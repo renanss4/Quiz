@@ -10,10 +10,12 @@ body {
 
 aside {
   padding: 20px;
+  align-items: flex-start;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   height: 100vh;
+  width: 250px;
   color: #eef2ff;
   box-sizing: border-box;
 }
@@ -32,7 +34,38 @@ button {
 }
 
 main {
+  gap: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
   background-color: #fafafa;
   width: 100%;
   border-radius: 25px 0px 0px 25px;
+  padding: 40px 36px;
+}
+
+.disciplinas {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: auto;
+  margin: 20px 16px;
+  gap: 8px;
+}
+
+.disciplinas ul li {
+  list-style: none;
+  display: flex;
+  width: 600px;
+  padding: 16px 20px;
+  align-items: center;
+  gap: 10px;
+  border-radius: 12px;
+  border: 1px solid #e7e5e4;
+  background: #f5f5f5;
+  margin: 10px;
+
+  /* shadow/base */
+  box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.1),
+    0px 1px 2px 0px rgba(0, 0, 0, 0.06);
 }
