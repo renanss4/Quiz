@@ -1,26 +1,26 @@
-import express from "express"; // Importa o framework Express para criar o servidor web
-import bodyParser from "body-parser"; // Importa o body-parser para fazer o parsing do corpo das requisições
-import cors from "cors"; // Importa o CORS para permitir requisições de diferentes origens
-import { config } from "dotenv"; // Importa o dotenv para carregar variáveis de ambiente a partir de um arquivo .env
-import { connectToDatabase } from "./database/connect.js"; // Importa a função de conexão com o banco de dados
-import { rota } from "./routes/routes.js";
+import express from "express"; // Imports the Express framework to create the web server
+import bodyParser from "body-parser"; // Imports body-parser to parse the body of requests
+import cors from "cors"; // Imports CORS to allow requests from different origins
+import { config } from "dotenv"; // Imports dotenv to load environment variables from a .env file
+import { connectToDatabase } from "./database/connect.js"; // Imports the function to connect to the database
+import routes from "./routes/routes.js"; // Imports the route configuration
 
-// Carrega as variáveis de ambiente do arquivo .env
+// Loads environment variables from the .env file
 config();
 
-// Conecta com o Banco de Dados
+// Connects to the Database
 connectToDatabase();
 
-const server = express(); // Cria uma instância do servidor Express
+const server = express(); // Creates an instance of the Express server
 
-server.use(bodyParser.json()); // Configura o body-parser para parsear o corpo das requisições como JSON
-server.use(cors()); // Habilita o CORS para permitir requisições de outras origens
-server.use("/", rota);
+server.use(bodyParser.json()); // Configures body-parser to parse request bodies as JSON
+server.use(cors()); // Enables CORS to allow requests from other origins
+server.use("/", routes); // Sets up the route configuration
 
-const port = process.env.PORT || 8080; // Define a porta em que o servidor vai rodar, utilizando a porta definida nas variáveis de ambiente ou 8080 como padrão
+const port = process.env.PORT || 8080; // Defines the port the server will run on, using the port defined in the environment variables or 8080 as default
 
-// Inicia o servidor na porta definida
+// Starts the server on the defined port
 server.listen(port, () => {
-  console.log(`Rodando na porta ${port}!`); // Loga uma mensagem indicando que o servidor está rodando
-  console.log(`Abra no seu navegador: http://127.0.0.1:${port}`); // Loga a URL onde o servidor pode ser acessado
+  console.log(`Running on port ${port}!`); // Logs a message indicating that the server is running
+  console.log(`Open in your browser: http://127.0.0.1:${port}`); // Logs the URL where the server can be accessed
 });

@@ -1,29 +1,24 @@
 import mongoose from "mongoose";
 import { Schema } from "mongoose";
 
-const disciplinasSchema = new Schema({
-  nome: {
+const subjectSchema = new Schema({
+  name: {
     type: String,
     required: true,
   },
-  ano: {
+  year: {
     type: Number,
     required: true,
   },
-  semestre: {
+  semester: {
     type: Number,
     required: true,
   },
-  prof_id: {
+  user_id: {
     type: Schema.Types.ObjectId,
-    ref: "Usuarios",
+    ref: "Users",
     default: null,
   },
 });
 
-export const DisciplinasModel = mongoose.model(
-  "Disciplinas",
-  disciplinasSchema
-);
-
-// export default Disciplinas
+export const subjectsModel = mongoose.model("Subjects", subjectSchema);

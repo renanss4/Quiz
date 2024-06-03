@@ -1,12 +1,12 @@
 import mongoose from "mongoose";
 import { Schema } from "mongoose";
 
-const usuariosSchema = new Schema({
-  nome: {
+const userSchema = new Schema({
+  name: {
     type: String,
     required: true,
   },
-  matricula: {
+  enrollment: {
     type: Number,
     require: true,
     unique: true,
@@ -16,18 +16,16 @@ const usuariosSchema = new Schema({
     required: true,
     unique: true,
   },
-  senha: {
+  password: {
     type: String,
     required: true,
     minlength: 7,
   },
-  papel: {
+  position: {
     type: String,
     required: true,
     enum: ["admin", "professor", "aluno"],
   },
 });
 
-export const UsuariosModel = mongoose.model("Usuarios", usuariosSchema);
-
-// module.exports = UserModel;
+export const usersModel = mongoose.model("Users", userSchema);

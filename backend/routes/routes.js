@@ -1,10 +1,12 @@
 import { Router } from "express";
-import rotaUsuario from "./usuario.routes.js";
-import rotaDisciplina from "./disciplina.routes.js";
-import rotaUsuarioDisciplina from "./usuario_disciplina.routes.js";
+import userRoute from "./user.routes.js";
+import subjectRoute from "./subject.routes.js";
+import userSubjectRoute from "./user_subject.routes.js";
 
-export const rota = Router();
+const routes = Router();
 
-rota.use("/usuarios", rotaUsuario);
-rota.use("/disciplinas", rotaDisciplina);
-rota.use("/usuarios_disciplinas", rotaUsuarioDisciplina);
+routes.use("/users", userRoute);
+routes.use("/subjects", subjectRoute);
+routes.use("/users_subjects", userSubjectRoute);
+
+export default routes;

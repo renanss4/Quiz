@@ -1,19 +1,19 @@
-import { mongoose } from "mongoose"; // Importa o mongoose, um ORM para MongoDB
-import { config } from "dotenv"; // Importa o dotenv para carregar variáveis de ambiente a partir de um arquivo .env
+import { mongoose } from "mongoose"; // Imports mongoose, an ORM for MongoDB
+import { config } from "dotenv"; // Imports dotenv to load environment variables from a .env file
 
-// Carrega as variáveis de ambiente do arquivo .env
+// Loads environment variables from the .env file
 config();
 
-// Monta a URI de conexão com o MongoDB utilizando as variáveis de ambiente
+// Constructs the MongoDB connection URI using environment variables
 const uri = `mongodb://${process.env.MONGODB_URL}:${process.env.MONGODB_PORT}/${process.env.MONGODB_DBNAME}`;
 
-// Função assíncrona para conectar ao banco de dados
+// Asynchronous function to connect to the database
 export const connectToDatabase = async () => {
   try {
-    // Tenta conectar ao MongoDB usando o mongoose
+    // Tries to connect to MongoDB using mongoose
     await mongoose.connect(uri);
-    console.log("Conexão ao banco de dados realizada com sucesso!"); // Loga uma mensagem de sucesso na conexão
+    console.log("Successfully connected to the database!"); // Logs a success message upon connection
   } catch (err) {
-    console.error("Ocorreu um erro ao se conectar com o banco de dados:", err); // Loga uma mensagem de erro se a conexão falhar
+    console.error("An error occurred while connecting to the database:", err); // Logs an error message if the connection fails
   }
 };
