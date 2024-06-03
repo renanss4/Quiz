@@ -1,8 +1,8 @@
-import { Router } from "express"
-import DisciplinaController  from "../controllers/disciplinaController.js"
+// import { Router } from "express";
+// import DisciplinaController from "../controllers/disciplina.controller.js";
 
-const routerDisciplina = Router()
+// const routerDisciplina = Router();
 
-routerDisciplina.post("/disciplina", DisciplinaController.criarDisciplina)
+// routerDisciplina.post("/disciplina", DisciplinaController.criarDisciplina);
 
-export default routerDisciplina
+// export default routerDisciplina;

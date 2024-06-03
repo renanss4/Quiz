@@ -3,7 +3,7 @@ import bodyParser from "body-parser"; // Importa o body-parser para fazer o pars
 import cors from "cors"; // Importa o CORS para permitir requisições de diferentes origens
 import { config } from "dotenv"; // Importa o dotenv para carregar variáveis de ambiente a partir de um arquivo .env
 import { connectToDatabase } from "./database/connect.js"; // Importa a função de conexão com o banco de dados
-import { router } from "./routes/routes.js"
+import { rota } from "./routes/routes.js";
 
 // Carrega as variáveis de ambiente do arquivo .env
 config();
@@ -11,12 +11,13 @@ config();
 // Conecta com o Banco de Dados
 connectToDatabase();
 
+const server = express(); // Cria uma instância do servidor Express
+
 server.use(bodyParser.json()); // Configura o body-parser para parsear o corpo das requisições como JSON
 server.use(cors()); // Habilita o CORS para permitir requisições de outras origens
-server.use('/', router)
+server.use("/", rota);
 
 const port = process.env.PORT || 8080; // Define a porta em que o servidor vai rodar, utilizando a porta definida nas variáveis de ambiente ou 8080 como padrão
-const server = express(); // Cria uma instância do servidor Express
 
 // Inicia o servidor na porta definida
 server.listen(port, () => {
