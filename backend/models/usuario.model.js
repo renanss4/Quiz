@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-const { Schema } = mongoose;
+import { Schema } from "mongoose";
 
 const usuariosSchema = new Schema({
   nome: {
@@ -14,7 +14,7 @@ const usuariosSchema = new Schema({
   email: {
     type: String,
     required: true,
-    unique: true
+    unique: true,
   },
   senha: {
     type: String,
@@ -24,7 +24,7 @@ const usuariosSchema = new Schema({
   papel: {
     type: String,
     required: true,
-    enum: ['admin', 'professor', 'aluno']
+    enum: ["admin", "professor", "aluno"],
   },
 });
 
