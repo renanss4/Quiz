@@ -1,8 +1,11 @@
-// import { Router } from "express";
-// import DisciplinaController from "../controllers/disciplina.controller.js";
+import { Router } from "express";
+import { DisciplinaController } from "../controllers/disciplina.controller.js";
 
-// const routerDisciplina = Router();
+const rotaDisciplina = Router();
 
-// routerDisciplina.post("/disciplina", DisciplinaController.criarDisciplina);
+rotaDisciplina.get("/", DisciplinaController.buscarDisciplinas);
+rotaDisciplina.post("/", DisciplinaController.cadastrarDisciplina);
+rotaDisciplina.patch("/:id", DisciplinaController.editarDisciplina);
+rotaDisciplina.delete("/:id", DisciplinaController.excluirDisciplina);
 
-// export default routerDisciplina;
+export default rotaDisciplina;

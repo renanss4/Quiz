@@ -3,9 +3,9 @@ import { UsuarioController } from "../controllers/usuario.controller.js";
 
 export const rotaUsuario = Router();
 
-rotaUsuario.get("/usuarios", UsuarioController.buscarUsuarios);
-rotaUsuario.post("/usuarios", UsuarioController.cadastrarUsuario);
-rotaUsuario.patch("/usuarios/:id", UsuarioController.editarUsuario);
-rotaUsuario.delete("/usuarios/:id", UsuarioController.excluirUsuario);
+rotaUsuario.get("/", UsuarioController.buscarUsuarios);
+rotaUsuario.post("/", UsuarioController.cadastrarUsuario);
+rotaUsuario.patch("/:id", UsuarioController.editarUsuario);
+rotaUsuario.delete("/:id", UsuarioController.excluirUsuario);
 
 export default rotaUsuario;
