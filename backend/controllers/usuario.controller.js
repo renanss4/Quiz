@@ -38,4 +38,38 @@ export class UsuarioController {
       return res.status(500).json({ Erro: `${error.message}` }); // Trata erros e retorna status 500
     }
   }
+
+  static async editarUsuario(req, res) {
+    try {
+      // Inicia um bloco de código try para lidar com possíveis erros
+      const id = req.params.id; // Obtém o ID do usuário a ser atualizado a partir dos parâmetros da requisição
+
+      // Encontra e atualiza o usuário com o ID especificado, usando os dados do corpo da requisição
+      const usuario = await UsuariosModel.findByIdAndUpdate(id, req.body, {
+        new: true, // Retorna o novo documento atualizado
+      });
+
+      return res.status(200).json(usuario); // Retorna o usuário atualizado com status 200 (OK)
+    } catch (err) {
+      // Captura qualquer erro que possa ocorrer durante o processo
+      return res.status(500).send(err.message); // Em caso de erro, retorna o status 500 (Erro Interno do Servidor) e a mensagem de erro
+    }
+  }
+
+  static async excluirUsuario(req, res) {
+    try {
+      // Inicia um bloco de código try para lidar com possíveis erros
+      const id = req.params.id; // Obtém o ID do usuário a ser removido a partir dos parâmetros da requisição
+
+      // Encontra e remove o usuário com o ID especificado
+      const usuario = await UsuariosModel.findByIdAndDelete(id, req.body, {
+        new: true, // Retorna o documento removido
+      });
+
+      return res.status(200).json(usuario); // Retorna o usuário removido com status 200 (OK)
+    } catch (err) {
+      // Captura qualquer erro que possa ocorrer durante o processo
+      return res.status(500).send(err.message); // Em caso de erro, retorna o status 500 (Erro Interno do Servidor) e a mensagem de erro
+    }
+  }
 }

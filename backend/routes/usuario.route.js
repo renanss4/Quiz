@@ -1,9 +1,11 @@
 import { Router } from "express";
 import { UsuarioController } from "../controllers/usuario.controller.js";
 
-export const routerUsuario = Router();
+export const rotaUsuario = Router();
 
-routerUsuario.post("/usuarios", UsuarioController.cadastrarUsuario);
-routerUsuario.get("/usuarios", UsuarioController.buscarUsuarios);
+rotaUsuario.get("/usuarios", UsuarioController.buscarUsuarios);
+rotaUsuario.post("/usuarios", UsuarioController.cadastrarUsuario);
+rotaUsuario.patch("/usuarios/:id", UsuarioController.editarUsuario);
+rotaUsuario.delete("/usuarios/:id", UsuarioController.excluirUsuario);
 
-export default routerUsuario;
+export default rotaUsuario;
