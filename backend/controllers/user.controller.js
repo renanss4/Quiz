@@ -37,6 +37,19 @@ export class UserController {
     }
   }
 
+  static async readUsersById(req, res) {
+    try {
+      // Finds only a user in the database
+      const id = req.params.id;
+      const user = await usersModel.findById(id);
+
+      return res.status(200).json(user); // Returns a 200 status with the found user
+    } catch (err) {
+      console.log(err);
+      return res.status(500).json({ Error: `${err.message}` }); // Returns a 500 status with an error message if an error occurs
+    }
+  }
+
   static async updateUser(req, res) {
     try {
       const id = req.params.id; // Retrieves the id parameter from the request
