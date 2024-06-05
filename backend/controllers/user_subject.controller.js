@@ -42,9 +42,7 @@ export class UserSubjectController {
 
       const response = await usersSubjectsModel.create(studentSubject);
 
-      res
-        .status(201)
-        .json({ response, msg: "Student with subject created successfully" }); // Returns a success message along with the created record
+      res.status(201).json({ response }); // Returns a success message along with the created record
     } catch (err) {
       console.log(err);
       return res.status(500).json({ Error: `${err.message}` }); // Returns a 500 status with an error message if an error occurs
@@ -82,7 +80,7 @@ export class UserSubjectController {
 
       res.status(201).json({
         userSubjectAlreadyExists, // Returns the found userSubject
-        msg: "Showing items with id equal to the parameter", // Returns a success message
+        // msg: "Showing items with id equal to the parameter", // Returns a success message
       });
     } catch (err) {
       console.log(err);

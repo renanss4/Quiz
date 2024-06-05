@@ -36,6 +36,19 @@ export class SubjectController {
     }
   }
 
+  static async readSubjectById(req, res) {
+    try {
+      // Finds only a user in the database
+      const id = req.params.id;
+      const subject = await subjectsModel.findById(id);
+
+      return res.status(200).json(subject); // Returns a 200 status with the found subject
+    } catch (err) {
+      console.log(err);
+      return res.status(500).json({ Error: `${err.message}` }); // Returns a 500 status with an error message if an error occurs
+    }
+  }
+
   static async updateSubject(req, res) {
     try {
       const id = req.params.id; // Retrieves the id parameter from the request
