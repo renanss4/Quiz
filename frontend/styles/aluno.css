@@ -9,6 +9,7 @@ body {
     "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue",
     sans-serif;
   display: flex;
+  /* overflow: hidden; */
 }
 
 header {
@@ -50,6 +51,7 @@ nav {
   padding: 1.5rem;
   justify-content: start;
   gap: 15px;
+  height: 100vh;
 }
 
 div.change-password {
