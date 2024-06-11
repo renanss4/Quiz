@@ -8,7 +8,7 @@ const userRoute = Router();
 userRoute.post("/", UserController.createUser);
 
 // GET routes
-userRoute.get("/:id", UserController.readUserById);
+userRoute.get("/search/:id", UserController.readUserById);
 userRoute.get("/admins", UserController.readAdmins);
 userRoute.get("/students", UserController.readStudents);
 userRoute.get("/teachers", UserController.readTeachers);

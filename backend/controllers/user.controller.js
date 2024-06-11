@@ -41,7 +41,7 @@ export class UserController {
         .status(200)
         .json({ msg: "User logged in successfully!", token }); // Returns a 200 status with a success message and the token
     } catch (error) {
-      console.log(error);
+      console.log({ Error: `${error.message}` });
       return res.status(500).json({ Error: `${error.message}` }); // Returns a 500 status with an error message if an error occurs
     }
   }
@@ -91,7 +91,7 @@ export class UserController {
 
       return res.status(201).send({ msg: "User created successfully!" }); // Returns a 201 status indicating successful creation
     } catch (error) {
-      console.log(error);
+      console.log({ Error: `${error.message}` });
       return res.status(500).json({ Error: `${error.message}` }); // Returns a 500 status with an error message if an error occurs
     }
   }
@@ -99,9 +99,8 @@ export class UserController {
   static async readAdmins(req, res) {
     try {
       // Checks if the user logged in is an admin
-      const id = req.payload.id;
-      const user = await usersModel.findById(id);
-      if (user.position !== "admin") {
+      const isAdmin = req.payload.position;
+      if (isAdmin !== "admin") {
         return res
           .status(403)
           .send({ msg: "You don't have permission for this funcionality" });
@@ -115,7 +114,7 @@ export class UserController {
       // Returns a 200 status with the found admins
       return res.status(200).json(admins);
     } catch (error) {
-      console.log(error);
+      console.log({ Error: `${error.message}` });
       return res.status(500).json({ Error: `${error.message}` });
     }
   }
@@ -123,9 +122,8 @@ export class UserController {
   static async readStudents(req, res) {
     try {
       // Checks if the user logged in is an admin
-      const id = req.payload.id;
-      const user = await usersModel.findById(id);
-      if (user.position !== "admin") {
+      const isAdmin = req.payload.position;
+      if (isAdmin !== "admin") {
         return res
           .status(403)
           .send({ msg: "You don't have permission for this funcionality" });
@@ -139,7 +137,7 @@ export class UserController {
       // Returns a 200 status with the found students
       return res.status(200).json(students);
     } catch (error) {
-      console.log(error);
+      console.log({ Error: `${error.message}` });
       return res.status(500).json({ Error: `${error.message}` });
     }
   }
@@ -147,9 +145,8 @@ export class UserController {
   static async readTeachers(req, res) {
     try {
       // Checks if the user logged in is an admin
-      const id = req.payload.id;
-      const user = await usersModel.findById(id);
-      if (user.position !== "admin") {
+      const isAdmin = req.payload.position;
+      if (isAdmin !== "admin") {
         return res
           .status(403)
           .send({ msg: "You don't have permission for this funcionality" });
@@ -163,7 +160,7 @@ export class UserController {
       // Returns a 200 status with the found teachers
       return res.status(200).json(teachers);
     } catch (error) {
-      console.log(error);
+      console.log({ Error: `${error.message}` });
       return res.status(500).json({ Error: `${error.message}` });
     }
   }
@@ -188,7 +185,7 @@ export class UserController {
       // Returns a 200 status with the found user
       return res.status(200).json(user); // Returns a 200 status with the found user
     } catch (error) {
-      console.log(error);
+      console.log({ Error: `${error.message}` });
       return res.status(500).json({ Error: `${error.message}` }); // Returns a 500 status with an error message if an error occurs
     }
   }
@@ -212,7 +209,7 @@ export class UserController {
 
       return res.status(200).json(updatedUser); // Returns a 200 status with the updated user
     } catch (error) {
-      console.log(error);
+      console.log({ Error: `${error.message}` });
       return res.status(500).json({ Error: `${error.message}` }); // Returns a 500 status with an error message if an error occurs
     }
   }
@@ -234,7 +231,7 @@ export class UserController {
 
       return res.status(200).json(deletedUser); // Returns a 200 status with the deleted user
     } catch (error) {
-      console.log(error);
+      console.log({ Error: `${error.message}` });
       return res.status(500).json({ Error: `${error.message}` }); // Returns a 500 status with an error message if an error occurs
     }
   }
