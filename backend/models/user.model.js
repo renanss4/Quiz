@@ -24,7 +24,7 @@ const userSchema = new Schema({
   position: {
     type: String,
     required: true,
-    enum: ["admin", "professor", "aluno"],
+    enum: ["admin", "teacher", "student"],
   },
 });
 

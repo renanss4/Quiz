@@ -14,7 +14,7 @@ const subjectSchema = new Schema({
     type: Number,
     required: true,
   },
-  user_id: {
+  teacher_id: {
     type: Schema.Types.ObjectId,
     ref: "Users",
     default: null,
