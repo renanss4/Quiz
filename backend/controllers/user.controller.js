@@ -185,7 +185,7 @@ export class UserController {
       }
 
       // Finds all users in the database
-      const users = await usersModel.find("-password -__v");
+      const users = await usersModel.find({}, "-password -__v");
       if (users.length === 0 || !users) {
         return res.status(404).send("No users found"); // Returns a 404 status if no users are found
       }
