@@ -3,10 +3,20 @@ import { SubjectController } from "../controllers/subject.controller.js";
 
 const subjectRoute = Router();
 
-subjectRoute.post("/", SubjectController.createSubject);
+// PRIVATE ROUTES FOR ALL USERS
 subjectRoute.get("/", SubjectController.readSubjects);
-subjectRoute.get("/:id", SubjectController.readSubjectById);
+
+// PRIVATE ROUTES FOR ADMINS
+// POST routes
+subjectRoute.post("/", SubjectController.createSubject);
+
+// GET routes
+subjectRoute.get("/search/:id", SubjectController.readSubjectById);
+
+// PATCH routes
 subjectRoute.patch("/:id", SubjectController.updateSubject);
+
+// DELETE routes
 subjectRoute.delete("/:id", SubjectController.deletedSubject);
 
 export default subjectRoute;

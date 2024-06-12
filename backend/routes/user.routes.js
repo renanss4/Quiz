@@ -3,6 +3,10 @@ import { UserController } from "../controllers/user.controller.js";
 
 const userRoute = Router();
 
+// PRIVATE ROUTES FOR ALL USERS
+userRoute.get("/students", UserController.readStudents);
+userRoute.get("/teachers", UserController.readTeachers);
+
 // PRIVATE ROUTES FOR ADMINS
 // POST routes
 userRoute.post("/", UserController.createUser);
@@ -10,8 +14,7 @@ userRoute.post("/", UserController.createUser);
 // GET routes
 userRoute.get("/search/:id", UserController.readUserById);
 userRoute.get("/admins", UserController.readAdmins);
-userRoute.get("/students", UserController.readStudents);
-userRoute.get("/teachers", UserController.readTeachers);
+userRoute.get("/", UserController.readUsers);
 
 // PATCH routes
 userRoute.patch("/:id", UserController.updateUser);
