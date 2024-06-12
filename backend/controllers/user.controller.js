@@ -121,14 +121,6 @@ export class UserController {
 
   static async readStudents(req, res) {
     try {
-      // Checks if the user logged in is an admin
-      const isAdmin = req.payload.position;
-      if (isAdmin !== "admin") {
-        return res
-          .status(403)
-          .send({ Msg: "You don't have permission for this funcionality" });
-      }
-
       // Finds all students in the database
       const students = await usersModel.find({ position: "student" }, "-__v");
       if (students.length === 0 || !students)
@@ -144,14 +136,6 @@ export class UserController {
 
   static async readTeachers(req, res) {
     try {
-      // Checks if the user logged in is an admin
-      const isAdmin = req.payload.position;
-      if (isAdmin !== "admin") {
-        return res
-          .status(403)
-          .send({ Msg: "You don't have permission for this funcionality" });
-      }
-
       // Finds all teachers in the database
       const teachers = await usersModel.find({ position: "teacher" }, "-__v");
       if (teachers.length === 0 || !teachers)
