@@ -11,22 +11,22 @@ export class UserController {
 
       // validate inputs
       if (!enrollment) {
-        return res.status(400).json({ msg: "Enrollment is required!" });
+        return res.status(400).json({ Msg: "Enrollment is required!" });
       }
       if (!password) {
-        return res.status(400).json({ msg: "Password is required!" });
+        return res.status(400).json({ Msg: "Password is required!" });
       }
 
       // Finds the user by enrollment
       const user = await usersModel.findOne({ enrollment });
       if (!user) {
-        return res.status(400).json({ msg: "User not found!" });
+        return res.status(400).json({ Msg: "User not found!" });
       }
 
       // check if password match
       const isMatch = await bcrypt.compare(password, user.password);
       if (!isMatch) {
-        return res.status(400).json({ msg: "Invalid password!" });
+        return res.status(400).json({ Msg: "Invalid password!" });
       }
 
       // create token
@@ -39,7 +39,7 @@ export class UserController {
 
       return res
         .status(200)
-        .json({ msg: "User logged in successfully!", token }); // Returns a 200 status with a success message and the token
+        .json({ Msg: "User logged in successfully!", token }); // Returns a 200 status with a success message and the token
     } catch (error) {
       console.log({ Error: `${error.message}` });
       return res.status(500).json({ Error: `${error.message}` }); // Returns a 500 status with an error message if an error occurs
@@ -57,13 +57,13 @@ export class UserController {
       if (user.position !== "admin")
         return res
           .status(403)
-          .send({ msg: "You don't have permission to create a new user" });
+          .send({ Msg: "You don't have permission to create a new user" });
 
       const { name, enrollment, email, password, position } = req.body; // Extracts user data from the request body
 
       // Validates inputs
       if (!name && !enrollment && !email && !password && !position) {
-        return res.status(400).json({ msg: "All fields are required!" });
+        return res.status(400).json({ Msg: "All fields are required!" });
       }
 
       // Checks if the user already exists in the database by enrollment or email
@@ -89,7 +89,7 @@ export class UserController {
       await usersModel.create(newUser);
       // console.log(response);
 
-      return res.status(201).send({ msg: "User created successfully!" }); // Returns a 201 status indicating successful creation
+      return res.status(201).send({ Msg: "User created successfully!" }); // Returns a 201 status indicating successful creation
     } catch (error) {
       console.log({ Error: `${error.message}` });
       return res.status(500).json({ Error: `${error.message}` }); // Returns a 500 status with an error message if an error occurs
@@ -103,7 +103,7 @@ export class UserController {
       if (isAdmin !== "admin") {
         return res
           .status(403)
-          .send({ msg: "You don't have permission for this funcionality" });
+          .send({ Msg: "You don't have permission for this funcionality" });
       }
 
       // Finds all admins in the database
@@ -126,7 +126,7 @@ export class UserController {
       if (isAdmin !== "admin") {
         return res
           .status(403)
-          .send({ msg: "You don't have permission for this funcionality" });
+          .send({ Msg: "You don't have permission for this funcionality" });
       }
 
       // Finds all students in the database
@@ -149,7 +149,7 @@ export class UserController {
       if (isAdmin !== "admin") {
         return res
           .status(403)
-          .send({ msg: "You don't have permission for this funcionality" });
+          .send({ Msg: "You don't have permission for this funcionality" });
       }
 
       // Finds all teachers in the database
@@ -172,7 +172,7 @@ export class UserController {
       if (isAdmin !== "admin") {
         return res
           .status(403)
-          .send({ msg: "You don't have permission for this funcionality" });
+          .send({ Msg: "You don't have permission for this funcionality" });
       }
 
       // Finds only a user in the database
@@ -197,7 +197,7 @@ export class UserController {
       if (isAdmin !== "admin") {
         return res
           .status(403)
-          .send({ msg: "You don't have permission for this funcionality" });
+          .send({ Msg: "You don't have permission for this funcionality" });
       }
 
       const id = req.params.id; // Retrieves the id parameter from the request
@@ -207,7 +207,10 @@ export class UserController {
         new: true,
       });
 
-      return res.status(200).json(updatedUser); // Returns a 200 status with the updated user
+      return res
+        .status(200)
+        .json(updatedUser)
+        .send({ Msg: "Succesfully updated" }); // Returns a 200 status with the updated user
     } catch (error) {
       console.log({ Error: `${error.message}` });
       return res.status(500).json({ Error: `${error.message}` }); // Returns a 500 status with an error message if an error occurs
@@ -221,7 +224,7 @@ export class UserController {
       if (isAdmin !== "admin") {
         return res
           .status(403)
-          .send({ msg: "You don't have permission for this funcionality" });
+          .send({ Msg: "You don't have permission for this funcionality" });
       }
 
       const id = req.params.id; // Retrieves the id parameter from the request
@@ -229,7 +232,10 @@ export class UserController {
       // Deletes the user with the provided id
       const deletedUser = await usersModel.findByIdAndDelete(id);
 
-      return res.status(200).json(deletedUser); // Returns a 200 status with the deleted user
+      return res
+        .status(200)
+        .json(deletedUser)
+        .send({ Msg: "Successfully deleted" }); // Returns a 200 status with the deleted user
     } catch (error) {
       console.log({ Error: `${error.message}` });
       return res.status(500).json({ Error: `${error.message}` }); // Returns a 500 status with an error message if an error occurs
