@@ -20,7 +20,7 @@ export class SubjectController {
       }
 
       // Checks if the subject already exists in the database by name
-      const subjectExists = await subjects
+      const subjectExists = await subjectsModel
         .findOne({ name })
         .populate("teacher_id");
       if (subjectExists) {
@@ -97,19 +97,18 @@ export class SubjectController {
 
       const id = req.params.id; // Retrieves the id parameter from the request
 
-      // Updates the subject with the provided id using the data from the request body
-      const updatedSubject = await subjectsModel.findByIdAndUpdate(
-        id,
-        req.body,
-        {
-          new: true,
-        }
-      );
+      // Checks if the subject exists
+      const subjectExists = await subjectsModel.findById(id);
+      if (!subjectExists) {
+        return res.status(404).json({ Msg: "Subject not found" }); // Returns a 404 status with a message if the subject doesn't exist
+      }
 
-      return res
-        .status(200)
-        .json(updatedSubject)
-        .send({ Msg: "Succesfully updated" }); // Returns a 200 status with the updated subject
+      // Updates the subject with the provided id using the data from the request body
+      await subjectsModel.findByIdAndUpdate(id, req.body, {
+        new: true,
+      });
+
+      return res.status(200).send({ Msg: "Succesfully updated" }); // Returns a 200 status with the updated subject
     } catch (error) {
       console.log({ Error: `${error.message}` });
       return res.status(500).json({ Error: `${error.message}` }); // Returns a 500 status with an erroror message if an erroror occurs
@@ -128,13 +127,16 @@ export class SubjectController {
 
       const id = req.params.id; // Retrieves the id parameter from the request
 
-      // Deletes the subject with the provided id
-      const deletedSubject = await subjectsModel.findByIdAndDelete(id);
+      // Checks if the subject exists
+      const subjectExists = await subjectsModel.findById(id);
+      if (!subjectExists) {
+        return res.status(404).json({ Msg: "Subject not found" }); // Returns a 404 status with a message if the subject doesn't exist
+      }
 
-      return res
-        .status(200)
-        .json(deletedSubject)
-        .send({ Msg: "Successfully deleted" }); // Returns a 200 status with the deleted subject
+      // Deletes the subject with the provided id
+      await subjectsModel.findByIdAndDelete(id);
+
+      return res.status(200).send({ Msg: "Successfully deleted" }); // Returns a 200 status with the deleted subject
     } catch (error) {
       console.log({ Error: `${error.message}` });
       return res.status(500).json({ Error: `${error.message}` }); // Returns a 500 status with an erroror message if an erroror occurs
