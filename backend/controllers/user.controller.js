@@ -190,6 +190,30 @@ export class UserController {
     }
   }
 
+  static async readUsers(req, res) {
+    try {
+      // Checks if the user logged in is an admin
+      const isAdmin = req.payload.position;
+      if (isAdmin !== "admin") {
+        return res
+          .status(403)
+          .send({ Msg: "You don't have permission for this funcionality" });
+      }
+
+      // Finds all users in the database
+      const users = await usersModel.find("-password -__v");
+      if (users.length === 0 || !users) {
+        return res.status(404).send("No users found"); // Returns a 404 status if no users are found
+      }
+
+      // Returns a 200 status with the found users
+      return res.status(200).json(users); // Returns a 200 status with the found users
+    } catch (error) {
+      console.log({ Error: `${error.message}` });
+      return res.status(500).json({ Error: `${error.message}` }); // Returns a 500 status with an error message if an error occurs
+    }
+  }
+
   static async updateUser(req, res) {
     try {
       // Checks if the user logged in is an admin
