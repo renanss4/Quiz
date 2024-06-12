@@ -3,7 +3,7 @@ import { Schema } from "mongoose";
 import { ObjectId } from "mongodb";
 
 const userSubjectSchema = new Schema({
-  user_id: {
+  student_id: {
     type: ObjectId,
     ref: "Users",
   },
