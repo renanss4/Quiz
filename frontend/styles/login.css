@@ -6,3 +6,123 @@
     "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue",
     sans-serif;
 }
+
+body {
+  position: relative;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #f5f5f5;
+  /* min-height: 100vh; */
+  height: 100vh;
+  overflow: hidden;
+}
+
+.vetor1,
+.vetor2 {
+  position: absolute;
+  opacity: 0.5;
+}
+
+.vetor1 {
+  top: 0;
+  right: 0;
+  width: 433px;
+  height: 497px;
+}
+
+.vetor2 {
+  bottom: 0;
+  left: 0;
+  width: 352px;
+  height: 284px;
+}
+
+.logo {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  z-index: 2;
+}
+
+.login {
+  border: 1px solid #e5e5e5;
+  border-radius: 20px;
+  box-shadow: 10px 11px 20px 0px rgba(0, 0, 0, 0.05);
+  background: #fafafa;
+  width: 545px;
+  height: 642px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 3;
+  position: relative;
+  gap: 10px;
+}
+
+.login h1 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+  font-weight: 600;
+}
+
+.login .line {
+  width: 206px;
+  height: 1px;
+  background: #d4d4d4;
+  margin: 20px auto 48px auto;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 30px;
+}
+
+.input-items {
+  display: flex;
+  width: 415px;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.input-items input {
+  display: flex;
+  padding: 12px 8px;
+  align-items: flex-start;
+  gap: 10px;
+  align-self: stretch;
+  border-radius: 6px;
+  border: 1px solid #e5e5e5;
+  background: #f5f5f5;
+}
+
+.input-items label {
+  display: block;
+}
+
+.login a {
+  align-self: center;
+  justify-items: auto;
+  color: #312e81;
+  text-decoration: none;
+}
+
+.login button {
+  color: #eef2ff;
+  border-radius: 6px;
+  border: none;
+  background: #6366f1;
+  width: 320px;
+  padding: 12px 8px;
+  gap: 10px;
+  cursor: pointer;
+  align-self: center;
+  justify-self: auto;
+}
