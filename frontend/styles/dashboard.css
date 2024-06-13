@@ -6,3 +6,39 @@
     "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue",
     sans-serif;
 }
+
+body {
+  display: grid;
+  grid-template-columns: 1fr 6fr;
+  background-color: rgb(43, 189, 79);
+}
+
+a,
+li {
+  list-style: none;
+  color: #eef2ff;
+  text-decoration: none;
+}
+
+nav {
+  background: #1e1b4b;
+  padding: 48px 32px;
+  color: #eef2ff;
+  height: 100vh;
+  /* width: 200px; */
+}
+
+main {
+  padding: 40px;
+}
+
+/* responsivo do mobile */
+@media (max-width: 767px) {
+  body {
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 6fr;
+  }
+  nav {
+    height: 100%;
+  }
+}
