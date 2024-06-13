@@ -7,34 +7,38 @@ export class UserController {
   // Method to login a user
   static async loginUser(req, res) {
     try {
-      const { enrollment, password } = req.body; // Extracts enrollment and password from the request body
+      const { enrollment, email, password } = req.body; // Extract enrollment, email, and password from the request body
 
-      // validate inputs
-      if (!enrollment) {
-        return res.status(400).json({ Msg: "Enrollment is required!" });
+      // Validate inputs
+      if (!enrollment && !email) {
+        return res
+          .status(400)
+          .json({ Msg: "Enrollment or email is required!" });
       }
       if (!password) {
         return res.status(400).json({ Msg: "Password is required!" });
       }
 
-      // Finds the user by enrollment
-      const user = await usersModel.findOne({ enrollment });
+      // Find the user by enrollment or email
+      const user = await usersModel.findOne(
+        enrollment ? { enrollment } : { email }
+      );
       if (!user) {
         return res.status(400).json({ Msg: "User not found!" });
       }
 
-      // check if password match
+      // Check if password matches
       const isMatch = await bcrypt.compare(password, user.password);
       if (!isMatch) {
         return res.status(400).json({ Msg: "Invalid password!" });
       }
 
-      // create token
+      // Create token
       const secret = process.env.JWT_SECRET;
       const token = jwt.sign(
         { id: user._id, position: user.position },
         secret,
-        { expiresIn: "30m" }
+        { expiresIn: "45m" }
       );
 
       return res
