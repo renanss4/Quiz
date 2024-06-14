@@ -4,46 +4,44 @@
   box-sizing: border-box;
   font-family: "Poppins", system-ui, -apple-system, BlinkMacSystemFont,
     "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue",
-    sans-serif;
+    sans-serif; /* Definição de fonte padrão */
 }
 
 body {
   position: relative;
-
   display: flex;
   justify-content: center;
   align-items: center;
   background-color: #f5f5f5;
-  /* min-height: 100vh; */
-  height: 100vh;
-  overflow: hidden;
+  height: 100vh; /* Altura total da viewport */
+  overflow: hidden; /* Evita rolagem */
 }
 
 .vetor1,
 .vetor2 {
   position: absolute;
-  opacity: 0.5;
+  opacity: 0.5; /* Transparência para os vetores */
 }
 
 .vetor1 {
   top: 0;
   right: 0;
-  width: 433px;
-  height: 497px;
+  width: 433px; /* Tamanho do vetor */
+  height: 497px; /* Tamanho do vetor */
 }
 
 .vetor2 {
   bottom: 0;
   left: 0;
-  width: 352px;
-  height: 284px;
+  width: 352px; /* Tamanho do vetor */
+  height: 284px; /* Tamanho do vetor */
 }
 
 .logo {
   position: absolute;
   top: 20px;
   left: 20px;
-  z-index: 2;
+  z-index: 2; /* Mantém a logo acima dos vetores */
 }
 
 .login {
@@ -51,8 +49,10 @@ body {
   border-radius: 20px;
   box-shadow: 10px 11px 20px 0px rgba(0, 0, 0, 0.05);
   background: #fafafa;
-  width: 545px;
-  height: 642px;
+  width: 90%; /* Largura adaptável */
+  max-width: 545px; /* Limite máximo de largura */
+  height: auto;
+  padding: 20px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -71,7 +71,7 @@ body {
 }
 
 .login .line {
-  width: 206px;
+  width: 206px; /* Linha sob o título */
   height: 1px;
   background: #d4d4d4;
   margin: 20px auto 48px auto;
@@ -82,11 +82,12 @@ form {
   flex-direction: column;
   justify-content: center;
   gap: 30px;
+  width: 100%; /* Largura total do formulário */
 }
 
 .input-items {
   display: flex;
-  width: 415px;
+  width: 100%; /* Largura total do contêiner de input */
   flex-direction: column;
   align-items: flex-start;
   gap: 12px;
@@ -101,6 +102,7 @@ form {
   border-radius: 6px;
   border: 1px solid #e5e5e5;
   background: #f5f5f5;
+  width: 100%; /* Largura total dos inputs */
 }
 
 .input-items label {
@@ -119,10 +121,63 @@ form {
   border-radius: 6px;
   border: none;
   background: #6366f1;
-  width: 320px;
+  width: 100%; /* Largura total do botão */
+  max-width: 320px; /* Limite máximo de largura */
   padding: 12px 8px;
   gap: 10px;
   cursor: pointer;
   align-self: center;
   justify-self: auto;
+}
+
+@media (max-width: 768px) {
+  /* Ajustes para telas de até 768px */
+  .login {
+    width: 90%;
+    height: auto;
+  }
+
+  .input-items {
+    width: 100%;
+  }
+
+  .input-items input {
+    width: 100%;
+  }
+
+  .login button {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  /* Ajustes para telas de até 480px */
+  .vetor1 {
+    width: 200px;
+    height: auto;
+  }
+
+  .vetor2 {
+    width: 150px;
+    height: auto;
+  }
+
+  .logo {
+    top: 10px;
+    left: 10px;
+  }
+
+  .login h1 {
+    gap: 12px;
+    font-size: 24px;
+  }
+
+  .login .line {
+    width: 150px;
+    margin: 10px auto 24px auto;
+  }
+
+  .login button {
+    max-width: 100%;
+  }
 }

@@ -4,79 +4,73 @@
   box-sizing: border-box;
   font-family: "Poppins", system-ui, -apple-system, BlinkMacSystemFont,
     "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue",
-    sans-serif;
+    sans-serif; /* Fonte padrão */
 }
 
 body {
   display: grid;
-  grid-template-columns: 1fr 6fr;
+  grid-template-columns: 1fr 6fr; /* Layout de duas colunas */
+  min-height: 100vh; /* Garante que o body ocupe toda a altura da viewport */
 }
 
 a,
 li {
-  list-style: none;
+  list-style: none; /* Remove estilo de lista */
   color: #eef2ff;
-  text-decoration: none;
+  text-decoration: none; /* Remove sublinhado dos links */
 }
 
 nav {
   display: flex;
   justify-content: space-between;
   flex-direction: column;
-  background: #1e1b4b;
-  padding: 40px;
+  background: #1e1b4b; /* Fundo escuro para o menu */
+  padding: 4rem; /* Padding em rem */
   color: #eef2ff;
-  height: 100vh;
+  height: 100vh; /* Altura total da viewport */
+
+  /* border-radius: 0 3rem 3rem 0; Arredondamento dos cantos em rem */
 }
 
 nav .logo {
-  margin-bottom: 32px;
-  gap: 2px;
+  margin-bottom: 2rem; /* Margem inferior ajustada para rem */
 }
 
 nav .menu {
   display: flex;
-  align-items: flex-start;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 16px;
+  flex-direction: column; /* Coluna para o menu */
+  gap: 2rem; /* Espaçamento entre itens em rem */
 }
 
 nav .menu li a {
   display: flex;
-  flex-direction: row;
-  gap: 10px;
+  gap: 1rem; /* Espaçamento entre elementos em rem */
   align-items: center;
-  justify-content: space-between;
 }
 
 nav .footer {
-  margin-top: auto;
-}
-
-nav .footer a {
-  display: flex;
-  gap: 10px;
-  flex-direction: row;
+  margin-top: auto; /* Empurra o footer para o final do nav */
 }
 
 main {
-  padding: 40px;
+  padding: 4rem; /* Padding em rem */
   background: #fafafa;
-  border-radius: 24px 0 0 24px;
+  border-radius: 3rem 0 0 3rem; /* Arredondamento dos cantos em rem */
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  margin: 0 0 0 -48px;
+  /* margin-left: -3rem; Margem negativa ajustada para rem */
 }
+
 .subjects {
-  gap: 20px;
+  gap: 2rem; /* Espaçamento entre elementos em rem */
 }
 
 .subjects .main-list {
-  gap: 20px;
-  margin-top: 40px;
+  gap: 2rem; /* Espaçamento entre elementos em rem */
+  margin-top: 4rem; /* Margem superior ajustada para rem */
 }
+
 .title h1 {
   font-weight: 700;
   color: #1c1917;
@@ -94,12 +88,13 @@ main {
 
 .main-list a {
   display: flex;
-  width: 800px;
+  width: 100%; /* Largura ajustada para 100% */
+  max-width: 50rem; /* Largura máxima ajustada para rem */
   color: #1c1917;
-  gap: 10px;
-  padding: 16px;
+  gap: 1rem; /* Espaçamento entre elementos em rem */
+  padding: 1.6rem; /* Padding em rem */
   align-items: center;
-  border-radius: 12px;
+  border-radius: 1.2rem; /* Bordas arredondadas em rem */
   margin-bottom: 1rem;
   border: 1px solid #e7e5e4;
   background: #f5f5f5;
@@ -107,13 +102,62 @@ main {
     0px 1px 2px 0px rgba(0, 0, 0, 0.06);
 }
 
-/* responsivo do mobile */
-/* @media (max-width: 767px) {
+@media (max-width: 1024px) {
+  /* Ajustes para telas de até 1024px */
   body {
-    grid-template-columns: 1fr;
-    grid-template-rows: 1fr 6fr;
+    grid-template-columns: 1fr 5fr; /* Ajuste de proporção das colunas */
   }
   nav {
-    height: 100%;
+    padding: 3rem; /* Reduz padding para telas menores */
   }
-} */
+  main {
+    padding: 3rem; /* Reduz padding para telas menores */
+  }
+}
+
+@media (max-width: 768px) {
+  /* Ajustes para telas de até 768px */
+  body {
+    grid-template-columns: 1fr; /* Layout de uma coluna */
+    grid-template-rows: auto 1fr; /* Nav acima e main abaixo */
+  }
+  nav {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    height: auto; /* Altura ajustável */
+    padding: 2rem; /* Reduz padding para telas menores */
+  }
+  nav .menu {
+    flex-direction: row; /* Menu em linha */
+    gap: 1rem; /* Reduz gap entre itens */
+  }
+  nav .footer {
+    display: none; /* Oculta footer no mobile */
+  }
+  main {
+    margin-left: 0; /* Remove margem negativa */
+    border-radius: 0; /* Remove borda arredondada */
+  }
+}
+
+@media (max-width: 480px) {
+  /* Ajustes para telas de até 480px */
+  nav {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 1rem; /* Padding ainda menor */
+  }
+  nav .menu {
+    flex-direction: column; /* Menu em coluna */
+    gap: 0.8rem; /* Gap menor entre itens */
+  }
+  main {
+    padding: 1rem; /* Padding menor para o main */
+  }
+  .main-list a {
+    flex-direction: column; /* Links em coluna */
+    align-items: flex-start;
+    width: 100%; /* Largura total no mobile */
+  }
+}
