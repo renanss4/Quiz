@@ -1,46 +1,79 @@
-async function fetchAluno(id) {
+const URL = "http://localhost:8080";
+
+// Função para obter o token do localStorage
+function getToken() {
+  return localStorage.getItem("token");
+}
+
+// Função para enviar o token e obter o ID do payload
+async function fetchUserId() {
+  const token = getToken();
+  if (!token) {
+    console.error("Token não encontrado");
+    return null;
+  }
+
   try {
-    const response = await fetch(`http://127.0.0.1:8080/users/${id}`, {
-      method: "GET",
+    const response = await fetch(`${URL}/user/token`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
     });
+
+    if (response.ok) {
+      const data = await response.json();
+      return data.id;
+    } else {
+      console.error("Falha ao obter o ID do usuário");
+      return null;
+    }
+  } catch (error) {
+    console.error("Erro ao buscar o ID do usuário:", error);
+    return null;
+  }
+}
+
+// Função genérica para buscar dados
+async function fetchData(endpoint, id) {
+  const token = getToken();
+  if (!token) {
+    console.error("Token não encontrado");
+    return null;
+  }
+
+  try {
+    const response = await fetch(`${URL}/${endpoint}/${id}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
     if (!response.ok) {
-      throw new Error(`Erro ao buscar aluno: ${response.statusText}`);
+      throw new Error(`Erro ao buscar ${endpoint}: ${response.statusText}`);
     }
     return await response.json();
   } catch (error) {
     console.error(error);
+    return null;
   }
+}
+
+async function fetchAluno(id) {
+  return fetchData("user/search", id);
 }
 
 async function fetchDisciplina(id) {
-  try {
-    const response = await fetch(`http://127.0.0.1:8080/subjects/${id}`, {
-      method: "GET",
-    });
-    if (!response.ok) {
-      throw new Error(`Erro ao buscar disciplina: ${response.statusText}`);
-    }
-    return await response.json();
-  } catch (error) {
-    console.error(error);
-  }
+  return fetchData("subject/search", id);
 }
 
 async function fetchAlunoDisciplina(id) {
-  try {
-    const response = await fetch(`http://127.0.0.1:8080/users_subjects/${id}`, {
-      method: "GET",
-    });
-    if (!response.ok) {
-      throw new Error(
-        `Erro ao buscar aluno_disciplina: ${response.statusText}`
-      );
-    }
-    const formatResponse = await response.json();
-    return formatResponse.userSubjectAlreadyExists;
-  } catch (error) {
-    console.error(error);
-  }
+  const data = await fetchData("user_subject/search", id);
+  // console.log(data[0]);
+  return data;
 }
 
 function addNameTitle(aluno) {
@@ -48,32 +81,30 @@ function addNameTitle(aluno) {
   welcome.innerText = `Bem vindo, ${aluno.name}`;
 }
 
-function createSubjectsOnPage(Disciplina) {
-  // console.log(Disciplina);
+function createSubjectsOnPage(disciplina) {
   const ul = document.querySelector(".main-list");
-  // const li = `<li></li>`;
   const liObj = document.createElement("li");
-  liObj.innerHTML = `<a href="#">${Disciplina.name} - ${Disciplina.year}</a>`;
+  liObj.innerHTML = `<a href="#">${disciplina.name} - ${disciplina.year}</a>`;
   ul.append(liObj);
 }
 
-// const aluno = fetchAluno("665f294276fdcedd4a693ac0").then((aluno) =>
-//   addNameTitle(aluno)
-// );
-// const disciplina = fetchDisciplina("665e1da1b9d3fe0a7f702900").then(
-//   (disciplina) => createSubjectsOnPage(disciplina)
-// );
+async function initializePage() {
+  const userId = await fetchUserId();
+  if (userId) {
+    const alunoDisciplinas = await fetchAlunoDisciplina(userId);
+    const aluno = await fetchAluno(alunoDisciplinas[0].student_id);
+    if (aluno) {
+      addNameTitle(aluno);
+    }
+    if (alunoDisciplinas) {
+      for (const element of alunoDisciplinas) {
+        const disciplina = await fetchDisciplina(element.subject_id);
+        if (disciplina) {
+          createSubjectsOnPage(disciplina);
+        }
+      }
+    }
+  }
+}
 
-const aluno_disciplina = fetchAlunoDisciplina("665f294276fdcedd4a693ac0").then(
-  (arr) =>
-    arr.forEach((element) => {
-      const aluno_id = element.user_id;
-      fetchAluno(aluno_id).then((nome) => addNameTitle(nome));
-
-      const disciplina_id = element.subject_id;
-      fetchDisciplina(disciplina_id).then((disciplina) => {
-        createSubjectsOnPage(disciplina);
-      });
-      // console.log(disciplina);
-    })
-);
+document.addEventListener("DOMContentLoaded", initializePage);
