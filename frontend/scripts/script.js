@@ -10,6 +10,7 @@ async function fetchUserId() {
   const token = getToken();
   if (!token) {
     console.error("Token não encontrado");
+    window.location.href = "login.html";
     return null;
   }
 
@@ -40,6 +41,7 @@ async function fetchData(endpoint, id) {
   const token = getToken();
   if (!token) {
     console.error("Token não encontrado");
+    window.location.href = "login.html";
     return null;
   }
 
@@ -107,4 +109,10 @@ async function initializePage() {
   }
 }
 
-document.addEventListener("DOMContentLoaded", initializePage);
+document.addEventListener("DOMContentLoaded", async () => {
+  try {
+    initializePage();
+  } catch (error) {
+    console.error("Erro durante a inicialização da página:", error);
+  }
+});
