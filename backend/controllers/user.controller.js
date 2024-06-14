@@ -7,10 +7,10 @@ export class UserController {
   // Method to login a user
   static async loginUser(req, res) {
     try {
-      const { enrollment, email, password } = req.body; // Extract enrollment, email, and password from the request body
+      const { emailOrEnrollment, password } = req.body; // Extract enrollment, email, and password from the request body
 
       // Validate inputs
-      if (!enrollment && !email) {
+      if (!emailOrEnrollment) {
         return res
           .status(400)
           .json({ Msg: "Enrollment or email is required!" });
@@ -20,9 +20,12 @@ export class UserController {
       }
 
       // Find the user by enrollment or email
-      const user = await usersModel.findOne(
-        enrollment ? { enrollment } : { email }
-      );
+      let user;
+      if (emailOrEnrollment.includes("@")) {
+        user = await usersModel.findOne({ email: emailOrEnrollment });
+      } else {
+        user = await usersModel.findOne({ enrollment: emailOrEnrollment });
+      }
       if (!user) {
         return res.status(400).json({ Msg: "User not found!" });
       }
@@ -47,6 +50,16 @@ export class UserController {
     } catch (error) {
       console.log({ Error: `${error.message}` });
       return res.status(500).json({ Error: `${error.message}` }); // Returns a 500 status with an error message if an error occurs
+    }
+  }
+
+  static async tokenUser(req, res) {
+    try {
+      const id = req.payload.id;
+      return res.status(200).json({ id });
+    } catch (error) {
+      console.log({ Error: `${error.message}` });
+      return res.status(500).json({ Error: `${error.message}` });
     }
   }
 
@@ -156,12 +169,12 @@ export class UserController {
   static async readUserById(req, res) {
     try {
       // Checks if the user logged in is an admin
-      const isAdmin = req.payload.position;
-      if (isAdmin !== "admin") {
-        return res
-          .status(403)
-          .send({ Msg: "You don't have permission for this funcionality" });
-      }
+      // const isAdmin = req.payload.position;
+      // if (isAdmin !== "admin") {
+      //   return res
+      //     .status(403)
+      //     .send({ Msg: "You don't have permission for this funcionality" });
+      // }
 
       // Finds only a user in the database
       const id = req.params.id;

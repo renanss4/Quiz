@@ -66,12 +66,12 @@ export class SubjectController {
   static async readSubjectById(req, res) {
     try {
       // Checks if the user logged in is an admin
-      const isAdmin = req.payload.position;
-      if (isAdmin !== "admin") {
-        return res
-          .status(403)
-          .send({ Msg: "You don't have permission for this funcionality" });
-      }
+      // const isAdmin = req.payload.position;
+      // if (isAdmin !== "admin") {
+      //   return res
+      //     .status(403)
+      //     .send({ Msg: "You don't have permission for this funcionality" });
+      // }
 
       // Finds only a user in the database
       const id = req.params.id;

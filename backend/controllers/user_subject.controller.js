@@ -82,12 +82,12 @@ export class UserSubjectController {
   static async readOnlyOneUserSubject(req, res) {
     try {
       // Checks if the user logged in is an admin
-      const isAdmin = req.payload.position;
-      if (isAdmin !== "admin") {
-        return res
-          .status(403)
-          .send({ Msg: "You don't have permission for this funcionality" });
-      }
+      // const isAdmin = req.payload.position;
+      // if (isAdmin !== "admin") {
+      //   return res
+      //     .status(403)
+      //     .send({ Msg: "You don't have permission for this funcionality" });
+      // }
 
       const id = req.params.id; // Retrieves the id parameter from the request
 
@@ -105,7 +105,7 @@ export class UserSubjectController {
       // Finds a userSubject with the provided id
       const userSubject = await usersSubjectsModel.find(
         {
-          $or: [{ _id: id }, { user_id: id }, { subject_id: id }],
+          $or: [{ _id: id }, { student_id: id }, { subject_id: id }],
         },
         "-__v"
       );

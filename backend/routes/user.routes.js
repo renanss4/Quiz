@@ -10,6 +10,7 @@ userRoute.get("/teachers", UserController.readTeachers);
 // PRIVATE ROUTES FOR ADMINS
 // POST routes
 userRoute.post("/", UserController.createUser);
+userRoute.post("/token", UserController.tokenUser);
 
 // GET routes
 userRoute.get("/search/:id", UserController.readUserById);
