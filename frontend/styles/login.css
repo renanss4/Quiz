@@ -85,6 +85,13 @@ form {
   width: 100%; /* Largura total do formulário */
 }
 
+#error {
+  display: none;
+  color: red;
+  line-height: 20px;
+  align-self: center;
+}
+
 .input-items {
   display: flex;
   width: 100%; /* Largura total do contêiner de input */
