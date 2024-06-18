@@ -27,8 +27,7 @@ async function fetchUserId() {
       const data = await response.json();
       return data.id;
     } else {
-      console.error("Falha ao obter o ID do usuário");
-      return null;
+      window.location.href = "login.html";
     }
   } catch (error) {
     console.error("Erro ao buscar o ID do usuário:", error);

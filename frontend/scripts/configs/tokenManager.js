@@ -1,14 +1,10 @@
-function getToken() {
-  localStorage.getItem("token");
-}
-
 // Remove the token from the local storage
 function removeToken() {
   localStorage.removeItem("token");
 }
 
-// Set the token in the local storage
-function setToken(token) {
+// Get the token in the local storage
+function getToken(token) {
   localStorage.setItem("token", token);
 }
 
@@ -21,4 +17,4 @@ function checkAuthentication() {
   }
 }
 
-export { getToken, removeToken, setToken, checkAuthentication };
+export { getToken, removeToken, checkAuthentication };

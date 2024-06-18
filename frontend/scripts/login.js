@@ -1,61 +1,72 @@
-import { getToken, setToken } from "./configs/tokenManager.js";
+import { getToken } from "./configs/tokenManager.js";
+import { loginFetch } from "./configs/fetch.js";
 
 const email = document.getElementById("email");
 const password = document.getElementById("password");
 const loginButton = document.getElementById("login-button");
-const inputIncorrect = document.getElementById("error");
-const forgotPassword = document.getElementById("forgot-password");
+const incorrect = document.getElementById("error");
 
-// URL do backend
-const URL = "http://localhost:8080";
+// Function to remove the error message when the user types in the input
+function removeError() {
+  email.addEventListener("input", () => {
+    incorrect.style.display = "none";
+    email.style.border = "1px solid #ccc";
+    password.style.border = "1px solid #ccc";
+  });
 
-async function loginFetch(emailOrEnrollment, password) {
-  try {
-    const response = await fetch(`${URL}/login`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ emailOrEnrollment, password }),
-    });
-
-    if (response.ok) {
-      const data = await response.json();
-      console.log("Login successful:", data);
-      return data;
-    }
-    if (response.status === 400) {
-      const errorData = await response.json();
-      console.error("Login failed:", errorData);
-      return null;
-    }
-  } catch (error) {
-    console.error("Error during fetch:", error);
-    return null;
-  }
+  password.addEventListener("input", () => {
+    incorrect.style.display = "none";
+    email.style.border = "1px solid #ccc";
+    password.style.border = "1px solid #ccc";
+  });
 }
 
+// Function to validate the fields
+function validateFields() {
+  if (email.value.trim() === "" || password.value.trim() === "") {
+    incorrect.style.display = "block";
+    email.style.border = "1px solid red";
+    password.style.border = "1px solid red";
+    return false;
+  }
+  if (!(email.value.includes("@") || !isNaN(email.value))) {
+    incorrect.style.display = "block";
+    email.style.border = "1px solid red";
+    password.style.border = "1px solid red";
+    return false;
+  }
+  return true;
+}
+
+// Logic for button "entrar"
 loginButton.addEventListener("click", async (event) => {
   event.preventDefault();
 
-  if (email.value.trim() === "" || password.value.trim() === "") {
-    inputIncorrect.style.display = "block";
-    email.style.border = "1px solid red";
-    password.style.border = "1px solid red";
-    return;
-  }
-  if (!(email.value.includes("@") || !isNaN(email.value))) {
-    console.log(isNaN(email.value));
-    inputIncorrect.style.display = "block";
-    email.style.border = "1px solid red";
-    password.style.border = "1px solid red";
+  // Call the validateFields function
+  if (!validateFields()) {
     return;
   }
 
-  const data = await loginFetch(email.value, password.value);
-  if (data) {
-    setToken(data.token);
+  try {
+    const data = await loginFetch(email.value, password.value);
+    if (data) {
+      getToken(data.token);
+      window.location.href = "dashboard.html";
+    }
+  } catch (error) {
+    if (error.message === "User invalid!") {
+      incorrect.style.display = "block";
+      incorrect.innerText = "Usuário inválido!";
+    } else if (error.message === "User not found!") {
+      incorrect.style.display = "block";
+      incorrect.innerText = "Usuário não cadastrado!";
+    } else {
+      console.error(`Error: ${error}`);
+    }
 
-    window.location.href = "dashboard.html";
+    // window.location.href = pagina de não encontrado ou algum problema aconteceu
   }
 });
+
+// Call the removeError function to set up the event listeners for input fields
+removeError();
