@@ -5,6 +5,9 @@ const email = document.getElementById("email");
 const password = document.getElementById("password");
 const loginButton = document.getElementById("login-button");
 const incorrect = document.getElementById("error");
+const togglePassword = document.getElementById("toggle-password");
+const showPasswordImg = document.getElementById("show-password");
+const hidePasswordImg = document.getElementById("hide-password");
 
 // Function to remove the error message when the user types in the input
 function removeError() {
@@ -38,6 +41,23 @@ function validateFields() {
   return true;
 }
 
+// Toggle password visibility
+togglePassword.addEventListener("click", (event) => {
+  event.preventDefault();
+  const type =
+    password.getAttribute("type") === "password" ? "text" : "password";
+  password.setAttribute("type", type);
+
+  // Toggle the visibility of the password images
+  if (type === "text") {
+    showPasswordImg.hidden = true;
+    hidePasswordImg.hidden = false;
+  } else {
+    showPasswordImg.hidden = false;
+    hidePasswordImg.hidden = true;
+  }
+});
+
 // Logic for button "entrar"
 loginButton.addEventListener("click", async (event) => {
   event.preventDefault();
@@ -63,8 +83,6 @@ loginButton.addEventListener("click", async (event) => {
     } else {
       console.error(`Error: ${error}`);
     }
-
-    // window.location.href = pagina de não encontrado ou algum problema aconteceu
   }
 });
 

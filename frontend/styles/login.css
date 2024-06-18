@@ -98,6 +98,7 @@ form {
   flex-direction: column;
   align-items: flex-start;
   gap: 12px;
+  position: relative;
 }
 
 .input-items input {
@@ -114,6 +115,18 @@ form {
 
 .input-items label {
   display: block;
+}
+
+#toggle-password {
+  position: absolute;
+  top: 50px; /* Ajuste conforme necessário */
+  right: 15px;
+  cursor: pointer;
+}
+
+#toggle-password-img {
+  width: 20px; /* Ajuste conforme necessário */
+  height: auto;
 }
 
 .login a {
