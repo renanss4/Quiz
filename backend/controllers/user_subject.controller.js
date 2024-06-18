@@ -10,7 +10,7 @@ export class UserSubjectController {
       if (isAdmin !== "admin") {
         return res
           .status(403)
-          .send({ Msg: "You don't have permission for this funcionality" });
+          .send({ msg: "You don't have permission for this funcionality" });
       }
 
       const { student_id, subject_id } = req.body; // Extracts student_id and subject_id from the request body
@@ -21,12 +21,12 @@ export class UserSubjectController {
 
       // Checks if user and subject exist
       if (!student || !subject) {
-        return res.status(404).send({ Msg: "Not found or does not exist" }); // Returns a 404 status if either user or subject doesn't exist
+        return res.status(404).send({ msg: "Not found or does not exist" }); // Returns a 404 status if either user or subject doesn't exist
       }
 
       // Checks if the student is a student
       if (student.position !== "student") {
-        return res.status(404).send({ Msg: "This user is not a Student" }); // Returns a 404 status if the user is not a student
+        return res.status(404).send({ msg: "This user is not a Student" }); // Returns a 404 status if the user is not a student
       }
 
       // Checks if the user already has the subject registered
@@ -37,7 +37,7 @@ export class UserSubjectController {
       if (studentAlreadyExists && studentAlreadyExists.length !== 0) {
         return res
           .status(404)
-          .send({ Msg: "Student with subject are already registered" }); // Returns a 404 status if the user already has the subject registered
+          .send({ msg: "Student with subject are already registered" }); // Returns a 404 status if the user already has the subject registered
       }
 
       // Creates a new record for the student with the subject
@@ -48,10 +48,10 @@ export class UserSubjectController {
 
       await usersSubjectsModel.create(studentSubject);
 
-      res.status(201).send({ Msg: "Successfully created" }); // Returns a success message along with the created record
+      res.status(201).send({ msg: "Successfully created" }); // Returns a success message along with the created record
     } catch (error) {
       console.log({ Error: `${error.message}` });
-      return res.status(500).json({ Msg: `${error.message}` }); // Returns a 500 status with an error message if an error occurs
+      return res.status(500).json({ msg: `${error.message}` }); // Returns a 500 status with an error message if an error occurs
     }
   }
 
@@ -62,20 +62,20 @@ export class UserSubjectController {
       // if (isAdmin !== "admin") {
       //   return res
       //     .status(403)
-      //     .send({ Msg: "You don't have permission for this funcionality" });
+      //     .send({ msg: "You don't have permission for this funcionality" });
       // }
 
       // Finds all user subjects
       const usersSubjects = await usersSubjectsModel.find({}, "-__v");
       if (usersSubjects.length === 0 || !usersSubjects) {
-        return res.status(404).send({ Msg: "No user subjects found" }); // Returns a 404 status if no user subjects are found
+        return res.status(404).send({ msg: "No user subjects found" }); // Returns a 404 status if no user subjects are found
       }
 
       // Returns a 201 status with the found user subjects
       res.status(200).json(usersSubjects);
     } catch (error) {
       console.log({ Error: `${error.message}` });
-      return res.status(500).json({ Msg: `${error.message}` }); // Returns a 500 status with an error message if an error occurs
+      return res.status(500).json({ msg: `${error.message}` }); // Returns a 500 status with an error message if an error occurs
     }
   }
 
@@ -86,7 +86,7 @@ export class UserSubjectController {
       // if (isAdmin !== "admin") {
       //   return res
       //     .status(403)
-      //     .send({ Msg: "You don't have permission for this funcionality" });
+      //     .send({ msg: "You don't have permission for this funcionality" });
       // }
 
       const id = req.params.id; // Retrieves the id parameter from the request
@@ -99,7 +99,7 @@ export class UserSubjectController {
         id === null ||
         id === undefined
       ) {
-        return res.status(400).json({ Msg: "Invalid id" }); // Returns a 400 status with a message if the id is invalid
+        return res.status(400).json({ msg: "Invalid id" }); // Returns a 400 status with a message if the id is invalid
       }
 
       // Finds a userSubject with the provided id
@@ -113,14 +113,14 @@ export class UserSubjectController {
       // Checks if the userSubject exists
       if (!userSubject || userSubject.length === 0) {
         return res.status(404).json({
-          Msg: "This id is not associated with any user or subject", // Returns a 404 status with a message if the userSubject doesn't exist
+          msg: "This id is not associated with any user or subject", // Returns a 404 status with a message if the userSubject doesn't exist
         });
       }
 
       res.status(200).json(userSubject); // Returns a 200 status with the found userSubject
     } catch (error) {
       console.log({ Error: `${error.message}` });
-      return res.status(500).json({ Msg: `${error.message}` }); // Returns a 500 status with an error message if an error occurs
+      return res.status(500).json({ msg: `${error.message}` }); // Returns a 500 status with an error message if an error occurs
     }
   }
 
@@ -131,7 +131,7 @@ export class UserSubjectController {
       if (isAdmin !== "admin") {
         return res
           .status(403)
-          .send({ Msg: "You don't have permission for this funcionality" });
+          .send({ msg: "You don't have permission for this funcionality" });
       }
 
       const id = req.params.id; // Retrieves the id parameter from the request
@@ -139,17 +139,17 @@ export class UserSubjectController {
       // Checks if the user subject exists
       const userSubjectExists = await usersSubjectsModel.findById(id);
       if (!userSubjectExists) {
-        return res.status(404).json({ Msg: "User subject not found" }); // Returns a 404 status with a message if the user subject doesn't exist
+        return res.status(404).json({ msg: "User subject not found" }); // Returns a 404 status with a message if the user subject doesn't exist
       }
 
       // Deletes the user subject
       await usersSubjectsModel.findOneAndDelete(id);
 
       // Returns a 200 status with the deleted user subject and a success message
-      return res.status(200).send({ Msg: "Successfully deleted" });
+      return res.status(200).send({ msg: "Successfully deleted" });
     } catch (error) {
       console.log({ Error: `${error.message}` });
-      return res.status(500).json({ Msg: `${error.message}` }); // Returns a 500 status with an error message if an error occurs
+      return res.status(500).json({ msg: `${error.message}` }); // Returns a 500 status with an error message if an error occurs
     }
   }
 }

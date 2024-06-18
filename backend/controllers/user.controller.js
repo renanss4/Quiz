@@ -10,13 +10,8 @@ export class UserController {
       const { emailOrEnrollment, password } = req.body; // Extract enrollment, email, and password from the request body
 
       // Validate inputs
-      if (!emailOrEnrollment) {
-        return res
-          .status(400)
-          .json({ Msg: "Enrollment or email is required!" });
-      }
-      if (!password) {
-        return res.status(400).json({ Msg: "Password is required!" });
+      if (!emailOrEnrollment && !password) {
+        return res.status(400).json({ msg: "Fields is required!" });
       }
 
       // Find the user by enrollment or email
@@ -26,14 +21,16 @@ export class UserController {
       } else {
         user = await usersModel.findOne({ enrollment: emailOrEnrollment });
       }
+
+      // Check if user exists
       if (!user) {
-        return res.status(400).json({ Msg: "User not found!" });
+        return res.status(404).json({ msg: "User not found!" });
       }
 
       // Check if password matches
       const isMatch = await bcrypt.compare(password, user.password);
       if (!isMatch) {
-        return res.status(400).json({ Msg: "Invalid password!" });
+        return res.status(404).json({ msg: "Invalid password!" });
       }
 
       // Create token
@@ -46,7 +43,7 @@ export class UserController {
 
       return res
         .status(200)
-        .json({ Msg: "User logged in successfully!", token }); // Returns a 200 status with a success message and the token
+        .json({ msg: "User logged in successfully!", token }); // Returns a 200 status with a success message and the token
     } catch (error) {
       console.log({ Error: `${error.message}` });
       return res.status(500).json({ Error: `${error.message}` }); // Returns a 500 status with an error message if an error occurs
@@ -74,13 +71,13 @@ export class UserController {
       if (user.position !== "admin")
         return res
           .status(403)
-          .send({ Msg: "You don't have permission to create a new user" });
+          .send({ msg: "You don't have permission to create a new user" });
 
       const { name, enrollment, email, password, position } = req.body; // Extracts user data from the request body
 
       // Validates inputs
       if (!name && !enrollment && !email && !password && !position) {
-        return res.status(400).json({ Msg: "All fields are required!" });
+        return res.status(404).json({ msg: "All fields are required!" });
       }
 
       // Checks if the user already exists in the database by enrollment or email
@@ -106,7 +103,7 @@ export class UserController {
       await usersModel.create(newUser);
       // console.log(response);
 
-      return res.status(201).send({ Msg: "User created successfully!" }); // Returns a 201 status indicating successful creation
+      return res.status(201).send({ msg: "User created successfully!" }); // Returns a 201 status indicating successful creation
     } catch (error) {
       console.log({ Error: `${error.message}` });
       return res.status(500).json({ Error: `${error.message}` }); // Returns a 500 status with an error message if an error occurs
@@ -120,7 +117,7 @@ export class UserController {
       if (isAdmin !== "admin") {
         return res
           .status(403)
-          .send({ Msg: "You don't have permission for this funcionality" });
+          .send({ msg: "You don't have permission for this funcionality" });
       }
 
       // Finds all admins in the database
@@ -173,7 +170,7 @@ export class UserController {
       // if (isAdmin !== "admin") {
       //   return res
       //     .status(403)
-      //     .send({ Msg: "You don't have permission for this funcionality" });
+      //     .send({ msg: "You don't have permission for this funcionality" });
       // }
 
       // Finds only a user in the database
@@ -198,7 +195,7 @@ export class UserController {
       if (isAdmin !== "admin") {
         return res
           .status(403)
-          .send({ Msg: "You don't have permission for this funcionality" });
+          .send({ msg: "You don't have permission for this funcionality" });
       }
 
       // Finds all users in the database
@@ -222,7 +219,7 @@ export class UserController {
       if (isAdmin !== "admin") {
         return res
           .status(403)
-          .send({ Msg: "You don't have permission for this funcionality" });
+          .send({ msg: "You don't have permission for this funcionality" });
       }
 
       const id = req.params.id; // Retrieves the id parameter from the request
@@ -233,9 +230,9 @@ export class UserController {
       });
 
       return res
-        .status(200)
+        .status(201)
         .json(updatedUser)
-        .send({ Msg: "Succesfully updated" }); // Returns a 200 status with the updated user
+        .send({ msg: "Succesfully updated" }); // Returns a 200 status with the updated user
     } catch (error) {
       console.log({ Error: `${error.message}` });
       return res.status(500).json({ Error: `${error.message}` }); // Returns a 500 status with an error message if an error occurs
@@ -249,7 +246,7 @@ export class UserController {
       if (isAdmin !== "admin") {
         return res
           .status(403)
-          .send({ Msg: "You don't have permission for this funcionality" });
+          .send({ msg: "You don't have permission for this funcionality" });
       }
 
       const id = req.params.id; // Retrieves the id parameter from the request
@@ -260,7 +257,7 @@ export class UserController {
       return res
         .status(200)
         .json(deletedUser)
-        .send({ Msg: "Successfully deleted" }); // Returns a 200 status with the deleted user
+        .send({ msg: "Successfully deleted" }); // Returns a 200 status with the deleted user
     } catch (error) {
       console.log({ Error: `${error.message}` });
       return res.status(500).json({ Error: `${error.message}` }); // Returns a 500 status with an error message if an error occurs
