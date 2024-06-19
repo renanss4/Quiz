@@ -3,7 +3,7 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 
 export class UserController {
-  // FOR EVERY USER, INDEPENDENT OF THE POSITION
+  // FOR EVERY USER, INDEPENDENT OF THE role
   // Method to login a user
   static async loginUser(req, res) {
     try {
@@ -35,11 +35,9 @@ export class UserController {
 
       // Create token
       const secret = process.env.JWT_SECRET;
-      const token = jwt.sign(
-        { id: user._id, position: user.position },
-        secret,
-        { expiresIn: "45m" }
-      );
+      const token = jwt.sign({ id: user._id, role: user.role }, secret, {
+        expiresIn: "45m",
+      });
 
       return res
         .status(200)
@@ -68,15 +66,15 @@ export class UserController {
       const id = req.payload.id;
       const user = await usersModel.findById(id);
 
-      if (user.position !== "admin")
+      if (user.role !== "admin")
         return res
           .status(403)
           .send({ msg: "You don't have permission to create a new user" });
 
-      const { name, enrollment, email, password, position } = req.body; // Extracts user data from the request body
+      const { name, enrollment, email, password, role } = req.body; // Extracts user data from the request body
 
       // Validates inputs
-      if (!name && !enrollment && !email && !password && !position) {
+      if (!name && !enrollment && !email && !password && !role) {
         return res.status(404).json({ msg: "All fields are required!" });
       }
 
@@ -96,7 +94,7 @@ export class UserController {
         enrollment,
         email,
         password: passwordHash,
-        position,
+        role,
       };
 
       // Creates a new user in the database
@@ -113,7 +111,7 @@ export class UserController {
   static async readAdmins(req, res) {
     try {
       // Checks if the user logged in is an admin
-      const isAdmin = req.payload.position;
+      const isAdmin = req.payload.role;
       if (isAdmin !== "admin") {
         return res
           .status(403)
@@ -121,7 +119,7 @@ export class UserController {
       }
 
       // Finds all admins in the database
-      const admins = await usersModel.find({ position: "admin" }, "-__v");
+      const admins = await usersModel.find({ role: "admin" }, "-__v");
       if (admins.length === 0 || !admins)
         return res.status(404).send("No admins found");
 
@@ -136,7 +134,7 @@ export class UserController {
   static async readStudents(req, res) {
     try {
       // Finds all students in the database
-      const students = await usersModel.find({ position: "student" }, "-__v");
+      const students = await usersModel.find({ role: "student" }, "-__v");
       if (students.length === 0 || !students)
         return res.status(404).send("No students found");
 
@@ -151,7 +149,7 @@ export class UserController {
   static async readTeachers(req, res) {
     try {
       // Finds all teachers in the database
-      const teachers = await usersModel.find({ position: "teacher" }, "-__v");
+      const teachers = await usersModel.find({ role: "teacher" }, "-__v");
       if (teachers.length === 0 || !teachers)
         return res.status(404).send("No teacher found");
 
@@ -166,7 +164,7 @@ export class UserController {
   static async readUserById(req, res) {
     try {
       // Checks if the user logged in is an admin
-      // const isAdmin = req.payload.position;
+      // const isAdmin = req.payload.role;
       // if (isAdmin !== "admin") {
       //   return res
       //     .status(403)
@@ -191,7 +189,7 @@ export class UserController {
   static async readUsers(req, res) {
     try {
       // Checks if the user logged in is an admin
-      const isAdmin = req.payload.position;
+      const isAdmin = req.payload.role;
       if (isAdmin !== "admin") {
         return res
           .status(403)
@@ -215,7 +213,7 @@ export class UserController {
   static async updateUser(req, res) {
     try {
       // Checks if the user logged in is an admin
-      const isAdmin = req.payload.position;
+      const isAdmin = req.payload.role;
       if (isAdmin !== "admin") {
         return res
           .status(403)
@@ -242,7 +240,7 @@ export class UserController {
   static async deleteUser(req, res) {
     try {
       // Checks if the user logged in is an admin
-      const isAdmin = req.payload.position;
+      const isAdmin = req.payload.role;
       if (isAdmin !== "admin") {
         return res
           .status(403)

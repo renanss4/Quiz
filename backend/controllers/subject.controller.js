@@ -4,7 +4,7 @@ export class SubjectController {
   static async createSubject(req, res) {
     try {
       // Checks if the user logged in is an admin
-      const isAdmin = req.payload.position;
+      const isAdmin = req.payload.role;
       if (isAdmin !== "admin") {
         return res
           .status(403)
@@ -66,7 +66,7 @@ export class SubjectController {
   static async readSubjectById(req, res) {
     try {
       // Checks if the user logged in is an admin
-      // const isAdmin = req.payload.position;
+      // const isAdmin = req.payload.role;
       // if (isAdmin !== "admin") {
       //   return res
       //     .status(403)
@@ -88,7 +88,7 @@ export class SubjectController {
   static async updateSubject(req, res) {
     try {
       // Checks if the user logged in is an admin
-      const isAdmin = req.payload.position;
+      const isAdmin = req.payload.role;
       if (isAdmin !== "admin") {
         return res
           .status(403)
@@ -118,7 +118,7 @@ export class SubjectController {
   static async deletedSubject(req, res) {
     try {
       // Checks if the user logged in is an admin
-      const isAdmin = req.payload.position;
+      const isAdmin = req.payload.role;
       if (isAdmin !== "admin") {
         return res
           .status(403)

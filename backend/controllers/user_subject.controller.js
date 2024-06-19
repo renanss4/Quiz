@@ -6,7 +6,7 @@ export class UserSubjectController {
   static async createUserSubject(req, res) {
     try {
       // Checks if the user logged in is an admin
-      const isAdmin = req.payload.position;
+      const isAdmin = req.payload.role;
       if (isAdmin !== "admin") {
         return res
           .status(403)
@@ -25,7 +25,7 @@ export class UserSubjectController {
       }
 
       // Checks if the student is a student
-      if (student.position !== "student") {
+      if (student.role !== "student") {
         return res.status(404).send({ msg: "This user is not a Student" }); // Returns a 404 status if the user is not a student
       }
 
@@ -58,7 +58,7 @@ export class UserSubjectController {
   static async readUsersSubjects(req, res) {
     try {
       // Checks if the user logged in is an admin
-      // const isAdmin = req.payload.position;
+      // const isAdmin = req.payload.role;
       // if (isAdmin !== "admin") {
       //   return res
       //     .status(403)
@@ -82,7 +82,7 @@ export class UserSubjectController {
   static async readOnlyOneUserSubject(req, res) {
     try {
       // Checks if the user logged in is an admin
-      // const isAdmin = req.payload.position;
+      // const isAdmin = req.payload.role;
       // if (isAdmin !== "admin") {
       //   return res
       //     .status(403)
@@ -127,7 +127,7 @@ export class UserSubjectController {
   static async deleteUserSubject(req, res) {
     try {
       // Checks if the user logged in is an admin
-      const isAdmin = req.payload.position;
+      const isAdmin = req.payload.role;
       if (isAdmin !== "admin") {
         return res
           .status(403)
