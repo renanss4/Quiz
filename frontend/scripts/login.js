@@ -1,5 +1,5 @@
 import { setToken } from "./configs/tokenManager.js";
-import { loginFetch } from "./configs/fetch.js";
+import { loginFetch, fetchUserRole } from "./configs/fetch.js";
 
 const email = document.getElementById("email");
 const password = document.getElementById("password");
@@ -71,7 +71,14 @@ loginButton.addEventListener("click", async (event) => {
     const data = await loginFetch(email.value, password.value);
     if (data) {
       setToken(data.token);
-      window.location.href = "dashboard.html";
+      const role = await fetchUserRole();
+      if (role === "student") {
+        window.location.href = "student-dashboard.html";
+      } else if (role === "teacher") {
+        window.location.href = "teacher-dashboard.html";
+      } else {
+        window.location.href = "admin-dashboard.html";
+      }
     }
   } catch (error) {
     if (error.message === "User invalid!") {

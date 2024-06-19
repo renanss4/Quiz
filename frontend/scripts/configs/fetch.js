@@ -82,7 +82,7 @@ export async function fetchUserRole() {
   checkAuthentication();
 
   const response = await fetch(`${URL}/user/role`, {
-    method: "POST",
+    method: "GET",
     headers: {
       "Content-Type": "application/json",
       Authorization: `Bearer ${getToken()}`,
