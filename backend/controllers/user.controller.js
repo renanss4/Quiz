@@ -58,6 +58,17 @@ export class UserController {
     }
   }
 
+  //return the role of the user
+  static async roleUser(req, res) {
+    try {
+      const role = req.payload.role;
+      return res.status(200).json({ role });
+    } catch (error) {
+      console.log({ Error: `${error.message}` });
+      return res.status(500).json({ Error: `${error.message}` });
+    }
+  }
+
   // FOR ADMINS ONLY
   static async createUser(req, res) {
     // works like a register
