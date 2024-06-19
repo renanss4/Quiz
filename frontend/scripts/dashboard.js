@@ -106,6 +106,10 @@ async function initializePage() {
       }
     }
   }
+  // Esconde o loader e mostra o conteúdo após o carregamento completo da página
+  document.querySelector(".loader-wrapper").style.display = "none";
+  document.querySelector(".content").classList.add("loaded");
+  document.body.style.overflow = "auto"; // Permite o scroll novamente
 }
 
 document.addEventListener("DOMContentLoaded", async () => {
