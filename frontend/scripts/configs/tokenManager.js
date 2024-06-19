@@ -22,4 +22,23 @@ function checkAuthentication() {
   }
 }
 
-export { getToken, setToken, removeToken, checkAuthentication };
+// Check role of the user
+function checkRole(token) {
+  const payload = JSON.parse(atob(token.split(".")[1]));
+  // console.log(payload);
+  return payload.role;
+}
+
+// Check permissions of the user
+// function checkPermissions() {
+//   const token = getToken();
+//   const role = checkRole(token);
+//   if (role !== "admin") {
+//     // Redirect to the dashboard page if the role is not admin
+//     window.location.href = "dashboard.html";
+//   }
+
+// }
+
+// Export the functions
+export { getToken, setToken, removeToken, checkAuthentication, checkRole };
