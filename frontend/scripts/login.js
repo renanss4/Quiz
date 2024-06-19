@@ -1,4 +1,4 @@
-import { getToken } from "./configs/tokenManager.js";
+import { setToken } from "./configs/tokenManager.js";
 import { loginFetch } from "./configs/fetch.js";
 
 const email = document.getElementById("email");
@@ -70,7 +70,7 @@ loginButton.addEventListener("click", async (event) => {
   try {
     const data = await loginFetch(email.value, password.value);
     if (data) {
-      getToken(data.token);
+      setToken(data.token);
       window.location.href = "dashboard.html";
     }
   } catch (error) {

@@ -3,9 +3,14 @@ function removeToken() {
   localStorage.removeItem("token");
 }
 
-// Get the token in the local storage
-function getToken(token) {
+// Set the token in the local storage
+function setToken(token) {
   localStorage.setItem("token", token);
+}
+
+// Get the token from the local storage
+function getToken() {
+  return localStorage.getItem("token");
 }
 
 // Check if the token is present in the localStorage
@@ -17,4 +22,4 @@ function checkAuthentication() {
   }
 }
 
-export { getToken, removeToken, checkAuthentication };
+export { getToken, setToken, removeToken, checkAuthentication };
