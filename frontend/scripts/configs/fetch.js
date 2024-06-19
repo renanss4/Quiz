@@ -76,3 +76,21 @@ export async function fetchAlunoDisciplina(id) {
   const data = await fetchDataById("user_subject/search", id);
   return data;
 }
+
+// Função para enviar o token e obter o role do payload
+export async function fetchUserRole() {
+  checkAuthentication();
+
+  const response = await fetch(`${URL}/user/role`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${getToken()}`,
+    },
+  });
+
+  if (response.ok) {
+    const data = await response.json();
+    return data.role;
+  }
+}

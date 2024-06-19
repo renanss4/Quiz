@@ -44,7 +44,7 @@ body {
 }
 
 .content {
-  display: none; /* Esconde o conteúdo inicialmente */
+  display: none;
 }
 
 .content.loaded {
@@ -59,13 +59,12 @@ li {
 }
 
 nav {
-  display: flex;
-  justify-content: space-between;
-  flex-direction: column;
+  /* display: flex;
+  justify-content: first baseline;
+  flex-direction: column; */
   background: #1e1b4b; /* Fundo escuro para o menu */
   padding: 4rem; /* Padding em rem */
   color: #eef2ff;
-  height: 100vh; /* Altura total da viewport */
   /* border-radius: 0 3rem 3rem 0; Arredondamento dos cantos em rem */
 }
 
@@ -74,6 +73,7 @@ nav .logo {
 }
 
 nav .menu {
+  height: 80vh; /* Altura total da viewport */
   display: flex;
   flex-direction: column; /* Coluna para o menu */
   gap: 2rem; /* Espaçamento entre itens em rem */
@@ -85,8 +85,8 @@ nav .menu li a {
   align-items: center;
 }
 
-nav .footer {
-  margin-top: auto; /* Empurra o footer para o final do nav */
+.teste {
+  flex-grow: 1;
 }
 
 main {
@@ -169,10 +169,9 @@ main {
   nav .menu {
     flex-direction: row; /* Menu em linha */
     gap: 1rem; /* Reduz gap entre itens */
+    height: 10vh;
   }
-  nav .footer {
-    display: none; /* Oculta footer no mobile */
-  }
+
   main {
     margin-left: 0; /* Remove margem negativa */
     border-radius: 0; /* Remove borda arredondada */
