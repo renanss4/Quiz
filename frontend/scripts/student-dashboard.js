@@ -9,6 +9,7 @@ const welcome = document.querySelector(".name");
 const ul = document.querySelector(".main-list");
 const loader = document.querySelector(".loader-wrapper");
 const content = document.querySelector(".content");
+const noContent = document.querySelector(".no-content");
 
 function addNameTitle(aluno) {
   welcome.innerText = `Bem vindo, ${aluno.name}`;
@@ -23,29 +24,37 @@ function createSubjectsOnPage(disciplina) {
 async function initializePage() {
   const userId = await fetchUserById();
   if (userId) {
-    const alunoDisciplinas = await fetchAlunoDisciplina(userId);
-    const aluno = await fetchAluno(alunoDisciplinas[0].student_id);
-    if (aluno) {
-      addNameTitle(aluno);
+    // Esconde o loader e mostra o conteúdo após o carregamento completo da página
+    loader.style.display = "none";
+    content.classList.add("loaded");
+
+    const dadosAluno = await fetchAluno(userId);
+    if (dadosAluno) {
+      addNameTitle(dadosAluno);
     }
-    if (alunoDisciplinas) {
-      for (const element of alunoDisciplinas) {
+
+    const disciplinasAluno = await fetchAlunoDisciplina(userId);
+    if (disciplinasAluno === 404) {
+      // remove ul.main-list
+      ul.remove();
+      return null;
+    }
+
+    if (disciplinasAluno.length > 0) {
+      for (const element of disciplinasAluno) {
         const disciplina = await fetchDisciplina(element.subject_id);
         if (disciplina) {
           createSubjectsOnPage(disciplina);
         }
       }
+      noContent.style.display = "none"; // Esconde a mensagem de "sem dados" se houver disciplinas
     }
   }
-  // Esconde o loader e mostra o conteúdo após o carregamento completo da página
-  loader.style.display = "none";
-  content.classList.add("loaded");
-  document.body.style.overflow = "auto"; // Permite o scroll novamente
 }
 
 document.addEventListener("DOMContentLoaded", async () => {
   try {
-    initializePage();
+    await initializePage();
   } catch (error) {
     console.error("Erro durante a inicialização da página:", error);
   }

@@ -4,7 +4,7 @@
   box-sizing: border-box;
   font-family: "Poppins", system-ui, -apple-system, BlinkMacSystemFont,
     "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue",
-    sans-serif; /* Fonte padrão */
+    sans-serif;
 }
 
 body {
@@ -45,6 +45,12 @@ body {
 
 .content {
   display: none;
+  position: relative;
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
 }
 
 .content.loaded {
@@ -59,13 +65,9 @@ li {
 }
 
 nav {
-  /* display: flex;
-  justify-content: first baseline;
-  flex-direction: column; */
   background: #1e1b4b; /* Fundo escuro para o menu */
   padding: 4rem; /* Padding em rem */
   color: #eef2ff;
-  /* border-radius: 0 3rem 3rem 0; Arredondamento dos cantos em rem */
 }
 
 nav .logo {
@@ -73,7 +75,8 @@ nav .logo {
 }
 
 nav .menu {
-  height: 80vh; /* Altura total da viewport */
+  /* height: calc(100vh - 8rem); Ajusta a altura para evitar overflow */
+  height: 90%;
   display: flex;
   flex-direction: column; /* Coluna para o menu */
   gap: 2rem; /* Espaçamento entre itens em rem */
@@ -97,16 +100,20 @@ main {
   flex-direction: column;
   align-items: flex-start;
   border-radius: 24px 0 0 24px;
-  /* margin-left: -3rem; Margem negativa ajustada para rem */
+  overflow: hidden;
 }
 
 .subjects {
   gap: 2rem; /* Espaçamento entre elementos em rem */
+  width: 100%; /* Ocupa toda a largura disponível */
+  height: 100%; /* Ocupa toda a altura disponível */
+  display: flex;
+  flex-direction: column;
 }
 
 .subjects .main-list {
   gap: 2rem; /* Espaçamento entre elementos em rem */
-  margin-top: 4rem; /* Margem superior ajustada para rem */
+  margin-top: 1rem; /* Margem superior ajustada para rem */
 }
 
 .title h1 {
@@ -140,6 +147,21 @@ main {
     0px 1px 2px 0px rgba(0, 0, 0, 0.06);
 }
 
+.no-content {
+  display: flex;
+  gap: 1rem;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%; /* Ajusta a altura para ocupar todo o container */
+  width: 100%; /* Ajusta a largura para ocupar todo o container */
+}
+
+.no-content img {
+  max-width: 80%; /* Ajuste a largura máxima da imagem */
+  max-height: 80%; /* Ajuste a altura máxima da imagem */
+}
+
 @media (max-width: 1024px) {
   /* Ajustes para telas de até 1024px */
   body {
@@ -169,7 +191,7 @@ main {
   nav .menu {
     flex-direction: row; /* Menu em linha */
     gap: 1rem; /* Reduz gap entre itens */
-    height: 10vh;
+    height: auto;
   }
 
   main {

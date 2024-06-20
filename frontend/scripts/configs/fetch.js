@@ -42,6 +42,9 @@ export async function fetchUserById() {
   if (response.ok) {
     const data = await response.json();
     return data.id;
+  } else if (response.status === 403) {
+    alert("Sessão expirada, faça login novamente!");
+    window.location.href = "login.html";
   }
 }
 
@@ -57,7 +60,8 @@ export async function fetchDataById(endpoint, id) {
   });
 
   if (!response.ok) {
-    throw new Error(`Erro ao buscar ${endpoint}: ${response.statusText}`);
+    return response.status;
+    // throw new Error(`Erro ao buscar ${endpoint}: ${response.statusText}`);
   }
   return await response.json();
 }
