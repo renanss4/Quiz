@@ -10,6 +10,7 @@ const ul = document.querySelector(".main-list");
 const loader = document.querySelector(".loader-wrapper");
 const content = document.querySelector(".content");
 const noContent = document.querySelector(".no-content");
+const btnQuiz = document.querySelector("#btn-quiz");
 
 function addNameTitle(aluno) {
   welcome.innerText = `Bem vindo, ${aluno.name}`;
@@ -27,6 +28,8 @@ async function initializePage() {
     // Esconde o loader e mostra o conteúdo após o carregamento completo da página
     loader.style.display = "none";
     content.classList.add("loaded");
+
+    btnQuiz.remove(); // Remove o botão de quiz
 
     const dadosAluno = await fetchAluno(userId);
     if (dadosAluno) {
