@@ -70,6 +70,12 @@ header {
   align-items: flex-start; /* Adicionado para alinhar itens no topo */
 }
 
+/* header a {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+} */
+
 .title {
   display: flex;
   flex-direction: column;
