@@ -3,6 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../styles/subject.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -11,5 +12,99 @@
     />
     <title>Disciplinas</title>
   </head>
-  <body></body>
+  <body>
+    <nav>
+      <div class="logo">
+          <img src="../imgs/logo1.svg" alt="Logo" />
+        </div>
+        <ul class="menu">
+          <li>
+            <a href="" class="menu-item">
+              <img src="../imgs/house.svg" alt="Dashboard Icon" />
+              <p>Dashboard</p>
+            </a>
+          </li>
+          <li>
+            <a href="" class="menu-item">
+              <img src="../imgs/books.svg" alt="Disciplinas Icon" />
+              <p>Painel</p>
+            </a>
+          </li>
+          <div class="footer">
+            <li>
+                <a href="" class="menu-item">
+                    <img src="../imgs/psswd.svg" alt="Trocar senha Icon" />
+                    <p>Trocar senha</p>
+                </a>
+            </li>
+            <li>
+                <a href="" class="menu-item">
+                <img src="../imgs/logout.svg" alt="Encerrar sessão Icon" />
+                <p>Encerrar sessão</p>
+                </a>
+            </li>
+        </div>
+      </ul>
+    </nav>
+    <main>
+      <header>
+        <div class="title">
+          <h1>Disciplinas</h1>
+          <h2>0 Disciplinas Cadastradas</h2>
+        </div>
+        <button>
+          <img src="../imgs/create.svg" alt="Cadastrar algo">
+          <!-- <p>Cadastrar</p> -->
+          Cadastrar
+        </button>
+      </header>
+      
+      <table>
+        <thead>
+          <tr>
+            <th>Nome</th>
+            <th>Professor</th>
+            <th>Quiz</th>
+            <th>Ações</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Matemática</td>
+            <td>Prof. Fulano</td>
+            <td>1</td>
+            <td>
+              <!-- <button>
+                <img src="../imgs/edit.svg" alt="Editar">
+                Editar
+              </button>
+              <button>
+                <img src="../imgs/delete.svg" alt="Excluir">
+                Excluir
+              </button> -->
+              <a href="">Editar</a>
+              <a href="">Excluir</a>
+            </td>
+          </tr>
+          <tr>
+            <td>Português</td>
+            <td>Prof. Beltrano</td>
+            <td>2</td>
+            <td>
+              <!-- <button>
+                <img src="../imgs/edit.svg" alt="Editar">
+                Editar
+              </button>
+              <button>
+                <img src="../imgs/delete.svg" alt="Excluir">
+                Excluir
+              </button> -->              
+              <a href="">Editar</a>
+              <a href="">Excluir</a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </main>
+  </body>
 </html>
