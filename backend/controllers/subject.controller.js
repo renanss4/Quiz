@@ -11,11 +11,11 @@ export class SubjectController {
           .send({ msg: "You don't have permission for this funcionality" });
       }
 
-      const { name, year, semester, teacher_id } = req.body; // Extracts subject data from the request body
+      const { name, teacher_id } = req.body; // Extracts subject data from the request body
 
       // Validates if the required fields are empty
       // Isn't it better to search by registration number, instead of ID?
-      if (!name || !year || !semester || !teacher_id) {
+      if (!name || !teacher_id) {
         return res.status(404).send({ msg: "Missing required fields" }); // Returns a 400 status with a message if any required field is empty
       }
 
@@ -27,11 +27,17 @@ export class SubjectController {
         return res.status(400).json({ Error: "Subject already exists" }); // Returns a 400 status if the subject already exists
       }
 
+      // Checks if the teacher exists in the database and get the name
+      // const teacher = await subjectsModel.findById(teacher_id);
+      // console.log(teacher_id);
+      // console.log(teacher);
+      // if (!teacher) {
+      //   return res.status(404).json({ Error: "Teacher not found" }); // Returns a 404 status if the teacher is not found
+      // }
+
       const newSubject = {
         // Creates a new subject object
         name,
-        year,
-        semester,
         teacher_id,
       };
 

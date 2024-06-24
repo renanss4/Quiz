@@ -6,14 +6,14 @@ const subjectSchema = new Schema({
     type: String,
     required: true,
   },
-  year: {
-    type: Number,
-    required: true,
-  },
-  semester: {
-    type: Number,
-    required: true,
-  },
+  // year: {
+  //   type: Number,
+  //   required: true,
+  // },
+  // semester: {
+  //   type: Number,
+  //   required: true,
+  // },
   teacher_id: {
     type: Schema.Types.ObjectId,
     ref: "Users",
