@@ -15,97 +15,103 @@
   <body>
     <nav>
       <div class="logo">
-          <img src="../imgs/logo1.svg" alt="Logo" />
-        </div>
-        <ul class="menu">
+        <img src="../imgs/logo1.svg" alt="Logo" />
+      </div>
+      <ul class="menu">
+        <li>
+          <a href="" class="menu-item">
+            <img src="../imgs/house.svg" alt="Dashboard Icon" />
+            <p>Dashboard</p>
+          </a>
+        </li>
+        <li>
+          <a href="" class="menu-item">
+            <img src="../imgs/books.svg" alt="Disciplinas Icon" />
+            <p>Painel</p>
+          </a>
+        </li>
+        <div class="footer">
           <li>
             <a href="" class="menu-item">
-              <img src="../imgs/house.svg" alt="Dashboard Icon" />
-              <p>Dashboard</p>
+              <img src="../imgs/psswd.svg" alt="Trocar senha Icon" />
+              <p>Trocar senha</p>
             </a>
           </li>
           <li>
             <a href="" class="menu-item">
-              <img src="../imgs/books.svg" alt="Disciplinas Icon" />
-              <p>Painel</p>
+              <img src="../imgs/logout.svg" alt="Encerrar sessão Icon" />
+              <p>Encerrar sessão</p>
             </a>
           </li>
-          <div class="footer">
-            <li>
-                <a href="" class="menu-item">
-                    <img src="../imgs/psswd.svg" alt="Trocar senha Icon" />
-                    <p>Trocar senha</p>
-                </a>
-            </li>
-            <li>
-                <a href="" class="menu-item">
-                <img src="../imgs/logout.svg" alt="Encerrar sessão Icon" />
-                <p>Encerrar sessão</p>
-                </a>
-            </li>
         </div>
       </ul>
     </nav>
     <main>
-      <header>
-        <!-- <a href="#"><img src="../imgs/go-back.svg" alt="Retornar Icon"></a> -->
-        <div class="title">
-          <h1>Disciplinas</h1>
-          <h2>0 Disciplinas Cadastradas</h2>
-        </div>
-        <button>
-          <img src="../imgs/create.svg" alt="Cadastrar algo">
-          <!-- <p>Cadastrar</p> -->
-          Cadastrar
-        </button>
-      </header>
-      
-      <table>
-        <thead>
-          <tr>
-            <th>Nome</th>
-            <th>Professor</th>
-            <th>Quiz</th>
-            <th>Ações</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Matemática</td>
-            <td>Prof. Fulano</td>
-            <td>1</td>
-            <td>
-              <!-- <button>
-                <img src="../imgs/edit.svg" alt="Editar">
-                Editar
-              </button>
-              <button>
-                <img src="../imgs/delete.svg" alt="Excluir">
-                Excluir
-              </button> -->
-              <a href="">Editar</a>
-              <a href="">Excluir</a>
-            </td>
-          </tr>
-          <tr>
-            <td>Português</td>
-            <td>Prof. Beltrano</td>
-            <td>2</td>
-            <td>
-              <!-- <button>
-                <img src="../imgs/edit.svg" alt="Editar">
-                Editar
-              </button>
-              <button>
-                <img src="../imgs/delete.svg" alt="Excluir">
-                Excluir
-              </button> -->              
-              <a href="">Editar</a>
-              <a href="">Excluir</a>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+      <div id="content">
+        <header>
+          <div class="title">
+            <h1>Disciplinas</h1>
+            <h2>0 Disciplinas Cadastradas</h2>
+          </div>
+          <button id="cadastrar">
+            <img src="../imgs/create.svg" alt="Cadastrar algo" />
+            Cadastrar
+          </button>
+        </header>
+        <table>
+          <thead>
+            <tr>
+              <th>Nome</th>
+              <th>Professor</th>
+              <th>Quiz</th>
+              <th>Ações</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Matemática</td>
+              <td>Prof. Fulano</td>
+              <td>1</td>
+              <td>
+                <a href="">Editar</a>
+                <a href="">Excluir</a>
+              </td>
+            </tr>
+            <tr>
+              <td>Português</td>
+              <td>Prof. Beltrano</td>
+              <td>2</td>
+              <td>
+                <a href="">Editar</a>
+                <a href="">Excluir</a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div id="form-container" style="display: none">
+        <form id="subject-form" action="" method="post">
+          <h1>Cadastro da Disciplina</h1>
+          <label for="name">Nome</label>
+          <input
+            type="text"
+            id="name"
+            name="name"
+            required
+            placeholder="Disciplina 1"
+          />
+          <label for="teacher">Professor</label>
+          <select id="teacher" name="teacher" required>
+            <option value="">Selecione um professor</option>
+            <option value="prof-fulano">Prof. Fulano</option>
+            <option value="prof-beltrano">Prof. Beltrano</option>
+            <!-- Adicione mais opções conforme necessário -->
+          </select>
+          <button type="submit" id="submit">Cadastrar</button>
+        </form>
+      </div>
     </main>
+    <script src="../scripts/subject.js" type="module"></script>
   </body>
 </html>
