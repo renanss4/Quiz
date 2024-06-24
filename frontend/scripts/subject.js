@@ -101,11 +101,13 @@ function displaySubjects(subjects) {
     const editLink = document.createElement("a");
     editLink.href = "#";
     editLink.textContent = "Editar";
+    editLink.style.marginRight = "5px";
     tdActions.appendChild(editLink);
 
     const deleteLink = document.createElement("a");
     deleteLink.href = "#";
     deleteLink.textContent = "Excluir";
+    deleteLink.style.marginLeft = "5px";
     tdActions.appendChild(deleteLink);
 
     tr.appendChild(tdActions);
