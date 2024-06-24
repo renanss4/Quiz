@@ -13,7 +13,6 @@ export async function loginFetch(emailOrEnrollment, password) {
     body: JSON.stringify({ emailOrEnrollment, password }),
   });
 
-  //   console.log(response);
   const data = await response.json();
 
   if (response.status === 404) {
@@ -61,12 +60,16 @@ export async function fetchDataById(endpoint, id) {
 
   if (!response.ok) {
     return response.status;
-    // throw new Error(`Erro ao buscar ${endpoint}: ${response.statusText}`);
   }
   return await response.json();
 }
 
 export async function fetchAluno(id) {
+  const data = await fetchDataById("user/search", id);
+  return data;
+}
+
+export async function fetchProfessor(id) {
   const data = await fetchDataById("user/search", id);
   return data;
 }
@@ -79,6 +82,44 @@ export async function fetchDisciplina(id) {
 export async function fetchAlunoDisciplina(id) {
   const data = await fetchDataById("user_subject/search", id);
   return data;
+}
+
+export async function fetchAllTeachers() {
+  checkAuthentication();
+
+  const response = await fetch(`${URL}/user/teachers`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${getToken()}`,
+    },
+  });
+
+  // console.log(response);
+
+  if (response.ok) {
+    return await response.json();
+  } else {
+    throw new Error("Erro ao buscar professores");
+  }
+}
+
+export async function fetchAllSubjects() {
+  checkAuthentication();
+
+  const response = await fetch(`${URL}/subject`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${getToken()}`,
+    },
+  });
+
+  if (response.ok) {
+    return await response.json();
+  } else {
+    throw new Error("Erro ao buscar disciplinas");
+  }
 }
 
 // Função para enviar o token e obter o role do payload
@@ -96,5 +137,31 @@ export async function fetchUserRole() {
   if (response.ok) {
     const data = await response.json();
     return data.role;
+  }
+}
+
+export async function createSubject(name, teacher_id) {
+  checkAuthentication();
+
+  const data = {
+    name,
+    teacher_id,
+  };
+
+  // console.log(data);
+
+  const response = await fetch(`${URL}/subject`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${getToken()}`,
+    },
+    body: JSON.stringify(data),
+  });
+
+  if (response.ok) {
+    alert("Matéria cadastrada com sucesso!");
+  } else {
+    alert("Erro ao cadastrar matéria.");
   }
 }
