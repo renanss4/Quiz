@@ -118,3 +118,14 @@ function displaySubjects(subjects) {
 
 // Carregar disciplinas ao carregar a página
 document.addEventListener("DOMContentLoaded", loadSubjects);
+
+// Voltar para a tela de disciplinas
+const backButton = document.querySelector("#back");
+backButton.addEventListener("click", hideForm);
+
+// Encerrar sessão
+const logoutButton = document.querySelector("#logout");
+logoutButton.addEventListener("click", () => {
+  localStorage.removeItem("token");
+  window.location.href = "login.html";
+});
