@@ -15,7 +15,7 @@ export class SubjectController {
 
       // Validates if the required fields are empty
       // Isn't it better to search by registration number, instead of ID?
-      if (!name || !teacher_id) {
+      if (!name) {
         return res.status(404).send({ msg: "Missing required fields" }); // Returns a 400 status with a message if any required field is empty
       }
 
@@ -38,7 +38,8 @@ export class SubjectController {
       const newSubject = {
         // Creates a new subject object
         name,
-        teacher_id,
+        // teacher_id: teacher_id || null,
+        teacher_id: teacher_id || null,
       };
 
       // Creates a new subject in the database
