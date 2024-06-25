@@ -20,6 +20,10 @@ li {
   color: #eef2ff;
 }
 
+nav a:hover {
+  color: #fef08a;
+}
+
 nav {
   padding: 4rem;
   display: flex;
@@ -38,6 +42,11 @@ ul {
   flex-direction: column;
   height: 100%;
   justify-content: space-between;
+}
+
+.atalhos li {
+  margin-top: 8px;
+  margin-bottom: 8px;
 }
 
 .footer {
@@ -112,11 +121,21 @@ header button img {
   margin-right: 0.5rem; /* Espaço entre o ícone e o texto */
 }
 
+header button:hover {
+  background: #4338ca;
+}
+
 /* Table style */
 table {
   width: 100%;
   border-collapse: separate;
   border-spacing: 0 10px;
+}
+
+table tbody tr:hover {
+  /* box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.1),
+    0px 1px 2px 0px rgba(0, 0, 0, 0.06); */
+  opacity: 0.85;
 }
 
 table thead {
@@ -157,7 +176,12 @@ table tbody a {
   width: 100%;
 }
 
+#form-container a.close {
+  cursor: pointer;
+}
+
 #form-container h1 {
+  margin-top: 1rem;
   font-weight: 700;
   color: #1c1917;
 }
@@ -187,6 +211,10 @@ table tbody a {
   font-size: 16px;
   font-weight: 400;
   cursor: pointer;
+}
+
+#form-container button:hover {
+  background: #4338ca;
 }
 
 #form-container select {

@@ -14,9 +14,12 @@
   </head>
   <body>
     <nav>
-      <div class="logo">
-        <img src="../imgs/logo1.svg" alt="Logo" />
-      </div>
+      <a href="#">
+        <!-- Link para a página inicial -->
+        <div class="logo">
+          <img src="../imgs/logo1.svg" alt="Logo" />
+        </div>
+      </a>
       <ul class="menu">
         <li>
           <a href="" class="menu-item">
@@ -28,8 +31,20 @@
           <a href="" class="menu-item">
             <img src="../imgs/books.svg" alt="Disciplinas Icon" />
             <p>Painel</p>
+            <img src="../imgs/go-down.svg" alt="Seta baixo Icon" />
           </a>
         </li>
+        <div class="atalhos">
+          <li>
+            <a href="">Alunos</a>
+          </li>
+          <li>
+            <a href="">Professores</a>
+          </li>
+          <li>
+            <a href="">Disciplinas</a>
+          </li>
+        </div>
         <div class="footer">
           <li>
             <a href="" class="menu-item">
@@ -68,7 +83,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr>
+            <!-- <tr>
               <td>Matemática</td>
               <td>Prof. Fulano</td>
               <td>1</td>
@@ -77,7 +92,7 @@
                 <a href="">Excluir</a>
               </td>
             </tr>
-            <tr>
+            <tr> 
               <td>Português</td>
               <td>Prof. Beltrano</td>
               <td>2</td>
@@ -85,13 +100,16 @@
                 <a href="">Editar</a>
                 <a href="">Excluir</a>
               </td>
-            </tr>
+            </tr> -->
           </tbody>
         </table>
       </div>
 
       <div id="form-container" style="display: none">
         <form id="subject-form" action="" method="post">
+          <a href="#" class="close">
+            <img src="../imgs/go-back.svg" alt="Fechar" />
+          </a>
           <h1>Cadastro da Disciplina</h1>
           <label for="name">Nome</label>
           <input
@@ -99,7 +117,7 @@
             id="name"
             name="name"
             required
-            placeholder="Disciplina 1"
+            placeholder="Disciplina"
           />
           <label for="teacher">Professor</label>
           <select id="teacher" name="teacher" required>
