@@ -184,6 +184,12 @@ export class UserController {
 
       // Finds only a user in the database
       const id = req.params.id;
+
+      // checks if id is valid
+      if (!id || !id.match(/^[0-9a-fA-F]{24}$/)) {
+        return res.status(400).send("Invalid ID");
+      }
+
       const user = await usersModel.findById(id, "-password -__v"); // Returns the user without the password and the version key
       if (!user) {
         return res.status(404).send("Not found or does not exist"); // Returns a 404 status if the user doesn't exist

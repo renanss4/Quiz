@@ -50,7 +50,7 @@ export async function fetchUserById() {
 export async function fetchDataById(endpoint, id) {
   checkAuthentication();
 
-  const response = await fetch(`${URL}/${endpoint}/${id}`, {
+  const response = await fetch(`${URL}/${endpoint}/${id ? id : ""}`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",

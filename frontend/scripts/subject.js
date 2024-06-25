@@ -38,8 +38,8 @@ function populateTeachersDropdown(teachers) {
 
   teachers.forEach((teacher) => {
     const option = document.createElement("option");
-    option.value = teacher._id; // Assumindo que o id do professor está no campo id
-    option.textContent = teacher.name; // Assumindo que o nome do professor está no campo name
+    option.value = teacher._id;
+    option.textContent = teacher.name;
     fieldTeacher.appendChild(option);
   });
 }
@@ -121,8 +121,13 @@ function displaySubjects(subjects) {
   tbody.innerHTML = ""; // Limpa as disciplinas existentes
 
   subjects.forEach(async (subject) => {
-    const teacher = await fetchProfessor(subject.teacher_id);
-    subject.teacher = teacher.name;
+    // checks if id professor is valid
+    if (subject.teacher_id) {
+      const teacher = await fetchProfessor(subject.teacher_id);
+      subject.teacher = teacher.name;
+    } else {
+      subject.teacher = "Não possui professor";
+    }
 
     const tr = document.createElement("tr");
 
