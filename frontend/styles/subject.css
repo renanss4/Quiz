@@ -230,3 +230,10 @@ table tbody a {
   background-position: right 10px top 50%;
   background-repeat: no-repeat;
 }
+
+#form-container #error {
+  display: none;
+  margin-top: 1rem;
+  color: red;
+  line-height: 20px;
+}

@@ -11,6 +11,9 @@ const content = document.querySelector("#content");
 const formContainer = document.querySelector("#form-container");
 const buttonSubmit = document.querySelector("#submit");
 const countSubject = document.querySelector("#count-subject");
+const divError = document.querySelector("#error");
+const fieldSubject = document.querySelector("#name");
+const fieldTeacher = document.querySelector("#teacher");
 
 // 2- Adicionar evento de click no botão de cadastrar
 buttonCreate.addEventListener("click", showForm);
@@ -34,7 +37,6 @@ function populateTeachersDropdown(teachers) {
   fieldTeacher.innerHTML = '<option value="">Selecione um professor</option>'; // Clear existing options
 
   teachers.forEach((teacher) => {
-    // console.log(teacher._id, teacher.name);
     const option = document.createElement("option");
     option.value = teacher._id; // Assumindo que o id do professor está no campo id
     option.textContent = teacher.name; // Assumindo que o nome do professor está no campo name
@@ -42,20 +44,58 @@ function populateTeachersDropdown(teachers) {
   });
 }
 
+// função para verificar se já existe a disciplina
+async function checkSubject(subject) {
+  const subjects = await fetchAllSubjects();
+  return subjects.find((s) => s.name === subject);
+}
+
+function clearFields() {
+  fieldSubject.value = "";
+  fieldTeacher.value = "";
+  divError.style.display = "none";
+  fieldSubject.style.border = "1px solid #ccc";
+  fieldTeacher.style.border = "1px solid #ccc";
+}
+
+fieldSubject.addEventListener("focus", clearFields);
+fieldTeacher.addEventListener("focus", clearFields);
+
 // 5- Função para enviar os dados do form
-buttonSubmit.addEventListener("click", (event) => {
+buttonSubmit.addEventListener("click", async (event) => {
   event.preventDefault();
 
-  const fieldSubject = document.querySelector("#name");
-  const fieldTeacher = document.querySelector("#teacher");
+  // check if the subject is empty
+  if (!fieldSubject.value) {
+    fieldSubject.style.border = "1px solid red";
+    fieldTeacher.style.border = "1px solid red";
+    divError.style.display = "block";
+    divError.textContent = "Preencha todos os campos.";
+    return;
+  }
 
-  //   console.log(fieldTeacher.options[fieldTeacher.selectedIndex].text);
+  // check if the teacher is selected
+  if (!fieldTeacher.value) {
+    fieldSubject.style.border = "1px solid red";
+    fieldTeacher.style.border = "1px solid red";
+    divError.style.display = "block";
+    divError.textContent = "Selecione um professor.";
+    return;
+  }
+
+  // checks if the subject already exists
+  const subjectExists = await checkSubject(fieldSubject.value);
+  if (subjectExists) {
+    divError.style.display = "block";
+    divError.textContent = "Disciplina já cadastrada.";
+    return;
+  }
+
   const selectedTeacher = fieldTeacher.options[fieldTeacher.selectedIndex];
-
-  // console.log(selectedTeacher.value, selectedTeacher.textContent);
 
   createSubject(fieldSubject.value, selectedTeacher.value);
   hideForm();
+  loadSubjects();
 });
 
 // 6- Função para esconder o form e mostrar o conteúdo
@@ -81,7 +121,6 @@ function displaySubjects(subjects) {
   tbody.innerHTML = ""; // Limpa as disciplinas existentes
 
   subjects.forEach(async (subject) => {
-    // pegar o nome do professor que tem o id igual ao id do professor da disciplina
     const teacher = await fetchProfessor(subject.teacher_id);
     subject.teacher = teacher.name;
 
@@ -126,11 +165,6 @@ const backButton = document.querySelector("#back");
 backButton.addEventListener("click", hideForm);
 
 // voltar para dashboard do admin
-
-/* <a href="" id="painel"
-      ><img src="../imgs/go-back.svg" alt="Voltar"
-  /></a>
-*/
 const painelButton = document.querySelector("#painel");
 painelButton.addEventListener("click", () => {
   window.location.href = "admin-dashboard.html";
