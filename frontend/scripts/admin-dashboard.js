@@ -1,26 +1,29 @@
-/**
- * Admin Dashboard
- * 
- * 1- importar os modulos necessários
- * 2- pegar os elementos do DOM
- * 
- * 3- Adicionar um evento de click no botão de subject
- * quando o usuario clicar no botão de subject, ele
- * deve ser redirecionado para a página de subject
- * 
- * 4- na página de subject, o usuário, neste caso
- * o admin deve ser capaz de adicionar um novo subject
- */
+import { fetchUser, fetchUserById } from "./configs/fetch.js";
 
-// 1
-// import { fetchAdmin } from './configs/fetch.js'
+// Função para exibir a mensagem de boas-vindas
+function welcomeMessage() {
+  const welcome = document.querySelector("#welcome");
+  fetchUserById()
+    .then((id) => fetchUser(id))
+    .then((user) => {
+      welcome.textContent = `Bem-vindo, ${user.name}`;
+    })
+    .catch((error) => {
+      console.error("Erro ao buscar usuário:", error);
+    });
+}
 
-// 2
-const buttonSubject = document.querySelector('#subject')
+welcomeMessage();
 
-// 3
-buttonSubject.addEventListener('click', () => {
-  window.location.href = 'subject.html'
-})
+// Redirect to the subject page
+const buttonSubject = document.querySelector("#subject");
+buttonSubject.addEventListener("click", () => {
+  window.location.href = "subject.html";
+});
 
-// 4
+// Encerrar sessão
+const logoutButton = document.querySelector("#logout");
+logoutButton.addEventListener("click", () => {
+  localStorage.removeItem("token");
+  window.location.href = "login.html";
+});

@@ -69,6 +69,11 @@ export async function fetchAluno(id) {
   return data;
 }
 
+export async function fetchUser(id) {
+  const data = await fetchDataById("user/search", id);
+  return data;
+}
+
 export async function fetchProfessor(id) {
   const data = await fetchDataById("user/search", id);
   return data;

@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="../styles/admin-dashboard.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -11,53 +11,68 @@
       rel="stylesheet"
     />
     <title>Admin Dashboard</title>
-</head>
-<body>
+  </head>
+  <body>
     <nav>
+      <a href="#">
+        <!-- Link para a página inicial -->
         <div class="logo">
-            <img src="../imgs/logo1.svg" alt="Logo" />
-          </div>
-          <ul class="menu">
-            <li>
-              <a href="" class="menu-item">
-                <img src="../imgs/house.svg" alt="Dashboard Icon" />
-                <p>Dashboard</p>
-              </a>
-            </li>
-            <li>
-              <a href="" class="menu-item">
-                <img src="../imgs/books.svg" alt="Disciplinas Icon" />
-                <p>Painel</p>
-              </a>
-            </li>
-            <div class="footer">
-                <li>
-                    <a href="" class="menu-item">
-                        <img src="../imgs/psswd.svg" alt="Trocar senha Icon" />
-                        <p>Trocar senha</p>
-                    </a>
-                </li>
-                <li>
-                    <a href="" class="menu-item">
-                    <img src="../imgs/logout.svg" alt="Encerrar sessão Icon" />
-                    <p>Encerrar sessão</p>
-                    </a>
-                </li>
-            </div>
-          </ul>
+          <img src="../imgs/logo1.svg" alt="Logo" />
+        </div>
+      </a>
+      <ul class="menu">
+        <li>
+          <a href="" class="menu-item">
+            <img src="../imgs/house.svg" alt="Dashboard Icon" />
+            <p>Dashboard</p>
+          </a>
+        </li>
+        <li>
+          <a href="" class="menu-item">
+            <img src="../imgs/books.svg" alt="Disciplinas Icon" />
+            <p>Painel</p>
+            <img src="../imgs/go-down.svg" alt="Seta baixo Icon" />
+          </a>
+        </li>
+        <div class="atalhos">
+          <li>
+            <a href="">Alunos</a>
+          </li>
+          <li>
+            <a href="">Professores</a>
+          </li>
+          <li>
+            <a href="">Disciplinas</a>
+          </li>
+        </div>
+        <div class="footer">
+          <li>
+            <a href="" class="menu-item">
+              <img src="../imgs/psswd.svg" alt="Trocar senha Icon" />
+              <p>Trocar senha</p>
+            </a>
+          </li>
+          <li>
+            <a href="" class="menu-item" id="logout">
+              <img src="../imgs/logout.svg" alt="Encerrar sessão Icon" />
+              <p>Encerrar sessão</p>
+            </a>
+          </li>
+        </div>
+      </ul>
     </nav>
     <main>
-        <div class="title">
-            <h1>Dashboard</h1>
-            <h2 class="name">Bem-vindo!</h2>
-        </div>
-        <section>
-            <h3 class="painel">Painel</h3>
-            <button id="student">Alunos <a href="">Cadastrar Novo</a></button>
-            <button id="teacher">Professores <a href="">Cadastrar Novo</a></button>
-            <button id="subject">Disciplinas <a href="">Cadastrar Novo</a></button>
-        </section>
+      <div class="title">
+        <h1>Dashboard</h1>
+        <h2 class="name" id="welcome">Bem-vindo!</h2>
+      </div>
+      <section>
+        <h3 class="painel">Painel</h3>
+        <button id="student">Alunos <a href="">Cadastrar Novo</a></button>
+        <button id="teacher">Professores <a href="">Cadastrar Novo</a></button>
+        <button id="subject">Disciplinas <a href="">Cadastrar Novo</a></button>
+      </section>
     </main>
     <script src="../scripts/admin-dashboard.js" type="module"></script>
-</body>
+  </body>
 </html>
