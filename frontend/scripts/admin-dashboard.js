@@ -15,6 +15,23 @@ function welcomeMessage() {
 
 welcomeMessage();
 
+// Toggle the visibility of the shortcuts
+const shortcutsButton = document.querySelector(".button-hide");
+const shortcuts = document.querySelector(".atalhos");
+const arrowIconDown = document.querySelector(".arrow-icon-down");
+const arrowIconBack = document.querySelector(".arrow-icon-back");
+
+shortcutsButton.addEventListener("click", (event) => {
+  event.preventDefault();
+
+  // Toggle the visibility of the shortcuts
+  shortcuts.classList.toggle("hidden");
+
+  // Toggle the arrow icons
+  arrowIconDown.classList.toggle("hidden");
+  arrowIconBack.classList.toggle("hidden");
+});
+
 // Redirect to the subject page
 const buttonSubject = document.querySelector("#subject");
 buttonSubject.addEventListener("click", () => {
