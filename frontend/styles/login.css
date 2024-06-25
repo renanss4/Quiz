@@ -150,6 +150,10 @@ form {
   justify-self: auto;
 }
 
+.login button:hover {
+  background: #4338ca;
+}
+
 @media (max-width: 768px) {
   /* Ajustes para telas de até 768px */
   .login {
