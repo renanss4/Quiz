@@ -10,6 +10,7 @@ const buttonCreate = document.querySelector("#cadastrar");
 const content = document.querySelector("#content");
 const formContainer = document.querySelector("#form-container");
 const buttonSubmit = document.querySelector("#submit");
+const countSubject = document.querySelector("#count-subject");
 
 // 2- Adicionar evento de click no botão de cadastrar
 buttonCreate.addEventListener("click", showForm);
@@ -67,6 +68,7 @@ function hideForm() {
 async function loadSubjects() {
   try {
     const subjects = await fetchAllSubjects();
+    countSubject.textContent = `${subjects.length} Disciplinas Cadastradas`;
     displaySubjects(subjects);
   } catch (error) {
     console.error("Erro ao buscar disciplinas:", error);
