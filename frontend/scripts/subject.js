@@ -119,9 +119,20 @@ function displaySubjects(subjects) {
 // Carregar disciplinas ao carregar a página
 document.addEventListener("DOMContentLoaded", loadSubjects);
 
-// Voltar para a tela de disciplinas
+// Voltar para a tela de disciplinas ou para a tela do painel do admin
 const backButton = document.querySelector("#back");
 backButton.addEventListener("click", hideForm);
+
+// voltar para dashboard do admin
+
+/* <a href="" id="painel"
+      ><img src="../imgs/go-back.svg" alt="Voltar"
+  /></a>
+*/
+const painelButton = document.querySelector("#painel");
+painelButton.addEventListener("click", () => {
+  window.location.href = "admin-dashboard.html";
+});
 
 // Encerrar sessão
 const logoutButton = document.querySelector("#logout");

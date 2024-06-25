@@ -96,6 +96,11 @@ header {
   color: #1c1917;
 }
 
+.title a {
+  cursor: pointer;
+  width: 0%;
+}
+
 .title h2 {
   font-weight: 400;
   color: #44403c;
