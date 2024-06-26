@@ -36,6 +36,12 @@ function populateTeachersDropdown(teachers) {
   const fieldTeacher = document.querySelector("#teacher");
   fieldTeacher.innerHTML = '<option value="">Selecione um professor</option>'; // Clear existing options
 
+  // Adiciona a opção "Não possui professor"
+  const optionWithoutTeacher = document.createElement("option");
+  optionWithoutTeacher.value = "none";
+  optionWithoutTeacher.textContent = "Não possui professor";
+  fieldTeacher.appendChild(optionWithoutTeacher);
+
   teachers.forEach((teacher) => {
     const option = document.createElement("option");
     option.value = teacher._id;
@@ -50,16 +56,16 @@ async function checkSubject(subject) {
   return subjects.find((s) => s.name === subject);
 }
 
-function clearFields() {
-  fieldSubject.value = "";
-  fieldTeacher.value = "";
-  divError.style.display = "none";
-  fieldSubject.style.border = "1px solid #ccc";
-  fieldTeacher.style.border = "1px solid #ccc";
-}
+// function clearFields() {
+//   fieldSubject.value = "";
+//   fieldTeacher.value = "";
+//   divError.style.display = "none";
+//   fieldSubject.style.border = "1px solid #ccc";
+//   fieldTeacher.style.border = "1px solid #ccc";
+// }
 
-fieldSubject.addEventListener("focus", clearFields);
-fieldTeacher.addEventListener("focus", clearFields);
+// fieldSubject.addEventListener("focus", clearFields);
+// fieldTeacher.addEventListener("focus", clearFields);
 
 // 5- Função para enviar os dados do form
 buttonSubmit.addEventListener("click", async (event) => {
@@ -91,9 +97,11 @@ buttonSubmit.addEventListener("click", async (event) => {
     return;
   }
 
-  const selectedTeacher = fieldTeacher.options[fieldTeacher.selectedIndex];
+  const selectedTeacher =
+    fieldTeacher.options[fieldTeacher.selectedIndex].value;
+  const teacherId = selectedTeacher === "none" ? null : selectedTeacher;
 
-  createSubject(fieldSubject.value, selectedTeacher.value);
+  createSubject(fieldSubject.value, teacherId);
   hideForm();
   loadSubjects();
 });
@@ -121,7 +129,6 @@ function displaySubjects(subjects) {
   tbody.innerHTML = ""; // Limpa as disciplinas existentes
 
   subjects.forEach(async (subject) => {
-    // checks if id professor is valid
     if (subject.teacher_id) {
       const teacher = await fetchProfessor(subject.teacher_id);
       subject.teacher = teacher.name;
@@ -140,7 +147,7 @@ function displaySubjects(subjects) {
     tr.appendChild(tdTeacher);
 
     const tdQuiz = document.createElement("td");
-    tdQuiz.textContent = subject.quizCount; // Assumindo que existe um campo quizCount
+    tdQuiz.textContent = subject.quizCount || 0;
     tr.appendChild(tdQuiz);
 
     const tdActions = document.createElement("td");
