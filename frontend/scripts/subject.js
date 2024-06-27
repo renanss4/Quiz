@@ -3,6 +3,7 @@ import {
   fetchAllTeachers,
   fetchAllSubjects,
   fetchProfessor,
+  deleteSubject,
 } from "./configs/fetch.js";
 
 // 1- Pegar elementos do DOM
@@ -14,6 +15,10 @@ const countSubject = document.querySelector("#count-subject");
 const divError = document.querySelector("#error");
 const fieldSubject = document.querySelector("#name");
 const fieldTeacher = document.querySelector("#teacher");
+const dialog = document.querySelector("#dialog");
+const cancelButton = document.querySelector("#cancel");
+const confirmButton = document.querySelector("#confirm");
+const pNameSubject = document.querySelector("#data-dialog");
 
 // 2- Adicionar evento de click no botão de cadastrar
 buttonCreate.addEventListener("click", showForm);
@@ -161,6 +166,19 @@ function displaySubjects(subjects) {
     deleteLink.href = "#";
     deleteLink.textContent = "Excluir";
     deleteLink.style.marginLeft = "5px";
+    deleteLink.addEventListener("click", () => {
+      pNameSubject.textContent = `Você irá elimiar a disciplina "${subject.name}". Esta ação não pode ser desfeita.`;
+      dialog.style.display = "flex";
+
+      cancelButton.addEventListener("click", () => {
+        dialog.style.display = "none";
+      });
+
+      confirmButton.addEventListener("click", () => {
+        deleteSubject(subject._id);
+        dialog.style.display = "none";
+      });
+    });
     tdActions.appendChild(deleteLink);
 
     tr.appendChild(tdActions);

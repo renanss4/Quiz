@@ -84,6 +84,28 @@ export async function fetchDisciplina(id) {
   return data;
 }
 
+// Função para deletar disciplina no backend
+export async function deleteSubject(id) {
+  checkAuthentication();
+
+  const response = await fetch(`${URL}/subject/${id}`, {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${getToken()}`,
+    },
+  });
+
+  if (response.ok) {
+    return true;
+  } else {
+    console.log(response);
+  }
+}
+
+// Função para editar disciplina no backend
+// export async function editSubject(id, name, teacher_id) {}
+
 export async function fetchAlunoDisciplina(id) {
   const data = await fetchDataById("user_subject/search", id);
   return data;
