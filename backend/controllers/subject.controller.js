@@ -59,8 +59,10 @@ export class SubjectController {
       // Finds all subjects in the database
       const subjects = await subjectsModel.find();
 
-      if (subjects.length === 0 || !subjects) {
-        return res.status(404).json({ Error: "No subjects found" }); // Returns a 404 status if no subjects are found
+      if (subjects.length === 0) {
+        return res
+          .status(200)
+          .json({ message: "No subjects found", subjects: [] });
       }
 
       return res.status(200).send(subjects); // Returns a 200 status with the found subjects
