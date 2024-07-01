@@ -4,6 +4,7 @@ import {
   fetchAllSubjects,
   fetchProfessor,
   deleteSubject,
+  editSubject,
 } from "./configs/fetch.js";
 
 // 1- Pegar elementos do DOM
@@ -20,25 +21,37 @@ const cancelButton = document.querySelector("#cancel");
 const confirmButton = document.querySelector("#confirm");
 const pNameSubject = document.querySelector("#data-dialog");
 
+let isEditing = false;
+let currentSubjectId = null;
+
 // 2- Adicionar evento de click no botão de cadastrar
 buttonCreate.addEventListener("click", showForm);
 
 // 3- Função para mostrar um form para cadastrar a matéria
-async function showForm() {
+async function showForm(defaultTeacher = "", subject = null) {
+  fieldSubject.value = subject ? subject.name : "";
   content.style.display = "none";
   formContainer.style.display = "block";
 
+  if (subject) {
+    isEditing = true;
+    currentSubjectId = subject._id;
+  } else {
+    isEditing = false;
+    currentSubjectId = null;
+  }
+
   try {
     const teachers = await fetchAllTeachers();
-    populateTeachersDropdown(teachers);
+    populateTeachersDropdown(teachers, defaultTeacher);
   } catch (error) {
     console.error("Erro ao buscar professores:", error);
   }
 }
 
 // 4- Função para popular o dropdown com professores
-function populateTeachersDropdown(teachers) {
-  const fieldTeacher = document.querySelector("#teacher");
+function populateTeachersDropdown(teachers, defaultTeacher) {
+  // const fieldTeacher = document.querySelector("#teacher");
   fieldTeacher.innerHTML = '<option value="">Selecione um professor</option>'; // Clear existing options
 
   // Adiciona a opção "Não possui professor"
@@ -51,6 +64,9 @@ function populateTeachersDropdown(teachers) {
     const option = document.createElement("option");
     option.value = teacher._id;
     option.textContent = teacher.name;
+    if (teacher._id === defaultTeacher) {
+      option.setAttribute("selected", "");
+    }
     fieldTeacher.appendChild(option);
   });
 }
@@ -58,6 +74,7 @@ function populateTeachersDropdown(teachers) {
 // função para verificar se já existe a disciplina
 async function checkSubject(subject) {
   const subjects = await fetchAllSubjects();
+  if (!subjects.length) return null;
   return subjects.find((s) => s.name === subject);
 }
 
@@ -76,7 +93,7 @@ async function checkSubject(subject) {
 buttonSubmit.addEventListener("click", async (event) => {
   event.preventDefault();
 
-  // check if the subject is empty
+  // Verificar se o campo de disciplina está vazio
   if (!fieldSubject.value) {
     fieldSubject.style.border = "1px solid red";
     fieldTeacher.style.border = "1px solid red";
@@ -85,7 +102,7 @@ buttonSubmit.addEventListener("click", async (event) => {
     return;
   }
 
-  // check if the teacher is selected
+  // Verificar se o professor está selecionado
   if (!fieldTeacher.value) {
     fieldSubject.style.border = "1px solid red";
     fieldTeacher.style.border = "1px solid red";
@@ -94,19 +111,23 @@ buttonSubmit.addEventListener("click", async (event) => {
     return;
   }
 
-  // checks if the subject already exists
-  const subjectExists = await checkSubject(fieldSubject.value);
-  if (subjectExists) {
-    divError.style.display = "block";
-    divError.textContent = "Disciplina já cadastrada.";
-    return;
-  }
-
   const selectedTeacher =
     fieldTeacher.options[fieldTeacher.selectedIndex].value;
   const teacherId = selectedTeacher === "none" ? null : selectedTeacher;
 
-  createSubject(fieldSubject.value, teacherId);
+  if (isEditing) {
+    await editSubject(currentSubjectId, fieldSubject.value, teacherId);
+  } else {
+    // Verificar se a disciplina já existe
+    const subjectExists = await checkSubject(fieldSubject.value);
+    if (subjectExists) {
+      divError.style.display = "block";
+      divError.textContent = "Disciplina já cadastrada.";
+      return;
+    }
+    await createSubject(fieldSubject.value, teacherId);
+  }
+
   hideForm();
   loadSubjects();
 });
@@ -121,7 +142,11 @@ function hideForm() {
 async function loadSubjects() {
   try {
     const subjects = await fetchAllSubjects();
-    countSubject.textContent = `${subjects.length} Disciplinas Cadastradas`;
+    if (subjects.length > 0) {
+      countSubject.textContent = `${subjects.length} Disciplinas Cadastradas`;
+    } else {
+      countSubject.textContent = `Nenhuma disciplina cadastrada`;
+    }
     displaySubjects(subjects);
   } catch (error) {
     console.error("Erro ao buscar disciplinas:", error);
@@ -133,6 +158,16 @@ function displaySubjects(subjects) {
   const tbody = document.querySelector("table tbody");
   tbody.innerHTML = ""; // Limpa as disciplinas existentes
 
+  if (!subjects.length) {
+    const tr = document.createElement("tr");
+    const td = document.createElement("td");
+    td.colSpan = 4;
+    td.textContent = "Nenhuma disciplina cadastrada";
+    td.style.textAlign = "center";
+    tr.appendChild(td);
+    tbody.appendChild(tr);
+    return;
+  }
   subjects.forEach(async (subject) => {
     if (subject.teacher_id) {
       const teacher = await fetchProfessor(subject.teacher_id);
@@ -160,6 +195,11 @@ function displaySubjects(subjects) {
     editLink.href = "#";
     editLink.textContent = "Editar";
     editLink.style.marginRight = "5px";
+    editLink.addEventListener("click", () => {
+      showForm(subject.teacher_id, subject); // Passa o sujeito para a função showForm
+      buttonSubmit.textContent = "Editar";
+      document.querySelector(".title-form").textContent = "Editar Disciplina";
+    });
     tdActions.appendChild(editLink);
 
     const deleteLink = document.createElement("a");
@@ -167,7 +207,7 @@ function displaySubjects(subjects) {
     deleteLink.textContent = "Excluir";
     deleteLink.style.marginLeft = "5px";
     deleteLink.addEventListener("click", () => {
-      pNameSubject.textContent = `Você irá elimiar a disciplina "${subject.name}". Esta ação não pode ser desfeita.`;
+      pNameSubject.textContent = `Você irá eliminar a disciplina "${subject.name}". Esta ação não pode ser desfeita.`;
       dialog.style.display = "flex";
 
       cancelButton.addEventListener("click", () => {

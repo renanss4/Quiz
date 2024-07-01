@@ -88,18 +88,44 @@ export async function fetchDisciplina(id) {
 export async function deleteSubject(id) {
   checkAuthentication();
 
-  const response = await fetch(`${URL}/subject/${id}`, {
-    method: "DELETE",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${getToken()}`,
-    },
-  });
+  try {
+    const response = await fetch(`${URL}/subject/${id}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${getToken()}`,
+      },
+    });
 
-  if (response.ok) {
-    return true;
-  } else {
-    console.log(response);
+    if (!response.ok) {
+      throw new Error("Erro ao editar o assunto");
+    }
+  } catch (error) {
+    console.error("Erro ao editar o assunto:", error);
+  }
+}
+
+// Função para editar disciplina no backend
+export async function editSubject(id, name, teacher_id) {
+  checkAuthentication();
+
+  const data = { name, teacher_id };
+
+  try {
+    const response = await fetch(`${URL}/subject/${id}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${getToken()}`,
+      },
+      body: JSON.stringify(data),
+    });
+
+    if (!response.ok) {
+      throw new Error("Erro ao editar o assunto");
+    }
+  } catch (error) {
+    console.error("Erro ao editar o assunto:", error);
   }
 }
 
@@ -145,6 +171,7 @@ export async function fetchAllSubjects() {
   if (response.ok) {
     return await response.json();
   } else {
+    console.log(response);
     throw new Error("Erro ao buscar disciplinas");
   }
 }

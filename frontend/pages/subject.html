@@ -85,26 +85,7 @@
               <th>Ações</th>
             </tr>
           </thead>
-          <tbody>
-            <!-- <tr>
-              <td>Matemática</td>
-              <td>Prof. Fulano</td>
-              <td>1</td>
-              <td>
-                <a href="">Editar</a>
-                <a href="">Excluir</a>
-              </td>
-            </tr>
-            <tr> 
-              <td>Português</td>
-              <td>Prof. Beltrano</td>
-              <td>2</td>
-              <td>
-                <a href="">Editar</a>
-                <a href="">Excluir</a>
-              </td>
-            </tr> -->
-          </tbody>
+          <tbody></tbody>
         </table>
       </div>
 
@@ -126,7 +107,7 @@
           <a href="#" id="back">
             <img src="../imgs/go-back.svg" alt="Fechar" />
           </a>
-          <h1>Cadastro da Disciplina</h1>
+          <h1 class="title-form">Cadastro da Disciplina</h1>
           <label for="name">Nome</label>
           <input
             type="text"
@@ -138,8 +119,6 @@
           <label for="teacher">Professor</label>
           <select id="teacher" name="teacher" required>
             <option value="">Selecione um professor</option>
-            <option value="prof-fulano">Prof. Fulano</option>
-            <option value="prof-beltrano">Prof. Beltrano</option>
             <!-- Adicione mais opções conforme necessário -->
           </select>
           <div id="error">
@@ -149,6 +128,7 @@
         </form>
       </div>
     </main>
+
     <script src="../scripts/subject.js" type="module"></script>
   </body>
 </html>
