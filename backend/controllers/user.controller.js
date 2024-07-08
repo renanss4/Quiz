@@ -2,7 +2,6 @@ import { usersModel } from "../models/user.model.js";
 import bcrypt from "bcryptjs";
 import { USER_ERROR } from "../constants/errorCodes.js";
 import ServerError from "../ServerError.js";
-import { roleUser } from "../utils/roleUser.js";
 import { generateToken } from "../utils/generateToken.js";
 
 export class UserController {
@@ -53,15 +52,15 @@ export class UserController {
 
     // Verifica se o usuário logado é um administrador
     const id = req.payload.id;
-    const user = await usersModel.findById(id);
+    // const user = await usersModel.findById(id);
 
-    // Obtém o papel do usuário
-    const role = roleUser(user);
-
-    if (role !== "admin")
+    // Checks if the user logged in is an admin
+    const isAdmin = req.payload.role;
+    if (isAdmin !== "admin") {
       return res
         .status(403)
-        .send({ msg: "You don't have permission to create a new user" });
+        .send({ msg: "You don't have permission for this funcionality" });
+    }
 
     const { name, enrollment, email, password, role: newRole } = req.body; // Extrai dados do usuário do corpo da requisição
 
