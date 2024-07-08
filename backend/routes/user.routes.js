@@ -17,7 +17,7 @@ userRoute.post("/token", UserController.tokenUser);
 userRoute.get("/search/:id?", UserController.readUserById); // query params
 userRoute.get("/admins", UserController.readAdmins);
 userRoute.get("/", UserController.readUsers);
-userRoute.get("/role", UserController.roleUser);
+// userRoute.get("/role", UserController.roleUser);
 
 // PATCH routes
 userRoute.patch("/:id", UserController.updateUser);

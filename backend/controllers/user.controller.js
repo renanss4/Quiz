@@ -3,6 +3,7 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import { USER_ERROR } from "../constants/errorCodes.js";
 import ServerError from "../ServerError.js";
+import { roleUser } from "../utils/roleUser.js";
 
 export class UserController {
   // FOR EVERY USER, INDEPENDENT OF THE role
@@ -60,61 +61,53 @@ export class UserController {
     }
   }
 
-  //return the role of the user
-  static async roleUser(req, res) {
-    try {
-      const role = req.payload.role;
-      return res.status(200).json({ role });
-    } catch (error) {
-      console.log({ Error: `${error.message}` });
-      return res.status(500).json({ Error: `${error.message}` });
-    }
-  }
-
-  // FOR ADMINS ONLY
   static async createUser(req, res) {
-    // works like a register
+    // Trabalha como um registro
 
-    // Checks if the user logged in is an admin
+    // Verifica se o usuário logado é um administrador
     const id = req.payload.id;
     const user = await usersModel.findById(id);
 
-    if (user.role !== "admin")
+    // Obtém o papel do usuário
+    const role = roleUser(req);
+
+    if (role !== "admin")
       return res
         .status(403)
         .send({ msg: "You don't have permission to create a new user" });
 
-    const { name, enrollment, email, password, role } = req.body; // Extracts user data from the request body
+    const { name, enrollment, email, password, role: newRole } = req.body; // Extrai dados do usuário do corpo da requisição
 
-    // Validates inputs
-    if (!name && !enrollment && !email && !password && !role) {
+    // Valida entradas
+    if (!name || !enrollment || !email || !password || !newRole) {
       return res.status(404).json({ msg: "All fields are required!" });
     }
 
-    // Checks if the user already exists in the database by enrollment or email
-    const userExists = await usersModel.findOne({ enrollment, email });
+    // Verifica se o usuário já existe no banco de dados pelo enrollment ou email
+    const userExists = await usersModel.findOne({
+      $or: [{ enrollment }, { email }],
+    });
     if (userExists) {
       throw new ServerError(USER_ERROR.ALREADY_REGISTERED);
     }
 
-    // Creates a Password Hash
+    // Cria um hash de senha
     const salt = await bcrypt.genSalt(12);
     const passwordHash = await bcrypt.hash(password, salt);
 
-    // Creates a new user object
+    // Cria um novo objeto de usuário
     const newUser = {
       name,
       enrollment,
       email,
       password: passwordHash,
-      role,
+      role: newRole,
     };
 
-    // Creates a new user in the database
+    // Cria um novo usuário no banco de dados
     await usersModel.create(newUser);
-    // console.log(response);
 
-    return res.status(201).send({ msg: "User created successfully!" }); // Returns a 201 status indicating successful creation
+    return res.status(201).send({ msg: "User created successfully!" }); // Retorna um status 201 indicando a criação bem-sucedida
   }
 
   static async readAdmins(req, res) {
