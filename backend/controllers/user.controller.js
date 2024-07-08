@@ -56,7 +56,7 @@ export class UserController {
     const user = await usersModel.findById(id);
 
     // Obtém o papel do usuário
-    const role = roleUser(req);
+    const role = roleUser(user);
 
     if (role !== "admin")
       return res
