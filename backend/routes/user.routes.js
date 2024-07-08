@@ -1,5 +1,6 @@
 import { Router } from "express";
 import { UserController } from "../controllers/user.controller.js";
+import { tryCatch } from "../utils/tryCatch.js";
 
 const userRoute = Router();
 
@@ -9,7 +10,7 @@ userRoute.get("/teachers", UserController.readTeachers);
 
 // PRIVATE ROUTES FOR ADMINS
 // POST routes
-userRoute.post("/", UserController.createUser);
+userRoute.post("/", tryCatch(UserController.createUser));
 userRoute.post("/token", UserController.tokenUser);
 
 // GET routes

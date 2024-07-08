@@ -1,8 +1,8 @@
 class ServerError extends Error {
-  constructor({ errorCode, message, statusCode }) {
+  constructor({ message, statusCode, errorCode }) {
     super(message);
-    this.errorCode = errorCode;
     this.statusCode = statusCode;
+    this.errorCode = errorCode;
   }
 }
 
