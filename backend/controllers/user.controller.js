@@ -62,10 +62,10 @@ export class UserController {
         .send({ msg: "You don't have permission for this funcionality" });
     }
 
-    const { name, enrollment, email, password, role: newRole } = req.body; // Extrai dados do usuário do corpo da requisição
+    const { name, enrollment, email, password, role } = req.body; // Extrai dados do usuário do corpo da requisição
 
     // Valida entradas
-    if (!name || !enrollment || !email || !password || !newRole) {
+    if (!name || !enrollment || !email || !password || !role) {
       return res.status(404).json({ msg: "All fields are required!" });
     }
 
