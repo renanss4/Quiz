@@ -1,9 +1,9 @@
 import { usersModel } from "../models/user.model.js";
 import bcrypt from "bcryptjs";
-import jwt from "jsonwebtoken";
 import { USER_ERROR } from "../constants/errorCodes.js";
 import ServerError from "../ServerError.js";
 import { roleUser } from "../utils/roleUser.js";
+import { generateToken } from "../utils/generateToken.js";
 
 export class UserController {
   // FOR EVERY USER, INDEPENDENT OF THE role
@@ -36,11 +36,8 @@ export class UserController {
         return res.status(404).json({ msg: "Invalid password!" });
       }
 
-      // Create token
-      const secret = process.env.JWT_SECRET;
-      const token = jwt.sign({ id: user._id, role: user.role }, secret, {
-        expiresIn: "1d",
-      });
+      // Generate token
+      const token = generateToken(user);
 
       return res
         .status(200)
@@ -48,16 +45,6 @@ export class UserController {
     } catch (error) {
       console.log({ Error: `${error.message}` });
       return res.status(500).json({ Error: `${error.message}` }); // Returns a 500 status with an error message if an error occurs
-    }
-  }
-
-  static async tokenUser(req, res) {
-    try {
-      const id = req.payload.id;
-      return res.status(200).json({ id });
-    } catch (error) {
-      console.log({ Error: `${error.message}` });
-      return res.status(500).json({ Error: `${error.message}` });
     }
   }
 
