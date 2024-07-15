@@ -6,47 +6,37 @@ import bcrypt from "bcryptjs";
 
 class UserController {
   async loginUser(req, res) {
-    try {
-      const { email, enrollment, password } = req.body; // Extract enrollment, email, and password from the request body
+    const { email, enrollment, password } = req.body; // Extract enrollment, email, and password from the request body
 
-      // Validate inputs
-      if (!email && !enrollment || !password) throw new ServerError(USER_ERROR.MISSING_REQUIRED_FIELDS);
+    // Validate inputs
+    if (!email && !enrollment || !password) throw new ServerError(USER_ERROR.MISSING_REQUIRED_FIELDS);
 
-      // Find the user by enrollment or email
-      const user = await usersModel.findOne({ $or: [{ email }, { enrollment }] });
+    // Find the user by enrollment or email
+    const user = await usersModel.findOne({ $or: [{ email }, { enrollment }] });
 
-      // Check if user exists
-      if (!user) {
-        throw new ServerError(USER_ERROR.DOESNT_EXIST);
-      }
-
-      // Check if password matches
-      const isMatch = await bcrypt.compare(password, user.password);
-      if (!isMatch) {
-        throw new ServerError(USER_ERROR.INVALID_LOGIN);
-      }
-
-      // Generate token
-      const token = generateToken(user);
-
-      return res
-        .status(200)
-        .json({ token }); // Returns a 200 status with a success message and the token
-    } catch (error) {
-      console.log({ Error: `${error.message}` });
-      return res.status(500).json({ Error: `${error.message}` }); // Returns a 500 status with an error message if an error occurs
+    // Check if user exists
+    if (!user) {
+      throw new ServerError(USER_ERROR.DOESNT_EXIST);
     }
+
+    // Check if password matches
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (!isMatch) {
+      throw new ServerError(USER_ERROR.INVALID_LOGIN);
+    }
+
+    // Generate token
+    const token = generateToken(user);
+
+    return res
+      .status(200)
+      .json({ token }); // Returns a 200 status with a success message and the token
+    
   }
 
   async createUser(req, res) {
-    // Trabalha como um registro
-
-    // Verifica se o usuário logado é um administrador
-    const id = req.payload.id;
-    // const user = await usersModel.findById(id);
-
     // Checks if the user logged in is an admin
-    const isAdmin = req.payload.role;
+    const isAdmin = req.userRole;
     if (isAdmin !== "admin") {
       return res
         .status(403)
@@ -78,7 +68,7 @@ class UserController {
       enrollment,
       email,
       password: passwordHash,
-      role: newRole,
+      role,
     };
 
     // Cria um novo usuário no banco de dados
