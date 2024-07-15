@@ -12,7 +12,8 @@ export function checkToken(req, res, next) {
       if (error) {
         return res.status(403).json({ msg: "Invalid token!" });
       }
-      req.payload = payload;
+      req.userId = payload.id;
+      req.userRole = payload.role;
       //   console.log("Payload: ", payload);
       next();
     });
