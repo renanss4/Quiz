@@ -1,38 +1,29 @@
 import { usersModel } from "../models/user.model.js";
-import bcrypt from "bcryptjs";
+import { generateToken } from "../utils/generateToken.js";
 import { USER_ERROR } from "../constants/errorCodes.js";
 import ServerError from "../ServerError.js";
-import { generateToken } from "../utils/generateToken.js";
+import bcrypt from "bcryptjs";
 
-export class UserController {
-  // FOR EVERY USER, INDEPENDENT OF THE role
-  // Method to login a user
-  static async loginUser(req, res) {
+class UserController {
+  async loginUser(req, res) {
     try {
-      const { emailOrEnrollment, password } = req.body; // Extract enrollment, email, and password from the request body
+      const { email, enrollment, password } = req.body; // Extract enrollment, email, and password from the request body
 
       // Validate inputs
-      if (!emailOrEnrollment && !password) {
-        return res.status(400).json({ msg: "Fields is required!" });
-      }
+      if (!email && !enrollment || !password) throw new ServerError(USER_ERROR.MISSING_REQUIRED_FIELDS);
 
       // Find the user by enrollment or email
-      let user;
-      if (emailOrEnrollment.includes("@")) {
-        user = await usersModel.findOne({ email: emailOrEnrollment });
-      } else {
-        user = await usersModel.findOne({ enrollment: emailOrEnrollment });
-      }
+      const user = await usersModel.findOne({ $or: [{ email }, { enrollment }] });
 
       // Check if user exists
       if (!user) {
-        return res.status(404).json({ msg: "User not found!" });
+        throw new ServerError(USER_ERROR.DOESNT_EXIST);
       }
 
       // Check if password matches
       const isMatch = await bcrypt.compare(password, user.password);
       if (!isMatch) {
-        return res.status(404).json({ msg: "Invalid password!" });
+        throw new ServerError(USER_ERROR.INVALID_LOGIN);
       }
 
       // Generate token
@@ -40,14 +31,14 @@ export class UserController {
 
       return res
         .status(200)
-        .json({ msg: "User logged in successfully!", token }); // Returns a 200 status with a success message and the token
+        .json({ token }); // Returns a 200 status with a success message and the token
     } catch (error) {
       console.log({ Error: `${error.message}` });
       return res.status(500).json({ Error: `${error.message}` }); // Returns a 500 status with an error message if an error occurs
     }
   }
 
-  static async createUser(req, res) {
+  async createUser(req, res) {
     // Trabalha como um registro
 
     // Verifica se o usuário logado é um administrador
@@ -93,10 +84,10 @@ export class UserController {
     // Cria um novo usuário no banco de dados
     await usersModel.create(newUser);
 
-    return res.status(201).send({ msg: "User created successfully!" }); // Retorna um status 201 indicando a criação bem-sucedida
+    return res.status(204).send(); // Retorna um status 204 com uma mensagem de sucesso
   }
 
-  static async readAdmins(req, res) {
+  async readAdmins(req, res) {
     try {
       // Checks if the user logged in is an admin
       const isAdmin = req.payload.role;
@@ -119,7 +110,7 @@ export class UserController {
     }
   }
 
-  static async readStudents(req, res) {
+  async readStudents(req, res) {
     try {
       // Finds all students in the database
       const students = await usersModel.find({ role: "student" }, "-__v");
@@ -134,7 +125,7 @@ export class UserController {
     }
   }
 
-  static async readTeachers(req, res) {
+  async readTeachers(req, res) {
     try {
       // Finds all teachers in the database
       const teachers = await usersModel.find({ role: "teacher" }, "-__v");
@@ -149,7 +140,7 @@ export class UserController {
     }
   }
 
-  static async readUserById(req, res) {
+  async readUserById(req, res) {
     try {
       // Checks if the user logged in is an admin
       // const isAdmin = req.payload.role;
@@ -180,7 +171,7 @@ export class UserController {
     }
   }
 
-  static async readUsers(req, res) {
+  async readUsers(req, res) {
     try {
       // Checks if the user logged in is an admin
       const isAdmin = req.payload.role;
@@ -204,7 +195,7 @@ export class UserController {
     }
   }
 
-  static async updateUser(req, res) {
+  async updateUser(req, res) {
     try {
       // Checks if the user logged in is an admin
       const isAdmin = req.payload.role;
@@ -231,7 +222,7 @@ export class UserController {
     }
   }
 
-  static async deleteUser(req, res) {
+  async deleteUser(req, res) {
     try {
       // Checks if the user logged in is an admin
       const isAdmin = req.payload.role;
@@ -255,8 +246,6 @@ export class UserController {
       return res.status(500).json({ Error: `${error.message}` }); // Returns a 500 status with an error message if an error occurs
     }
   }
-
-  // FOR STUDENTS ONLY
-
-  // FOR TEACHERS ONLY
 }
+
+export default new UserController();
