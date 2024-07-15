@@ -24,5 +24,5 @@ const port = process.env.PORT || 8080; // Defines the port the server will run o
 // Starts the server on the defined port
 server.listen(port, () => {
   console.log(`Running on port ${port}!`); // Logs a message indicating that the server is running
-  console.log(`Open in your browser: http://127.0.0.1:${port}`); // Logs the URL where the server can be accessed
+  // console.log(`Open in your browser: http://127.0.0.1:${port}`); // Logs the URL where the server can be accessed
 });
