@@ -19,6 +19,6 @@ const userSubjectSchema = new Schema({
 });
 
 export const usersSubjectsModel = mongoose.model(
-  "UsersSubjects",
+  "Users_Subjects",
   userSubjectSchema
 );
