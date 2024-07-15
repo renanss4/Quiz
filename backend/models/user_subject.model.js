@@ -6,11 +6,16 @@ const userSubjectSchema = new Schema({
   student_id: {
     type: ObjectId,
     ref: "Users",
+    required: true,
   },
   subject_id: {
     type: ObjectId,
     ref: "Subjects",
+    required: true,
   },
+},
+{
+  timestamps: false,
 });
 
 export const usersSubjectsModel = mongoose.model(
