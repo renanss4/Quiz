@@ -17,12 +17,12 @@ export const USER_ERROR = {
   INVALID_ID: {
       statusCode: 400,
       errorCode: 1400,
-      message: "Invalid ID!"
+      message: "Invalid ID format!"
   }, 
   MISSING_REQUIRED_FIELDS: {
       statusCode: 400,
       errorCode: 1405,
-      message: "All mandatory fields must be provided!"
+      message: "All mandatory fields must be provided: name, email, password, role"
   },
   INCORRECT_CURRENT_PASSWORD: { 
       statusCode: 403,
