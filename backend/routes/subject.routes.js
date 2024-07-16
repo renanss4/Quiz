@@ -1,22 +1,24 @@
 import { Router } from "express";
-import { SubjectController } from "../controllers/subject.controller.js";
+import SubjectController from "../controllers/subject.controller.js";
+import { tryCatch } from "../utils/tryCatch.js";
 
 const subjectRoute = Router();
 
-// PRIVATE ROUTES FOR ALL USERS
-subjectRoute.get("/", SubjectController.readSubjects);
+subjectRoute.post("/", tryCatch(SubjectController.createSubject));
 
-// PRIVATE ROUTES FOR ADMINS
-// POST routes
-subjectRoute.post("/", SubjectController.createSubject);
+/* 
+    works with query params
 
-// GET routes
-subjectRoute.get("/search/:id", SubjectController.readSubjectById);
+    1. /search finds all subjects
+    2. e.g. /search?id=123
+    3. e.g. /search?teacher_id=123
+    4. e.g. /search?name=math
+    5. e.g. /search?teacher_id=123&name=math
+*/
+subjectRoute.get("/search", tryCatch(SubjectController.readSubjects));
 
-// PATCH routes
-subjectRoute.patch("/:id", SubjectController.updateSubject);
+subjectRoute.patch("/:id", tryCatch(SubjectController.updateSubject));
 
-// DELETE routes
-subjectRoute.delete("/:id", SubjectController.deletedSubject);
+subjectRoute.delete("/:id", tryCatch(SubjectController.deleteSubject));
 
 export default subjectRoute;
