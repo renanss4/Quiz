@@ -12,4 +12,6 @@ userRoute.patch("/:id", tryCatch(UserController.updateUser));
 
 userRoute.delete("/:id", tryCatch(UserController.deleteUser));
 
+userRoute.put("/new-password", tryCatch(UserController.updatePassword));
+
 export default userRoute;

@@ -106,7 +106,7 @@ class UserController {
     }
 
     // Finds users in the database based on the query
-    const users = await usersModel.findOne(query, "-password -__v");
+    const users = await usersModel.find(query, "-password -__v");
     if (!users) {
       throw new ServerError(USER_ERROR.DOESNT_EXIST);
     }
@@ -135,7 +135,41 @@ class UserController {
       .send();
   }
 
-  
+  async updatePassword(req, res) {
+    const id = req.userId; // Retrieves the user id from the request
+    const { currentPassword, newPassword } = req.body; // Extracts the current password and the new password from the request body
+
+    // Checks if the user is updating their own password
+    if (req.userId !== id) {
+      throw new ServerError(TOKEN_ERROR.FORBIDDEN_ACCESS);
+    }
+
+    // Finds the user by id
+    const user = await usersModel.findById(id);
+
+    // Checks if the user exists
+    if (!user) {
+      throw new ServerError(USER_ERROR.DOESNT_EXIST);
+    }
+
+    // Checks if the current password matches the user's password
+    const isMatch = await bcrypt.compare(currentPassword, user.password);
+    if (!isMatch) {
+      throw new ServerError(USER_ERROR.INCORRECT_CURRENT_PASSWORD);
+    }
+
+    // Hashes the new password
+    const salt = await bcrypt.genSalt(12);
+    const passwordHash = await bcrypt.hash(newPassword, salt);
+
+    // Updates the user's password
+    await usersModel.findByIdAndUpdate(id, { password: passwordHash });
+
+    // Returns a 204 status with no content
+    return res
+      .status(204)
+      .send();
+  }
 
   async deleteUser(req, res) {
     // Checks if the user logged in is an admin
