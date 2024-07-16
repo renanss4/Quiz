@@ -1,34 +1,59 @@
-export function Button({type = 'default', size = 'large', text, imgSrc = null}) {
-  const button = document.createElement('button')
-  const p = document.createElement('p')
-  p.textContent = text
+export function Button({
+  type = "default",
+  size = null,
+  text,
+  link = null,
+  imgSrc = null,
+  onClick,
+}) {
+  // Cria o elemento button ou a
+  const element = link
+    ? document.createElement("a")
+    : document.createElement("button");
 
+  // Define o texto do botão
+  const p = document.createElement("span");
+  p.textContent = text;
+
+  // Adiciona a imagem se a propriedade imgSrc for definida
   if (imgSrc) {
-    const img = document.createElement('img')
-    img.setAttribute('src', imgSrc)
-
-    button.appendChild(img)
-  }
-  button.appendChild(p)
-
-  const stylesByType =  {
-    "default": "button-default",
-    "outline": "button-outline",
-    "destructive": "button-default-destructive",
-    "destructive-outline": "button-outline-destructive"
+    const img = document.createElement("img");
+    img.setAttribute("src", imgSrc);
+    element.appendChild(img);
   }
 
-  const btnClass = stylesByType[type]
-  button.classList.add(btnClass)
+  element.appendChild(p);
+
+  // Define as classes de estilo
+  const stylesByType = {
+    default: "button-default",
+    outline: "button-outline",
+    destructive: "button-default-destructive",
+    "destructive-outline": "button-outline-destructive",
+    link: "button-link",
+    "link-sidebar": "button-link-sidebar",
+  };
+
+  const btnClass = stylesByType[type];
+  element.classList.add(btnClass);
 
   const btnsSize = {
-    "large": "size-large",
-    "medium": "size-medium",
-    "small": "size-small"
-  } 
+    full: "size-full",
+    large: "size-large",
+    medium: "size-medium",
+    small: "size-small",
+  };
 
-  const btnSize = btnsSize[size]
-  button.classList.add(btnSize)
+  const btnSize = btnsSize[size];
+  element.classList.add(btnSize);
 
-  return button
+  // Adiciona a propriedade href se for um link
+  if (link) {
+    element.setAttribute("href", link);
+    // element.setAttribute("role", "button"); // Opcional, para acessibilidade
+  } else {
+    element.addEventListener("click", onClick);
+  }
+
+  return element;
 }
