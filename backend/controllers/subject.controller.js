@@ -4,12 +4,6 @@ import ServerError from "../ServerError.js";
 
 class SubjectController {
   async createSubject(req, res) {
-    // Checks if the user logged in is an admin
-    const loggedUser = req.userRole;
-    if (loggedUser !== "admin") {
-      throw new ServerError(TOKEN_ERROR.FORBIDDEN_ACCESS);
-    }
-
     // Extracts subject data from the request body
     const { name, teacher_id } = req.body; 
 
@@ -36,12 +30,6 @@ class SubjectController {
   }
 
   async readSubjects(req, res) {
-    // Checks if the user logged in is an admin
-    const isAdmin = req.userRole;
-    if (isAdmin !== "admin") {
-      throw new ServerError(TOKEN_ERROR.FORBIDDEN_ACCESS);
-    }
-
     // Extract query params for filtering
     const { teacher_id, id, name } = req.query;
     let query = {};
@@ -82,12 +70,6 @@ class SubjectController {
   }
 
   async updateSubject(req, res) {
-    // Checks if the user logged in is an admin
-    const loggedUser = req.userRole;
-    if (loggedUser !== "admin") {
-      throw new ServerError(TOKEN_ERROR.FORBIDDEN_ACCESS);
-    }
-
     // Retrieves the id parameter from the request
     const id = req.params.id; 
 
@@ -106,12 +88,6 @@ class SubjectController {
   }
 
   async deleteSubject(req, res) {
-    // Checks if the user logged in is an admin
-    const loggedUser = req.userRole;
-    if (loggedUser !== "admin") {
-      throw new ServerError(TOKEN_ERROR.FORBIDDEN_ACCESS);
-    }
-
     // Retrieves the id parameter from the request
     const id = req.params.id; 
 

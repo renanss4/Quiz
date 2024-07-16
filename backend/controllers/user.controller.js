@@ -35,12 +35,6 @@ class UserController {
   }
 
   async createUser(req, res) {
-    // Checks if the user logged in is an admin
-    const isAdmin = req.userRole;
-    if (isAdmin !== "admin") {
-      throw new ServerError(TOKEN_ERROR.FORBIDDEN_ACCESS);
-    }
-
     // Extracts the user data from the request body
     const { name, enrollment, email, password, role } = req.body;
 
@@ -77,12 +71,6 @@ class UserController {
   }
 
   async readUsers(req, res) {
-    // Checks if the user logged in is an admin
-    const isAdmin = req.userRole;
-    if (isAdmin !== "admin") {
-      throw new ServerError(TOKEN_ERROR.FORBIDDEN_ACCESS);
-    }
-
     // Extract query params for filtering
     const { role, id, enrollment } = req.query;
     let query = {};
@@ -116,12 +104,6 @@ class UserController {
   }  
 
   async updateUser(req, res) {
-    // Checks if the user logged in is an admin
-    const isAdmin = req.userRole;
-    if (isAdmin !== "admin") {
-      throw new ServerError(TOKEN_ERROR.FORBIDDEN_ACCESS);
-    }
-
     const id = req.params.id; // Retrieves the id parameter from the request
 
     // Updates the user with the provided id using the data from the request body
@@ -172,12 +154,6 @@ class UserController {
   }
 
   async deleteUser(req, res) {
-    // Checks if the user logged in is an admin
-    const isAdmin = req.userRole;
-    if (isAdmin !== "admin") {
-      throw new ServerError(TOKEN_ERROR.FORBIDDEN_ACCESS);
-    }
-
     const id = req.params.id; // Retrieves the id parameter from the request
 
     // Deletes the user with the provided id

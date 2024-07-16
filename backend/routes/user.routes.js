@@ -1,14 +1,15 @@
 import { Router } from "express";
 import UserController from "../controllers/user.controller.js";
 import { tryCatch } from "../utils/tryCatch.js";
+import { adminCheck } from "../middlewares/adminCheck.js";
 
 const userRoute = Router();
 
-userRoute.post("/", tryCatch(UserController.createUser));
-
+userRoute.post("/", adminCheck, tryCatch(UserController.createUser));
 
 /* 
     works with query params
+    does not require adminCheck, for now
 
     1. /search finds all users
     2. e.g. /search?id=123
@@ -18,10 +19,10 @@ userRoute.post("/", tryCatch(UserController.createUser));
 */
 userRoute.get("/search", tryCatch(UserController.readUsers));
 
-userRoute.patch("/:id", tryCatch(UserController.updateUser));
+userRoute.patch("/:id", adminCheck, tryCatch(UserController.updateUser));
 
-userRoute.delete("/:id", tryCatch(UserController.deleteUser));
+userRoute.delete("/:id", adminCheck, tryCatch(UserController.deleteUser));
 
-userRoute.put("/new-password", tryCatch(UserController.updatePassword));
+userRoute.put("/new-password", adminCheck, tryCatch(UserController.updatePassword));
 
 export default userRoute;
