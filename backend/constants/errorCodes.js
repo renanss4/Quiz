@@ -36,6 +36,47 @@ export const USER_ERROR = {
   }
 };
 
+export const SUBJECT_ERROR = {
+  ALREADY_EXIST: {
+    statusCode: 409,
+    errorCode: 2409,
+    message: "A subject with this name already exists!"
+  },
+  DOESNT_EXIST: { 
+    statusCode: 404,
+    errorCode: 2404,
+    message: "Subject does not exist!"        
+  },
+  NAME_CONFLICT: {
+    statusCode: 400,
+    errorCode: 2400,
+    message: "The provided name conflicts with the one in the database!"
+  }, 
+  ID_REQUIRED: {
+    statusCode: 400,
+    errorCode: 2401,
+    message: "Subject ID is required!"
+  },
+  MISSING_FIELDS: {
+    statusCode: 400,
+    errorCode: 2402,
+    message: "Name or professor ID is required to edit the subject!"
+  },
+  INVALID_NAME: {
+    statusCode: 422,
+    errorCode: 2422,
+    message: "Invalid name. The name must have at least 3 characters!"
+  }
+}
+
+export const RELATION_ERROR = {
+  ALREADY_EXIST: {
+    statusCode: 400,
+    errorCode: 3400,
+    message: "Relation already exists!",
+  },
+};
+
 export const TOKEN_ERROR = {
   NOT_PROVIDED: {
       statusCode: 401,
