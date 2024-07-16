@@ -31,8 +31,6 @@ export function errorHandler(error, req, res, next) {
 
   console.log("Internal Server Error:", error);
   return res.status(500).send({
-    error: true,
-    type: "InternalServerError",
     message: error.message,
   });
 }
