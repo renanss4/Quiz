@@ -1,0 +1,14 @@
+.input-default {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 6px;
+  border: 1px solid #a8a29e;
+  background: #fafafa;
+  color: #78716c;
+  cursor: pointer;
+
+  font-family: "Popins", sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+}
