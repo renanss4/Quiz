@@ -1,6 +1,6 @@
 import { usersModel } from "../models/user.model.js";
 import { generateToken } from "../utils/generateToken.js";
-import { USER_ERROR } from "../constants/errorCodes.js";
+import { TOKEN_ERROR, USER_ERROR } from "../constants/errorCodes.js";
 import ServerError from "../ServerError.js";
 import bcrypt from "bcryptjs";
 
@@ -38,19 +38,18 @@ class UserController {
     // Checks if the user logged in is an admin
     const isAdmin = req.userRole;
     if (isAdmin !== "admin") {
-      return res
-        .status(403)
-        .send({ msg: "You don't have permission for this funcionality" });
+      throw new ServerError(TOKEN_ERROR.FORBIDDEN_ACCESS);
     }
 
-    const { name, enrollment, email, password, role } = req.body; // Extrai dados do usuário do corpo da requisição
+    // Extracts the user data from the request body
+    const { name, enrollment, email, password, role } = req.body;
 
-    // Valida entradas
+    // Validates the inputs
     if (!name || !enrollment || !email || !password || !role) {
-      return res.status(404).json({ msg: "All fields are required!" });
+      throw new ServerError(USER_ERROR.MISSING_REQUIRED_FIELDS);
     }
 
-    // Verifica se o usuário já existe no banco de dados pelo enrollment ou email
+    // Checks if the user already exists
     const userExists = await usersModel.findOne({
       $or: [{ enrollment }, { email }],
     });
@@ -58,11 +57,11 @@ class UserController {
       throw new ServerError(USER_ERROR.ALREADY_REGISTERED);
     }
 
-    // Cria um hash de senha
+    // Hashes the password
     const salt = await bcrypt.genSalt(12);
     const passwordHash = await bcrypt.hash(password, salt);
 
-    // Cria um novo objeto de usuário
+    // Creates a new user
     const newUser = {
       name,
       enrollment,
@@ -71,135 +70,89 @@ class UserController {
       role,
     };
 
-    // Cria um novo usuário no banco de dados
+    // Saves the new user in the database
     await usersModel.create(newUser);
 
-    return res.status(204).send(); // Retorna um status 204 com uma mensagem de sucesso
-  }
-
-  async readAdmins(req, res) {
-    // Checks if the user logged in is an admin
-    const isAdmin = req.payload.role;
-    if (isAdmin !== "admin") {
-      return res
-        .status(403)
-        .send({ msg: "You don't have permission for this funcionality" });
-    }
-
-    // Finds all admins in the database
-    const admins = await usersModel.find({ role: "admin" }, "-__v");
-    if (admins.length === 0 || !admins)
-      return res.status(404).send("No admins found");
-
-    // Returns a 200 status with the found admins
-    return res.status(200).json(admins);
-  }
-
-  async readStudents(req, res) {
-    // Finds all students in the database
-    const students = await usersModel.find({ role: "student" }, "-__v");
-    if (students.length === 0 || !students)
-      return res.status(404).send("No students found");
-
-    // Returns a 200 status with the found students
-    return res.status(200).json(students);
-  }
-
-  async readTeachers(req, res) {
-    // Finds all teachers in the database
-    const teachers = await usersModel.find({ role: "teacher" }, "-__v");
-    if (teachers.length === 0 || !teachers)
-      return res.status(404).send("No teacher found");
-
-    // Returns a 200 status with the found teachers
-    return res.status(200).json(teachers);
-  }
-
-  async readUserById(req, res) {
-    // Checks if the user logged in is an admin
-    // const isAdmin = req.payload.role;
-    // if (isAdmin !== "admin") {
-    //   return res
-    //     .status(403)
-    //     .send({ msg: "You don't have permission for this funcionality" });
-    // }
-
-    // Finds only a user in the database
-    const id = req.params.id;
-
-    // checks if id is valid
-    if (!id || !id.match(/^[0-9a-fA-F]{24}$/)) {
-      return res.status(400).send("Invalid ID");
-    }
-
-    const user = await usersModel.findById(id, "-password -__v"); // Returns the user without the password and the version key
-    if (!user) {
-      return res.status(404).send("Not found or does not exist"); // Returns a 404 status if the user doesn't exist
-    }
-
-    // Returns a 200 status with the found user
-    return res.status(200).json(user); // Returns a 200 status with the found user
+    return res.status(204).send();
   }
 
   async readUsers(req, res) {
     // Checks if the user logged in is an admin
-    const isAdmin = req.payload.role;
+    const isAdmin = req.userRole;
     if (isAdmin !== "admin") {
-      return res
-        .status(403)
-        .send({ msg: "You don't have permission for this funcionality" });
+      throw new ServerError(TOKEN_ERROR.FORBIDDEN_ACCESS);
     }
 
-    // Finds all users in the database
-    const users = await usersModel.find({}, "-password -__v");
-    if (users.length === 0 || !users) {
-      return res.status(404).send("No users found"); // Returns a 404 status if no users are found
+    // Extract query params for filtering
+    const { role, id, enrollment } = req.query;
+    let query = {};
+    
+    // Add role to query if present
+    if (role) {
+      query.role = role;
+    }
+
+    // Add id to query if present and valid
+    if (id) {
+      if (!id.match(/^[0-9a-fA-F]{24}$/)) {
+        throw new ServerError(USER_ERROR.INVALID_ID);
+      }
+      query._id = id;
+    }
+
+    // Add enrollment to query if present
+    if (enrollment) {
+      query.enrollment = enrollment;
+    }
+
+    // Finds users in the database based on the query
+    const users = await usersModel.findOne(query, "-password -__v");
+    if (!users) {
+      throw new ServerError(USER_ERROR.DOESNT_EXIST);
     }
 
     // Returns a 200 status with the found users
-    return res.status(200).json(users); // Returns a 200 status with the found users
-  }
+    return res.status(200).json(users);
+  }  
 
   async updateUser(req, res) {
     // Checks if the user logged in is an admin
-    const isAdmin = req.payload.role;
+    const isAdmin = req.userRole;
     if (isAdmin !== "admin") {
-      return res
-        .status(403)
-        .send({ msg: "You don't have permission for this funcionality" });
+      throw new ServerError(TOKEN_ERROR.FORBIDDEN_ACCESS);
     }
 
     const id = req.params.id; // Retrieves the id parameter from the request
 
     // Updates the user with the provided id using the data from the request body
-    const updatedUser = await usersModel.findByIdAndUpdate(id, req.body, {
+    await usersModel.findByIdAndUpdate(id, req.body, {
       new: true,
     });
 
+    // Returns a 204 status with no content
     return res
-      .status(201)
-      .json(updatedUser)
-      .send({ msg: "Succesfully updated" }); // Returns a 200 status with the updated user
+      .status(204)
+      .send();
   }
+
+  
 
   async deleteUser(req, res) {
     // Checks if the user logged in is an admin
-    const isAdmin = req.payload.role;
+    const isAdmin = req.userRole;
     if (isAdmin !== "admin") {
-      return res
-        .status(403)
-        .send({ msg: "You don't have permission for this funcionality" });
+      throw new ServerError(TOKEN_ERROR.FORBIDDEN_ACCESS);
     }
 
     const id = req.params.id; // Retrieves the id parameter from the request
 
     // Deletes the user with the provided id
-    const deletedUser = await usersModel.findByIdAndDelete(id);
+    await usersModel.findByIdAndDelete(id);
 
+    // Returns a 204 status with no content
     return res
-      .status(200)
-      .json(deletedUser)
-      .send({ msg: "Successfully deleted" }); // Returns a 200 status with the deleted user
+      .status(204)
+      .send();
   }
 }
 

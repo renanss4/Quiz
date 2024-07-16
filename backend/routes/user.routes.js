@@ -6,11 +6,7 @@ const userRoute = Router();
 
 userRoute.post("/", tryCatch(UserController.createUser));
 
-userRoute.get("/search/:id?", tryCatch(UserController.readUserById)); // query params
-userRoute.get("/admins", tryCatch(UserController.readAdmins));
-userRoute.get("/students", tryCatch(UserController.readStudents));
-userRoute.get("/teachers", tryCatch(UserController.readTeachers));
-userRoute.get("/", tryCatch(UserController.readUsers));
+userRoute.get("/search", tryCatch(UserController.readUsers));
 
 userRoute.patch("/:id", tryCatch(UserController.updateUser));
 

@@ -9,11 +9,11 @@ export const USER_ERROR = {
       errorCode: 1404,
       message: "User does not exist!"
   },
-  FORBIDDEN_EDIT: {
-      statusCode: 403,
-      errorCode: 1403,
-      message: "Action not allowed!"
-  },
+//   FORBIDDEN_EDIT: {
+//       statusCode: 403,
+//       errorCode: 1403,
+//       message: "Action not allowed!"
+//   },
   INVALID_ID: {
       statusCode: 400,
       errorCode: 1400,
