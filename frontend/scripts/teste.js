@@ -1,5 +1,6 @@
 import { Button } from "../components/Button/Button.js";
 import { Input } from "../components/Input/Input.js";
+import { Toaster } from "../components/Toaster/Toaster.js";
 
 function teste() {
   alert("Você clicou no botão!");
@@ -60,4 +61,33 @@ document.addEventListener("DOMContentLoaded", () => {
   //   });
   //   app.appendChild(input);
   // });
+
+  // Adiciona toasters
+  const toasters = [
+    {
+      iconSrc: "../assets/success.svg",
+      type: "success",
+      title: "Sucesso!",
+      message: "Ação realizada com sucesso.",
+      onClose: () => {
+        console.log("Fechou o toaster");
+      },
+    },
+    {
+      iconSrc: "../assets/warning.svg",
+      type: "warning",
+      title: "Atenção!",
+      message: "Ação não permitida.",
+    },
+  ];
+
+  toasters.forEach((toasterConfig) => {
+    const toaster = Toaster({
+      ...toasterConfig,
+      onClose: () => {
+        console.log("Fechou o toaster");
+      },
+    });
+    app.appendChild(toaster);
+  });
 });
