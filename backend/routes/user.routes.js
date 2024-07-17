@@ -1,32 +1,28 @@
 import { Router } from "express";
-import { UserController } from "../controllers/user.controller.js";
+import UserController from "../controllers/user.controller.js";
 import { tryCatch } from "../utils/tryCatch.js";
+import { adminCheck } from "../middlewares/adminCheck.js";
 
 const userRoute = Router();
 
-// PRIVATE ROUTES FOR ALL USERS
-userRoute.get("/students", UserController.readStudents);
-userRoute.get("/teachers", UserController.readTeachers);
+userRoute.post("/", adminCheck, tryCatch(UserController.createUser));
 
-// PRIVATE ROUTES FOR ADMINS
-// POST routes
-userRoute.post("/", tryCatch(UserController.createUser));
-// userRoute.post("/token", UserController.tokenUser);
+/* 
+    works with query params
+    does not require adminCheck, for now
 
-// GET routes
-userRoute.get("/search/:id?", UserController.readUserById); // query params
-userRoute.get("/admins", UserController.readAdmins);
-userRoute.get("/", UserController.readUsers);
-// userRoute.get("/role", UserController.roleUser);
+    1. /search finds all users
+    2. e.g. /search?id=123
+    3. e.g. /search?role=admin
+    4. e.g. /search?enrollment=123456
+    5. e.g. /search?role=admin&id=123&enrollment=123456
+*/
+userRoute.get("/search", tryCatch(UserController.readUsers));
 
-// PATCH routes
-userRoute.patch("/:id", UserController.updateUser);
+userRoute.patch("/:id", adminCheck, tryCatch(UserController.updateUser));
 
-// DELETE routes
-userRoute.delete("/:id", UserController.deleteUser);
+userRoute.delete("/:id", adminCheck, tryCatch(UserController.deleteUser));
 
-// PRIVATE ROUTES FOR STUDENTS
-
-// PRIVATE ROUTES FOR TEACHERS
+userRoute.put("/new-password", adminCheck, tryCatch(UserController.updatePassword));
 
 export default userRoute;

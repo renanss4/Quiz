@@ -5,20 +5,29 @@ const subjectSchema = new Schema({
   name: {
     type: String,
     required: true,
+    trim: true,
+    minlength: [3, "The name must have at least 3 characters!"],
   },
-  // year: {
-  //   type: Number,
-  //   required: true,
-  // },
-  // semester: {
-  //   type: Number,
-  //   required: true,
-  // },
   teacher_id: {
     type: Schema.Types.ObjectId,
     ref: "Users",
-    default: null,
   },
+  // quizzes: [{
+  //   quiz_id: {
+  //     type: Schema.Types.ObjectId,
+  //     ref: "Quizzes",
+  //     required: true,
+  //   },
+  //   name: {
+  //     type: String,
+  //     required: true,
+  //     trim: true,
+  //     minlength: [3, "The name must have at least 3 characters!"],
+  //   }
+  // }],
+},
+{
+  timestamps: false,
 });
 
 export const subjectsModel = mongoose.model("Subjects", subjectSchema);

@@ -1,23 +1,24 @@
+import ServerError from "../ServerError.js";
+import { TOKEN_ERROR } from "../constants/errorCodes.js";
 import jwt from "jsonwebtoken";
 
+// Middleware to check the token sent by the user
 export function checkToken(req, res, next) {
   const authHeader = req.headers["authorization"];
   const token = authHeader && authHeader.split(" ")[1];
+
   if (!token) {
-    return res.status(401).json({ msg: "Token not found!" });
+    throw new ServerError(TOKEN_ERROR.NOT_PROVIDED);
   }
-  try {
-    const secret = process.env.JWT_SECRET;
-    jwt.verify(token, secret, (error, payload) => {
-      if (error) {
-        return res.status(403).json({ msg: "Invalid token!" });
-      }
-      req.payload = payload;
-      //   console.log("Payload: ", payload);
-      next();
-    });
-  } catch (error) {
-    console.log(error);
-    return res.status(500).json({ msg: "Error verifying token!" });
-  }
+
+  const secret = process.env.JWT_SECRET;
+  jwt.verify(token, secret, (error, payload) => {
+    if (error) {
+      throw new ServerError(TOKEN_ERROR.FORBIDDEN_ACCESS);
+    }
+    req.userId = payload.id;
+    req.userRole = payload.role;
+    //   console.log("Payload: ", payload);
+    next();
+  });
 }
