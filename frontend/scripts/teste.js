@@ -1,6 +1,7 @@
 import { Button } from "../components/Button/Button.js";
 import { Input } from "../components/Input/Input.js";
 import { Toaster } from "../components/Toaster/Toaster.js";
+import { Select } from "../components/Select/Select.js";
 
 function teste() {
   alert("Você clicou no botão!");
@@ -81,13 +82,36 @@ document.addEventListener("DOMContentLoaded", () => {
     },
   ];
 
-  toasters.forEach((toasterConfig) => {
-    const toaster = Toaster({
-      ...toasterConfig,
-      onClose: () => {
-        console.log("Fechou o toaster");
+  // toasters.forEach((toasterConfig) => {
+  //   const toaster = Toaster({
+  //     ...toasterConfig,
+  //     onClose: () => {
+  //       console.log("Fechou o toaster");
+  //     },
+  //   });
+  //   app.appendChild(toaster);
+  // });
+
+  // Adiciona selects
+  const selectConfigs = [
+    {
+      id: "teacher",
+      name: "teacher",
+      required: true,
+      options: [
+        { value: "none", label: "Não possui professor" },
+        { value: "1", label: "Jojo" },
+        { value: "2", label: "Ana" },
+      ],
+      value: "",
+      onChange: (e) => {
+        console.log(e.target.value);
       },
-    });
-    app.appendChild(toaster);
+    },
+  ];
+
+  selectConfigs.forEach((selectConfig) => {
+    const selectElement = Select(selectConfig);
+    app.appendChild(selectElement);
   });
 });
