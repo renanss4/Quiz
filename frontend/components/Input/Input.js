@@ -1,7 +1,7 @@
 export function Input({
   type = "text",
   placeholder = "",
-  value = "",
+  name = "",
   style = "default",
   onChange,
 }) {
@@ -9,7 +9,7 @@ export function Input({
   const input = document.createElement("input");
 
   // Define o tipo de input
-  if (["password", "email", "number", "select"].includes(type)) {
+  if (["password", "email"].includes(type)) {
     input.setAttribute("type", type);
   } else {
     input.setAttribute("type", "text");
@@ -17,7 +17,7 @@ export function Input({
 
   // Define o placeholder e o valor
   input.setAttribute("placeholder", placeholder);
-  input.value = value;
+  input.name = name;
 
   // Adiciona o evento onChange
   input.addEventListener("input", onChange);
