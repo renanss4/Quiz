@@ -1,0 +1,27 @@
+.toaster-success {
+  display: inline-block;
+  padding: 12px 20px;
+  align-items: flex-start;
+  gap: 48px;
+
+  border-radius: 6px;
+  border-left: 5px solid #34d399;
+  background: #d1fae5;
+  color: #1c1917;
+  box-shadow: 0px 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0px 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.toaster-warning {
+  display: inline-block;
+  padding: 12px 20px;
+  align-items: flex-start;
+  gap: 48px;
+
+  border-radius: 6px;
+  border-left: 5px solid #6366f1;
+  background: #e0e7ff;
+  color: #1c1917;
+  box-shadow: 0px 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0px 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
