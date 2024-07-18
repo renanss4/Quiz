@@ -2,6 +2,10 @@ import { Button } from "../components/Button/Button.js";
 import { Input } from "../components/Input/Input.js";
 import { Toaster } from "../components/Toaster/Toaster.js";
 import { Select } from "../components/Select/Select.js";
+import { Tag } from "../components/Tag/Tag.js";
+import { Header } from "../components/Header/Header.js";
+import { CardItem } from "../components/CardItem/CardItem.js";
+import { Optional } from "../components/Optional/Optional.js";
 
 function teste() {
   alert("Você clicou no botão!");
@@ -110,8 +114,53 @@ document.addEventListener("DOMContentLoaded", () => {
     },
   ];
 
-  selectConfigs.forEach((selectConfig) => {
-    const selectElement = Select(selectConfig);
-    app.appendChild(selectElement);
-  });
+  // selectConfigs.forEach((selectConfig) => {
+  //   const selectElement = Select(selectConfig);
+  //   app.appendChild(selectElement);
+  // });
+
+  // Adiciona tags
+  const tags = [
+    { value: "1", text: "Simulado" },
+    { value: "2", text: "Prova" },
+    { value: "3", text: "Avaliação" },
+  ];
+
+  // tags.forEach((tagConfig) => {
+  //   const tag = Tag(tagConfig);
+  //   app.appendChild(tag);
+  // });
+
+  // Adiciona header
+  // const header = Header({
+  //   title: "Título",
+  //   subtitle: "Subtítulo",
+  //   // btnBack: true,
+  //   linkBack: "#",
+  // });
+
+  // app.appendChild(header);
+
+  // Adiciona cardItem
+  const cardItems = [
+    {
+      question: "Qual a capital do Brasil?",
+      answer: "B",
+      type: "default",
+    },
+    {
+      question: "Qual a capital da Argentina?",
+      answer: "B",
+      type: "error",
+    },
+  ];
+
+  // cardItems.forEach((cardItemsConfig) => {
+  //   const cardItem = CardItem(cardItemsConfig);
+  //   app.appendChild(cardItem);
+  // });
+
+  // Adiciona optional
+  const optional = Optional({ info: "Informação opcional" });
+  app.appendChild(optional);
 });
