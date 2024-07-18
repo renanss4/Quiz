@@ -1,0 +1,28 @@
+span {
+  border-radius: 4px;
+  border: 1px solid #d4d4d4;
+  background: #f5f5f5;
+  box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.05);
+  display: none; /* Oculta o span por padrão */
+  padding: 8px;
+  align-items: flex-start;
+  gap: 10px;
+  color: #78716c;
+}
+
+/* seleciona o elemento que é imediatamente após outro elemento especificado, ambos sendo irmãos e compartilhando o mesmo pai */
+img:hover + span {
+  display: block; /* Exibe o span quando o mouse está sobre a imagem */
+  animation: fadeOpacity 0.5s;
+}
+
+@keyframes fadeOpacity {
+  from {
+    opacity: 0;
+    /* transform: translateY(-10px); */
+  }
+  to {
+    opacity: 1;
+    /* transform: translateY(0); */
+  }
+}
