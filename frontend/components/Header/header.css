@@ -1,0 +1,31 @@
+header {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+header h1 {
+  color: #1c1917;
+  font-size: 30px;
+  line-height: 36px;
+  font-weight: 700;
+}
+
+header h2 {
+  color: #44403c;
+  font-size: 18px;
+  line-height: 28px;
+  font-weight: 400;
+}
+
+.header-back h2,
+.header-back h1 {
+  margin: auto;
+}
+
+.header-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
