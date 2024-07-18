@@ -1,7 +1,7 @@
 export function Button({
   type = "default",
   size = null,
-  text,
+  text = null,
   link = null,
   imgSrc = null,
   onClick,
