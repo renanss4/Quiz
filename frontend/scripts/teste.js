@@ -6,6 +6,7 @@ import { Tag } from "../components/Tag/Tag.js";
 import { Header } from "../components/Header/Header.js";
 import { CardItem } from "../components/CardItem/CardItem.js";
 import { Optional } from "../components/Optional/Optional.js";
+import { Card } from "../components/Card/Card.js";
 
 function teste() {
   alert("Você clicou no botão!");
@@ -161,6 +162,48 @@ document.addEventListener("DOMContentLoaded", () => {
   // });
 
   // Adiciona optional
-  const optional = Optional({ info: "Informação opcional" });
-  app.appendChild(optional);
+  // const optional = Optional({ info: "Informação opcional" });
+  // app.appendChild(optional);
+
+  // Adiciona card
+  const cards = [
+    {
+      type: "empty",
+      title: "Suas Tentativas",
+      cardItems: [],
+    },
+    {
+      type: "attempts",
+      title: "Suas Tentativas",
+      cardItems: [
+        { question: "1ª Tentativa", answer: "8/10", type: "default" },
+        { question: "2ª Tentativa", answer: "7/10", type: "error" },
+      ],
+    },
+    {
+      type: "answers",
+      title: "Respostas",
+      cardItems: [
+        { question: "Pergunta 1", answer: "A" },
+        { question: "Pergunta 2", answer: "C" },
+        { question: "Pergunta 3", answer: "D" },
+        { question: "Pergunta 4", answer: "B" },
+      ],
+    },
+    {
+      type: "template",
+      title: "Nota 8",
+      cardItems: [
+        { question: "Pergunta 1", answer: "A" },
+        { question: "Pergunta 2", answer: "B", type: "error" },
+        { question: "Pergunta 3", answer: "D" },
+        { question: "Pergunta 4", answer: "B" },
+      ],
+    },
+  ];
+
+  cards.forEach((cardConfig) => {
+    const card = Card(cardConfig);
+    app.appendChild(card);
+  });
 });
