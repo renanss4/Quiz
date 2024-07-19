@@ -1,5 +1,6 @@
 export function CardItem({ question, answer, type = "default" }) {
-  const cardItem = document.createElement("span");
+  const cardItem = document.createElement("div"); // Mudança de <span> para <div>
+  cardItem.classList.add("card-item");
 
   const questionElement = document.createElement("p");
   questionElement.textContent = question;

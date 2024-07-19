@@ -1,0 +1,37 @@
+.card-empty,
+.card-attempts,
+.card-answers,
+.card-template {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #ddd;
+  padding: 20px;
+  margin: 10px 0;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.card-empty {
+  background-color: #f9f9f9;
+}
+
+.card-attempts {
+  background-color: #e9f7ff;
+}
+
+.card-answers {
+  background-color: #e8f5e9;
+}
+
+.card-template {
+  background-color: #f3e5f5;
+}
+
+.card h2 {
+  margin-bottom: 10px;
+}
+
+.card span {
+  display: block;
+  margin: 10px 0;
+}
