@@ -1,10 +1,10 @@
 export function Button({
   type = "default",
-  size = null,
-  text = null,
+  size = "medium",
+  text = "",
   link = null,
   imgSrc = null,
-  onClick,
+  onClick = () => {},
 }) {
   // Cria o elemento button ou a
   const element = link
@@ -12,8 +12,10 @@ export function Button({
     : document.createElement("button");
 
   // Define o texto do botão
-  const p = document.createElement("span");
-  p.textContent = text;
+  // const span = document.createElement("span");
+  // span.textContent = text;
+
+  element.textContent = text;
 
   // Adiciona a imagem se a propriedade imgSrc for definida
   if (imgSrc) {
@@ -22,7 +24,7 @@ export function Button({
     element.appendChild(img);
   }
 
-  element.appendChild(p);
+  // element.appendChild(span);
 
   // Define as classes de estilo
   const stylesByType = {
@@ -35,7 +37,9 @@ export function Button({
   };
 
   const btnClass = stylesByType[type];
-  element.classList.add(btnClass);
+  if (btnClass) {
+    element.classList.add(btnClass);
+  }
 
   const btnsSize = {
     full: "size-full",
@@ -45,7 +49,9 @@ export function Button({
   };
 
   const btnSize = btnsSize[size];
-  element.classList.add(btnSize);
+  if (btnSize) {
+    element.classList.add(btnSize);
+  }
 
   // Adiciona a propriedade href se for um link
   if (link) {
