@@ -7,6 +7,8 @@ import { Header } from "../components/Header/Header.js";
 import { CardItem } from "../components/CardItem/CardItem.js";
 import { Optional } from "../components/Optional/Optional.js";
 import { Card } from "../components/Card/Card.js";
+import { Dialog } from "../components/Dialog/Dialog.js";
+import { Table } from "../components/Table/Table.js";
 
 function teste() {
   alert("Você clicou no botão!");
@@ -202,8 +204,48 @@ document.addEventListener("DOMContentLoaded", () => {
     },
   ];
 
-  cards.forEach((cardConfig) => {
-    const card = Card(cardConfig);
-    app.appendChild(card);
-  });
+  // cards.forEach((cardConfig) => {
+  //   const card = Card(cardConfig);
+  //   app.appendChild(card);
+  // });
+
+  // Adiciona dialog
+  const dialogs = [
+    {
+      type: "confirm",
+      title: "Tem certeza?",
+      message:
+        "Lorem ipsum dolor sit amet consectetur. Elementum integer ac mauris fermentum neque sodales mi cursus.",
+    },
+    {
+      type: "alert",
+      title: "Pergunta de ação!",
+      message:
+        "Lorem ipsum dolor sit amet consectetur. Elementum integer ac mauris fermentum neque sodales mi cursus.",
+    },
+    {
+      type: "toaster",
+      title: "Entregue!",
+      message:
+        "O quiz 'Simulado Prova 1' foi entregue com sucesso. Deseja realmente excluir?",
+    },
+  ];
+
+  // dialogs.forEach((dialogConfig) => {
+  //   const dialog = Dialog(dialogConfig);
+  //   app.appendChild(dialog);
+  // });
+
+  // Adiciona table
+  // Defina os cabeçalhos e os dados da tabela
+  const headers = ["Name", "Age", "Occupation"];
+  const rows = [
+    ["Alice", 30, "Engineer"],
+    ["Bob", 25, "Designer"],
+    ["Charlie", 35, "Teacher"],
+  ];
+
+  // Crie a tabela
+  const table = Table(headers, rows);
+  app.appendChild(table);
 });
