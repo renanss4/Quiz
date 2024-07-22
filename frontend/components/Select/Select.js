@@ -1,4 +1,4 @@
-import { Option } from "../Option/Option.js";
+import { Option } from "./Option/Option.js";
 
 export function Select({
   id,
