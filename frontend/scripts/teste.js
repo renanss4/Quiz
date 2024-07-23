@@ -9,13 +9,20 @@ import { Optional } from "../components/Optional/Optional.js";
 import { Card } from "../components/Card/Card.js";
 import { Dialog } from "../components/Dialog/Dialog.js";
 import { Table } from "../components/Table/Table.js";
+import { SideBar } from "../components/SideBar/SideBar.js";
+import { Box } from "../components/Box/Box.js";
 
 function teste() {
   alert("Você clicou no botão!");
 }
 
 document.addEventListener("DOMContentLoaded", () => {
+  // const body = document.querySelector("body");
   const app = document.getElementById("app");
+  const main = document.getElementById("main");
+
+  // body.appendChild(app);
+  // body.appendChild(main);
 
   // Adiciona botões
   const buttons = [
@@ -247,5 +254,27 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Crie a tabela
   const table = Table(headers, rows);
-  app.appendChild(table);
+  // app.appendChild(table);
+
+  // Adiciona sidebar
+  const sideBar = SideBar({
+    itens: [
+      { iconSrc: "../assets/house.svg", text: "Dashboard", link: "#" },
+      { iconSrc: "../assets/books.svg", text: "Disciplinas", link: "#" },
+    ],
+  });
+
+  app.appendChild(sideBar);
+
+  // Adiciona box
+  const box = Box({
+    type: "main",
+    children: [
+      Header({ title: "1", subtitle: "2" }),
+      // { type: "main", content: "Conteúdo" },
+      // { type: "footer", content: "Rodapé" },
+    ],
+  });
+
+  main.appendChild(box);
 });
