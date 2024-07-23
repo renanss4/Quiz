@@ -14,7 +14,7 @@ export function SideBar({ itens = [] }) {
     local: "header",
   });
   logo.classList.add("logo");
-  console.log(logo);
+  // console.log(logo);
   //   const header = document.createElement("div");
   //   header.classList.add("header");
   //   const headerItens = [
