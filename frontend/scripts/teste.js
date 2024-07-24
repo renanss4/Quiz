@@ -124,10 +124,10 @@ document.addEventListener("DOMContentLoaded", () => {
     },
   ];
 
-  // selectConfigs.forEach((selectConfig) => {
-  //   const selectElement = Select(selectConfig);
-  //   app.appendChild(selectElement);
-  // });
+  selectConfigs.forEach((selectConfig) => {
+    const selectElement = Select(selectConfig);
+    app.appendChild(selectElement);
+  });
 
   // Adiciona tags
   const tags = [
@@ -243,12 +243,31 @@ document.addEventListener("DOMContentLoaded", () => {
   //   app.appendChild(dialog);
   // });
 
+  const button1 = Button({
+    type: "link",
+    size: "none",
+    text: "Editar",
+    onClick: teste,
+  });
+
   // Adiciona table
   // Defina os cabeçalhos e os dados da tabela
-  const headers = ["Name", "Age", "Occupation"];
+  const headers = ["Name", "Age", "Occupation", "Actions"];
   const rows = [
-    ["Alice", 30, "Engineer"],
-    ["Bob", 25, "Designer"],
+    [
+      "Alice",
+      30,
+      "Engineer",
+      button1,
+      Button({ type: "link", size: "none", text: "Excluir", onClick: teste }),
+    ],
+    [
+      "Bob",
+      25,
+      "Designer",
+      Tag({ value: "1", text: "Simulado" }),
+      "AFYASIUÇJD",
+    ],
     ["Charlie", 35, "Teacher"],
   ];
 
@@ -264,7 +283,7 @@ document.addEventListener("DOMContentLoaded", () => {
     ],
   });
 
-  app.appendChild(sideBar);
+  // app.appendChild(sideBar);
 
   // Adiciona box
   const box = Box({
@@ -276,5 +295,5 @@ document.addEventListener("DOMContentLoaded", () => {
     ],
   });
 
-  main.appendChild(box);
+  // main.appendChild(box);
 });
