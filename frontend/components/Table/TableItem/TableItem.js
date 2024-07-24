@@ -3,7 +3,11 @@ export function TableItem(rowData) {
 
   rowData.forEach((data) => {
     const tableData = document.createElement("td");
-    tableData.textContent = data;
+    if (data instanceof HTMLElement) {
+      tableData.appendChild(data);
+    } else {
+      tableData.textContent = data;
+    }
     tableRow.appendChild(tableData);
   });
 
