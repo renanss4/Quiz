@@ -4,19 +4,14 @@
   gap: 10px;
 }
 
-.size-large {
+.size-mid {
   padding: 18px 30px;
   width: 50%;
   gap: 10px;
 }
 
-.size-medium {
+.size-normal {
   padding: 14px 24px;
-  gap: 10px;
-}
-
-.size-small {
-  padding: 10px 20px;
   gap: 10px;
 }
 
@@ -30,7 +25,6 @@
   color: #fafafa;
   cursor: pointer;
 
-  font-family: "Popins", sans-serif;
   font-size: 16px;
   font-weight: 400;
 }
@@ -49,7 +43,6 @@
   color: #78716c;
   cursor: pointer;
 
-  font-family: "Popins", sans-serif;
   font-size: 16px;
   font-weight: 400;
 }
@@ -68,7 +61,6 @@
   color: #fafafa;
   cursor: pointer;
 
-  font-family: "Popins", sans-serif;
   font-size: 16px;
   font-weight: 400;
 }
@@ -83,19 +75,21 @@
   align-items: center;
   border-radius: 6px;
   border: 1px solid #ef4444;
+  background: transparent;
+  color: #ef4444;
   cursor: pointer;
 
-  font-family: "Popins", sans-serif;
   font-size: 16px;
   font-weight: 400;
 }
 
 .button-outline-destructive:hover {
-  background: #ef4444;
-  color: #fafafa;
+  opacity: 0.8;
 }
 
 .button-link {
+  gap: 0;
+  padding: 0;
   display: inline;
   border: none;
   color: #6366f1;
@@ -103,23 +97,10 @@
   text-decoration: none;
   background: none;
 
-  font-family: "Popins", sans-serif;
   font-size: 16px;
   font-weight: 400;
 }
 
 .button-link:hover {
   text-decoration: underline;
-}
-
-.button-link-sidebar {
-  display: inline;
-  border: none;
-  color: #dc2626;
-  cursor: pointer;
-  text-decoration: none;
-
-  font-family: "Popins", sans-serif;
-  font-size: 16px;
-  font-weight: 400;
 }

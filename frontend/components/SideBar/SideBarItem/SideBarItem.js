@@ -1,4 +1,4 @@
-export function SideBarItem({ local = "main", iconSrc, text = "", link }) {
+export function SidebarItem({ local = "main", iconSrc, text = "", link }) {
   const a = document.createElement("a");
   a.classList.add("sidebar-item");
   a.setAttribute("href", link);
@@ -17,8 +17,8 @@ export function SideBarItem({ local = "main", iconSrc, text = "", link }) {
 
   a.appendChild(icon);
 
-  const p = document.createElement("p");
   if (text) {
+    const p = document.createElement("p");
     p.textContent = text;
     a.appendChild(p);
   }

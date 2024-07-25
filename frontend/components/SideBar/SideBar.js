@@ -1,6 +1,6 @@
-import { SideBarItem } from "./SideBarItem/SideBarItem.js";
+import { SidebarItem } from "./SidebarItem/SidebarItem.js";
 
-export function SideBar({ itens = [] }) {
+export function Sidebar({ itens = [] }) {
   const nav = document.createElement("nav");
   nav.classList.add("sidebar");
 
@@ -8,7 +8,7 @@ export function SideBar({ itens = [] }) {
   menu.classList.add("menu");
 
   // Adiciona o logo (header)
-  const logo = SideBarItem({
+  const logo = SidebarItem({
     iconSrc: "../assets/logo1.svg",
     link: "#",
     local: "header",
@@ -36,7 +36,7 @@ export function SideBar({ itens = [] }) {
   main.classList.add("main");
   itens.forEach((item) => {
     const li = document.createElement("li");
-    const sidebarItem = SideBarItem(item);
+    const sidebarItem = SidebarItem(item);
     li.appendChild(sidebarItem);
     main.appendChild(li);
   });
@@ -51,7 +51,7 @@ export function SideBar({ itens = [] }) {
 
   footerItens.forEach((item) => {
     const li = document.createElement("li");
-    const sidebarItem = SideBarItem({ ...item, local: "footer" });
+    const sidebarItem = SidebarItem({ ...item, local: "footer" });
     li.appendChild(sidebarItem);
     footer.appendChild(li);
   });

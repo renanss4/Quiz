@@ -1,8 +1,4 @@
-export function Box({ type = "main", children = [] }) {
-  if (type != "main") {
-    return null;
-  }
-
+export function Box({ type = "default", children = [] }) {
   const box = document.createElement("main");
   box.classList.add("box");
 
@@ -11,7 +7,7 @@ export function Box({ type = "main", children = [] }) {
   };
 
   const boxClass = stylesByType[type];
-  box.classList.add(boxClass);
+  if (boxClass) box.classList.add(boxClass);
 
   children.forEach((item) => {
     box.appendChild(item);
