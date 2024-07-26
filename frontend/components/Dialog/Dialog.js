@@ -29,7 +29,7 @@ export function Dialog({ type = "toaster", title, message }) {
   if (type === "confirm") {
     confirmButton = Button({
       type: "default",
-      size: "small",
+      size: "normal",
       text: "Confirmar",
       onClick: () => {
         alert('Você clicou no botão "Confirmar"');
@@ -37,7 +37,7 @@ export function Dialog({ type = "toaster", title, message }) {
     });
     cancelButton = Button({
       type: "outline",
-      size: "small",
+      size: "normal",
       text: "Cancelar",
       onClick: () => {
         alert('Você clicou no botão "Cancelar"');
@@ -46,7 +46,7 @@ export function Dialog({ type = "toaster", title, message }) {
   } else if (type === "alert") {
     confirmButton = Button({
       type: "destructive",
-      size: "small",
+      size: "normal",
       text: "OK",
       onClick: () => {
         alert('Você clicou no botão "OK"');
@@ -54,7 +54,7 @@ export function Dialog({ type = "toaster", title, message }) {
     });
     cancelButton = Button({
       type: "outline",
-      size: "small",
+      size: "normal",
       text: "Cancelar",
       onClick: () => {
         alert('Você clicou no botão "Cancelar"');

@@ -1,6 +1,6 @@
 import { TableItem } from "./TableItem/TableItem.js";
 
-export function Table(headers = [], rows = []) {
+export function Table({ headers = [], rows = [] }) {
   const table = document.createElement("table");
   table.classList.add("table");
 
