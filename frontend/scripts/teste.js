@@ -20,6 +20,23 @@ function teste() {
 document.addEventListener("DOMContentLoaded", () => {
   const body = document.querySelector("body");
 
+  const sidebarTest = Sidebar({
+    children: [
+      SidebarItem({
+        text: "Item 1",
+        link: "#",
+      }),
+      SidebarItem({
+        text: "Item 2",
+        link: "#",
+      }),
+      SidebarItem({
+        text: "Item 3",
+        link: "#",
+      }),
+    ],
+  });
+  body.appendChild(sidebarTest);
   const boxTestMain = Box({
     children: [
       Optional({
@@ -82,7 +99,8 @@ document.addEventListener("DOMContentLoaded", () => {
       Dialog({
         type: "toaster",
         title: "Teste 3",
-        message: "fusyiahdidsioçad",
+        message:
+          "fusyiahdidsioçajjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjf jjjjjjjjjjjjjjjjjjjjjjjjj jjjhhhhhhhhhhhhhhhhhhhhd",
       }),
       Header({
         title: "Título",
@@ -144,11 +162,58 @@ document.addEventListener("DOMContentLoaded", () => {
         name: "select",
         required: true,
         options: [
+          { value: "none", label: "Não possui professor" },
           { value: "1", label: "Opção 1" },
           { value: "2", label: "Opção 2" },
           { value: "3", label: "Opção 3" },
         ],
-        value: "2",
+        value: "",
+        placeholder: "Selecione uma opção",
+      }),
+      Card({
+        type: "empty",
+      }),
+      Card({
+        type: "attempts",
+        title: "Suas Tentativas.",
+        cardItems: [
+          {
+            title: "Tentativa 1",
+            description: "Descrição da tentativa 1",
+          },
+          {
+            title: "Tentativa 2",
+            description: "Descrição da tentativa 2",
+          },
+        ],
+      }),
+      Card({
+        type: "answers",
+        title: "Suas Respostas.",
+        cardItems: [
+          {
+            title: "Resposta 1",
+            description: "Descrição da resposta 1",
+          },
+          {
+            title: "Resposta 2",
+            description: "Descrição da resposta 2",
+          },
+        ],
+      }),
+      Card({
+        type: "template",
+        title: "Seu Template.",
+        cardItems: [
+          {
+            title: "Template 1",
+            description: "Descrição do template 1",
+          },
+          {
+            title: "Template 2",
+            description: "Descrição do template 2",
+          },
+        ],
       }),
     ],
   });

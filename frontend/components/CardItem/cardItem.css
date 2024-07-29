@@ -1,11 +1,11 @@
-div {
+div.card-item {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
   width: 80%;
 }
 
-div p:first-child {
+div.card-item p:first-child {
   font-weight: bold;
 }
 
