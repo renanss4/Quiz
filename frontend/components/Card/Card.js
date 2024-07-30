@@ -1,4 +1,4 @@
-import { CardItem } from "../CardItem/CardItem.js";
+import { CardItem } from "./CardItem/CardItem.js";
 import { Button } from "../Button/Button.js";
 
 export function Card({
