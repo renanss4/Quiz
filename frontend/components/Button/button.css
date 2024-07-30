@@ -104,3 +104,9 @@
 .button-link:hover {
   text-decoration: underline;
 }
+
+@media (max-width: 480px) {
+  button {
+    max-width: 100%;
+  }
+}
