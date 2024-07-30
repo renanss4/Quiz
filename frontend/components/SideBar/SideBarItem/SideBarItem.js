@@ -1,4 +1,4 @@
-export function SidebarItem({ local = "main", iconSrc, text = "", link }) {
+export function SidebarItem({ local = "main", iconSrc = "", text = "", link }) {
   const a = document.createElement("a");
   a.classList.add("sidebar-item");
   a.setAttribute("href", link);
