@@ -1,7 +1,7 @@
 import { Box } from "../components/Box/Box.js";
 import { Button } from "../components/Button/Button.js";
 import { Card } from "../components/Card/Card.js";
-import { CardItem } from "../components/CardItem/CardItem.js";
+// import { CardItem } from "../components/CardItem/CardItem.js";
 import { Dialog } from "../components/Dialog/Dialog.js";
 import { Header } from "../components/Header/Header.js";
 import { Input } from "../components/Input/Input.js";
