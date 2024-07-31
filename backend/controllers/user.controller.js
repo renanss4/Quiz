@@ -1,6 +1,7 @@
 import { usersModel } from "../models/user.model.js";
 import { TOKEN_ERROR, USER_ERROR } from "../constants/errorCodes.js";
 import ServerError from "../ServerError.js";
+import { validateId } from "../utils/validateId.js";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
 
@@ -85,9 +86,7 @@ class UserController {
 
     // Add id to query if present and valid
     if (id) {
-      if (!id.match(/^[0-9a-fA-F]{24}$/)) {
-        throw new ServerError(USER_ERROR.INVALID_ID);
-      }
+      validateId(id);
       query._id = id;
     }
 

@@ -1,6 +1,7 @@
 import { subjectsModel } from "../models/subject.model.js";
 import { SUBJECT_ERROR } from "../constants/errorCodes.js";
 import ServerError from "../ServerError.js";
+import { validateId } from "../utils/validateId.js";
 
 class SubjectController {
   async createSubject(req, res) {
@@ -36,17 +37,13 @@ class SubjectController {
 
     // Add teacher_id to query if present and valid
     if (teacher_id) {
-      if (!teacher_id.match(/^[0-9a-fA-F]{24}$/)) {
-        throw new ServerError(USER_ERROR.INVALID_ID);
-      }
+      validateId(teacher_id);
       query.teacher_id = teacher_id;
     }
 
     // Add id to query if present and valid
     if (id) {
-      if (!id.match(/^[0-9a-fA-F]{24}$/)) {
-        throw new ServerError(USER_ERROR.INVALID_ID);
-      }
+      validateId(id);
       query._id = id;
     }
 

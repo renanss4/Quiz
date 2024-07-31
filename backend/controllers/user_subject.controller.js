@@ -7,6 +7,7 @@ import {
   RELATION_ERROR,
 } from "../constants/errorCodes.js";
 import ServerError from "../ServerError.js";
+import { validateId } from "../utils/validateId.js";
 
 class UserSubjectController {
   async createUserSubject(req, res) {
@@ -62,25 +63,19 @@ class UserSubjectController {
 
     // Add id to query if present and valid
     if (id) {
-      if (!id.match(/^[0-9a-fA-F]{24}$/)) {
-        throw new ServerError(USER_ERROR.INVALID_ID);
-      }
+      validateId(id);
       query._id = id;
     }
 
     // Add student_id to query if present and valid
     if (student_id) {
-      if (!student_id.match(/^[0-9a-fA-F]{24}$/)) {
-        throw new ServerError(USER_ERROR.INVALID_ID);
-      }
+      validateId(student_id);
       query.student_id = student_id;
     }
 
     // Add subject_id to query if present and valid
     if (subject_id) {
-      if (!subject_id.match(/^[0-9a-fA-F]{24}$/)) {
-        throw new ServerError(USER_ERROR.INVALID_ID);
-      }
+      validateId(subject_id);
       query.subject_id = subject_id;
     }
 
