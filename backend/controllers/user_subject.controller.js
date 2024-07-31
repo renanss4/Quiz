@@ -80,12 +80,16 @@ class UserSubjectController {
     }
 
     // Finds user_subject relationships in the database based on the query
-    const usersSubjects = await usersSubjectsModel.find(query, "-__v");
+    const usersSubjects = await usersSubjectsModel
+      .find(query, "-__v")
+      .populate([
+        { path: "student_id", select: "name" },
+        { path: "subject_id", select: "name" },
+      ]);
     if (!usersSubjects) {
       throw new ServerError(RELATION_ERROR.DOESNT_EXIST);
     }
 
-    console.log(query);
     // Returns a 200 status with the found user_subject relationships
     return res.status(200).json(usersSubjects);
   }
