@@ -17,7 +17,7 @@ routes.use("/subject", checkToken, subjectRoute);
 routes.use("/user_subject", checkToken, userSubjectRoute);
 
 // 404 - Not Found
-routes.use((res) => {
+routes.use((req, res) => {
   res.status(404).send({ Msg: "404 - Not Found" });
 });
 
