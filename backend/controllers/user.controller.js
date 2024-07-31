@@ -1,12 +1,13 @@
 import { usersModel } from "../models/user.model.js";
-import { generateToken } from "../utils/generateToken.js";
 import { TOKEN_ERROR, USER_ERROR } from "../constants/errorCodes.js";
 import ServerError from "../ServerError.js";
+import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
 
 class UserController {
   async loginUser(req, res) {
-    const { email, enrollment, password } = req.body; // Extract enrollment, email, and password from the request body
+    // Extract enrollment, email, and password from the request body
+    const { email, enrollment, password } = req.body;
 
     // Validate inputs
     if ((!email && !enrollment) || !password)
@@ -27,9 +28,13 @@ class UserController {
     }
 
     // Generate token
-    const token = generateToken(user);
+    const secret = process.env.JWT_SECRET;
+    const token = jwt.sign({ id: user._id, role: user.role }, secret, {
+      expiresIn: "1d",
+    });
 
-    return res.status(200).json({ token }); // Returns a 200 status with a success message and the token
+    // Returns a 200 status with a success message and the token
+    return res.status(200).json({ token });
   }
 
   async createUser(req, res) {
@@ -102,7 +107,8 @@ class UserController {
   }
 
   async updateUser(req, res) {
-    const id = req.params.id; // Retrieves the id parameter from the request
+    // Retrieves the id parameter from the request
+    const id = req.params.id;
 
     // Updates the user with the provided id using the data from the request body
     await usersModel.findByIdAndUpdate(id, req.body, {
@@ -114,8 +120,11 @@ class UserController {
   }
 
   async updatePassword(req, res) {
-    const id = req.userId; // Retrieves the user id from the request
-    const { currentPassword, newPassword } = req.body; // Extracts the current password and the new password from the request body
+    // Retrieves the user id from the request
+    const id = req.userId;
+
+    // Extracts the current password and the new password from the request body
+    const { currentPassword, newPassword } = req.body;
 
     // Checks if the user is updating their own password
     if (req.userId !== id) {
@@ -148,7 +157,8 @@ class UserController {
   }
 
   async deleteUser(req, res) {
-    const id = req.params.id; // Retrieves the id parameter from the request
+    // Retrieves the id parameter from the request
+    const id = req.params.id;
 
     // Deletes the user with the provided id
     await usersModel.findByIdAndDelete(id);
