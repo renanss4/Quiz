@@ -92,29 +92,8 @@ form {
   align-self: center;
 }
 
-.input-items {
-  display: flex;
-  width: 100%; /* Largura total do contêiner de input */
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 12px;
+#password-container {
   position: relative;
-}
-
-.input-items input {
-  display: flex;
-  padding: 12px 8px;
-  align-items: flex-start;
-  gap: 10px;
-  align-self: stretch;
-  border-radius: 6px;
-  border: 1px solid #e5e5e5;
-  background: #f5f5f5;
-  width: 100%; /* Largura total dos inputs */
-}
-
-.input-items label {
-  display: block;
 }
 
 #toggle-password {
@@ -122,6 +101,7 @@ form {
   top: 50px; /* Ajuste conforme necessário */
   right: 15px;
   cursor: pointer;
+  z-index: 999;
 }
 
 #toggle-password-img {
@@ -134,24 +114,6 @@ form {
   justify-items: auto;
   color: #312e81;
   text-decoration: none;
-}
-
-.login button {
-  color: #eef2ff;
-  border-radius: 6px;
-  border: none;
-  background: #6366f1;
-  width: 100%; /* Largura total do botão */
-  max-width: 320px; /* Limite máximo de largura */
-  padding: 12px 8px;
-  gap: 10px;
-  cursor: pointer;
-  align-self: center;
-  justify-self: auto;
-}
-
-.login button:hover {
-  background: #4338ca;
 }
 
 @media (max-width: 768px) {

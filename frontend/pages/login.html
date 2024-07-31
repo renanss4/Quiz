@@ -9,6 +9,7 @@
       href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
       rel="stylesheet"
     />
+    <link rel="stylesheet" href="../styles/components.css" />
     <link rel="stylesheet" href="../styles/login.css" />
     <title>Login</title>
   </head>
@@ -22,44 +23,28 @@
       <h1>Faça login</h1>
       <div class="line"></div>
       <form id="form">
-        <div class="input-items">
-          <label for="email">Matricula ou Email:</label>
-          <input
-            type="text"
-            id="email"
-            name="email"
-            required
-            placeholder="usuario@email.com"
-          />
-        </div>
-        <div class="input-items">
-          <label for="password">Senha:</label>
-          <input
-            type="password"
-            id="password"
-            name="password"
-            required
-            placeholder="••••••••••••"
-          />
-          <a href="#" id="toggle-password">
+        <div id="email-container"></div>
+        <div id="password-container">
+          <div id="toggle-password">
             <img
-              src="../assets/on.svg"
-              alt="não visualizar senha"
-              class="toggle-password-img"
               id="show-password"
+              src="../assets/off.svg"
+              alt="Show Password"
             />
             <img
-              src="../assets/off.svg"
-              alt="visualizar senha"
-              class="toggle-password-img"
               id="hide-password"
+              src="../assets/on.svg"
+              alt="Hide Password"
               hidden
             />
-          </a>
-          <div id="error"><p>Email ou senha inválidos!</p></div>
+          </div>
+        </div>
+
+        <div id="error" style="display: none; color: red">
+          Usuário ou senha incorretos!
         </div>
         <a href="" id="forgot-password">Esqueceu a senha ou deseja trocar?</a>
-        <button type="submit" id="login-button">Entrar</button>
+        <div id="login-button-container"></div>
       </form>
     </div>
 
