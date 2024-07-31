@@ -1,4 +1,6 @@
 export function Input({
+  id = "",
+  required = false,
   type = "text",
   label = "",
   placeholder = "",
@@ -13,14 +15,20 @@ export function Input({
   // Cria o elemento input
   const input = document.createElement("input");
 
-  // Define um ID único para o input
-  const inputId = `input-${name}-${Math.random().toString(36).substr(2, 9)}`;
-  input.setAttribute("id", inputId);
+  // Define um ID para o input
+  if (id) {
+    input.id = id;
+  }
+
+  // Tratando o caso de input obrigatório
+  if (required) {
+    input.required = true;
+  }
 
   // Define o label
   if (label) {
     const labelElement = document.createElement("label");
-    labelElement.setAttribute("for", inputId);
+    labelElement.setAttribute("for", input.id);
     labelElement.textContent = label;
     labelElement.classList.add("input-label");
     container.appendChild(labelElement);
