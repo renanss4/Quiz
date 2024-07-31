@@ -4,6 +4,7 @@ import ServerError from "../ServerError.js";
 import { validateId } from "../utils/validateId.js";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
+import { usersSubjectsModel } from "../models/user_subject.model.js";
 
 class UserController {
   async loginUser(req, res) {
@@ -158,6 +159,9 @@ class UserController {
   async deleteUser(req, res) {
     // Retrieves the id parameter from the request
     const id = req.params.id;
+
+    // Deletes the related user_subject relationships
+    await usersSubjectsModel.deleteMany({ student_id: id });
 
     // Deletes the user with the provided id
     await usersModel.findByIdAndDelete(id);

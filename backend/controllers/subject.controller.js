@@ -2,6 +2,7 @@ import { subjectsModel } from "../models/subject.model.js";
 import { SUBJECT_ERROR } from "../constants/errorCodes.js";
 import ServerError from "../ServerError.js";
 import { validateId } from "../utils/validateId.js";
+import { usersSubjectsModel } from "../models/user_subject.model.js";
 
 class SubjectController {
   async createSubject(req, res) {
@@ -87,6 +88,9 @@ class SubjectController {
   async deleteSubject(req, res) {
     // Retrieves the id parameter from the request
     const id = req.params.id;
+
+    // Deletes the related user_subject relationships
+    await usersSubjectsModel.deleteMany({ subject_id: id });
 
     // Deletes the subject with the provided id
     const deletedSubject = await subjectsModel.findByIdAndDelete(id);
