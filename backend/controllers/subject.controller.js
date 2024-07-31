@@ -5,10 +5,10 @@ import ServerError from "../ServerError.js";
 class SubjectController {
   async createSubject(req, res) {
     // Extracts subject data from the request body
-    const { name, teacher_id } = req.body; 
+    const { name, teacher_id } = req.body;
 
     // Validates if the required fields are empty
-    if (!name ) {
+    if (!name) {
       throw new ServerError(SUBJECT_ERROR.MISSING_FIELDS);
     }
 
@@ -26,14 +26,14 @@ class SubjectController {
     await subjectsModel.create(newSubject);
 
     // Returns a 204 status if the subject is created
-    return res.status(204).send(); 
+    return res.status(204).send();
   }
 
   async readSubjects(req, res) {
     // Extract query params for filtering
     const { teacher_id, id, name } = req.query;
     let query = {};
-    
+
     // Add teacher_id to query if present and valid
     if (teacher_id) {
       if (!teacher_id.match(/^[0-9a-fA-F]{24}$/)) {
@@ -66,12 +66,12 @@ class SubjectController {
     }
 
     // Returns a 200 status with the found subjects
-    return res.status(200).send(subjects); 
+    return res.status(200).send(subjects);
   }
 
   async updateSubject(req, res) {
     // Retrieves the id parameter from the request
-    const id = req.params.id; 
+    const id = req.params.id;
 
     // Updates the subject with the provided id using the data from the request body
     const updatedSubject = await subjectsModel.findByIdAndUpdate(id, req.body, {
@@ -82,14 +82,14 @@ class SubjectController {
     if (!updatedSubject) {
       throw new ServerError(SUBJECT_ERROR.DOESNT_EXIST);
     }
-    
+
     // Returns a 200 status with the updated subject
-    return res.status(204).send(); 
+    return res.status(204).send();
   }
 
   async deleteSubject(req, res) {
     // Retrieves the id parameter from the request
-    const id = req.params.id; 
+    const id = req.params.id;
 
     // Deletes the subject with the provided id
     const deletedSubject = await subjectsModel.findByIdAndDelete(id);
@@ -99,8 +99,8 @@ class SubjectController {
       throw new ServerError(SUBJECT_ERROR.DOESNT_EXIST);
     }
 
-    // Returns a 200 status with the deleted subject
-    return res.status(204).send(); 
+    // Returns a 204 status with the deleted subject
+    return res.status(204).send();
   }
 }
 

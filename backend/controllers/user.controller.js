@@ -9,7 +9,8 @@ class UserController {
     const { email, enrollment, password } = req.body; // Extract enrollment, email, and password from the request body
 
     // Validate inputs
-    if (!email && !enrollment || !password) throw new ServerError(USER_ERROR.MISSING_REQUIRED_FIELDS);
+    if ((!email && !enrollment) || !password)
+      throw new ServerError(USER_ERROR.MISSING_REQUIRED_FIELDS);
 
     // Find the user by enrollment or email
     const user = await usersModel.findOne({ $or: [{ email }, { enrollment }] });
@@ -28,10 +29,7 @@ class UserController {
     // Generate token
     const token = generateToken(user);
 
-    return res
-      .status(200)
-      .json({ token }); // Returns a 200 status with a success message and the token
-    
+    return res.status(200).json({ token }); // Returns a 200 status with a success message and the token
   }
 
   async createUser(req, res) {
@@ -74,7 +72,7 @@ class UserController {
     // Extract query params for filtering
     const { role, id, enrollment } = req.query;
     let query = {};
-    
+
     // Add role to query if present
     if (role) {
       query.role = role;
@@ -101,7 +99,7 @@ class UserController {
 
     // Returns a 200 status with the found users
     return res.status(200).json(users);
-  }  
+  }
 
   async updateUser(req, res) {
     const id = req.params.id; // Retrieves the id parameter from the request
@@ -112,9 +110,7 @@ class UserController {
     });
 
     // Returns a 204 status with no content
-    return res
-      .status(204)
-      .send();
+    return res.status(204).send();
   }
 
   async updatePassword(req, res) {
@@ -148,9 +144,7 @@ class UserController {
     await usersModel.findByIdAndUpdate(id, { password: passwordHash });
 
     // Returns a 204 status with no content
-    return res
-      .status(204)
-      .send();
+    return res.status(204).send();
   }
 
   async deleteUser(req, res) {
@@ -160,9 +154,7 @@ class UserController {
     await usersModel.findByIdAndDelete(id);
 
     // Returns a 204 status with no content
-    return res
-      .status(204)
-      .send();
+    return res.status(204).send();
   }
 }
 

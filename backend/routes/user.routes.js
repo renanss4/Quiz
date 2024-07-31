@@ -23,6 +23,10 @@ userRoute.patch("/:id", adminCheck, tryCatch(UserController.updateUser));
 
 userRoute.delete("/:id", adminCheck, tryCatch(UserController.deleteUser));
 
-userRoute.put("/new-password", adminCheck, tryCatch(UserController.updatePassword));
+userRoute.put(
+  "/new-password",
+  adminCheck,
+  tryCatch(UserController.updatePassword)
+);
 
 export default userRoute;
