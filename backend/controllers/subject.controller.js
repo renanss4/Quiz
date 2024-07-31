@@ -1,5 +1,5 @@
 import { subjectsModel } from "../models/subject.model.js";
-import { TOKEN_ERROR, SUBJECT_ERROR } from "../constants/errorCodes.js";
+import { SUBJECT_ERROR } from "../constants/errorCodes.js";
 import ServerError from "../ServerError.js";
 
 class SubjectController {
