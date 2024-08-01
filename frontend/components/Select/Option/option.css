@@ -1,0 +1,19 @@
+option {
+  padding: 8px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border-radius: 8px;
+  height: 48px;
+  color: #44403c;
+  background: #fff;
+}
+
+option:hover {
+  background: #e0e7ff;
+}
+
+option:checked {
+  background: #e0e7ff;
+  color: #000;
+}
