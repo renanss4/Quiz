@@ -1,0 +1,9 @@
+.sidebar-item {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #eef2ff;
+  gap: 10px;
+  /* margin: 8px 0; */
+  /* padding: 24px; */
+}

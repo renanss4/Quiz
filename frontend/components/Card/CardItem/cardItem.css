@@ -1,0 +1,18 @@
+div.card-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  width: 80%;
+}
+
+div.card-item p:first-child {
+  font-weight: bold;
+}
+
+.card-item-default {
+  color: #44403c;
+}
+
+.card-item-error {
+  color: #ef4444;
+}

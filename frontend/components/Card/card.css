@@ -1,0 +1,39 @@
+.card-empty,
+.card-attempts,
+.card-answers,
+.card-template {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #ddd;
+  padding: 20px;
+  /* margin: 10px 0; */
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  max-width: 320px;
+  max-height: 524px;
+}
+
+.card-empty {
+  background-color: #e5e5e5;
+}
+
+.card-attempts {
+  background-color: #e5e5e5;
+}
+
+.card-answers {
+  background-color: #e5e5e5;
+}
+
+.card-template {
+  background-color: #e5e5e5;
+}
+
+.card h2 {
+  margin-bottom: 10px;
+}
+
+.card span {
+  display: block;
+  margin: 10px 0;
+}
