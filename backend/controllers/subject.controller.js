@@ -1,154 +1,108 @@
 import { subjectsModel } from "../models/subject.model.js";
+import { SUBJECT_ERROR } from "../constants/errorCodes.js";
+import ServerError from "../ServerError.js";
+import { validateId } from "../utils/validateId.js";
+import { usersSubjectsModel } from "../models/user_subject.model.js";
 
-export class SubjectController {
-  static async createSubject(req, res) {
-    try {
-      // Checks if the user logged in is an admin
-      const isAdmin = req.payload.role;
-      if (isAdmin !== "admin") {
-        return res
-          .status(403)
-          .send({ msg: "You don't have permission for this funcionality" });
-      }
+class SubjectController {
+  async createSubject(req, res) {
+    // Extracts subject data from the request body
+    const { name, teacher_id } = req.body;
 
-      const { name, teacher_id } = req.body; // Extracts subject data from the request body
-
-      // Validates if the required fields are empty
-      // Isn't it better to search by registration number, instead of ID?
-      if (!name) {
-        return res.status(404).send({ msg: "Missing required fields" }); // Returns a 400 status with a message if any required field is empty
-      }
-
-      // Checks if the subject already exists in the database by name
-      const subjectExists = await subjectsModel
-        .findOne({ name })
-        .populate("teacher_id");
-      if (subjectExists) {
-        return res.status(400).json({ Error: "Subject already exists" }); // Returns a 400 status if the subject already exists
-      }
-
-      // Checks if the teacher exists in the database and get the name
-      // const teacher = await subjectsModel.findById(teacher_id);
-      // console.log(teacher_id);
-      // console.log(teacher);
-      // if (!teacher) {
-      //   return res.status(404).json({ Error: "Teacher not found" }); // Returns a 404 status if the teacher is not found
-      // }
-
-      const newSubject = {
-        // Creates a new subject object
-        name,
-        // teacher_id: teacher_id || null,
-        teacher_id: teacher_id || null,
-      };
-
-      // Creates a new subject in the database
-      // const response = await subjectsModel.create(newSubject);
-      // console.log(response);
-      await subjectsModel.create(newSubject);
-
-      return res.status(201).send({ msg: "Subject created successfully!" }); // Returns a 201 status indicating successful creation
-    } catch (error) {
-      console.log({ Error: `${error.message}` });
-      return res.status(500).json({ Error: `${error.message}` }); // Returns a 500 status with an erroror message if an erroror occurs
+    // Validates if the required fields are empty
+    if (!name) {
+      throw new ServerError(SUBJECT_ERROR.MISSING_FIELDS);
     }
+
+    // Checks if the subject already exists in the database by name
+    const subjectExists = await subjectsModel.findOne({ name });
+    if (subjectExists) {
+      throw new ServerError(SUBJECT_ERROR.ALREADY_EXIST);
+    }
+
+    const newSubject = {
+      name,
+      teacher_id: teacher_id || null,
+    };
+
+    await subjectsModel.create(newSubject);
+
+    // Returns a 204 status if the subject is created
+    return res.status(204).send();
   }
 
-  static async readSubjects(req, res) {
-    try {
-      // Finds all subjects in the database
-      const subjects = await subjectsModel.find();
+  async readSubjects(req, res) {
+    // Extract query params for filtering
+    const { teacher_id, id, name } = req.query;
+    let query = {};
 
-      if (subjects.length === 0) {
-        return res
-          .status(200)
-          .json({ message: "No subjects found", subjects: [] });
-      }
-
-      return res.status(200).send(subjects); // Returns a 200 status with the found subjects
-    } catch (error) {
-      console.log({ Error: `${error.message}` });
-      return res.status(500).json({ Error: `${error.message}` }); // Returns a 500 status with an erroror message if an erroror occurs
+    // Add teacher_id to query if present and valid
+    if (teacher_id) {
+      validateId(teacher_id);
+      query.teacher_id = teacher_id;
     }
+
+    // Add id to query if present and valid
+    if (id) {
+      validateId(id);
+      query._id = id;
+    }
+
+    // Add name to query if present
+    if (name) {
+      query.name = name;
+    }
+
+    // Finds subjects in the database based on the query
+    const subjects = await subjectsModel.find(query, "-__v").populate({
+      path: "teacher_id",
+      select: "name",
+    });
+
+    if (!subjects || subjects.length === 0) {
+      throw new ServerError(SUBJECT_ERROR.DOESNT_EXIST);
+    }
+
+    // Returns a 200 status with the found subjects
+    return res.status(200).send(subjects);
   }
 
-  static async readSubjectById(req, res) {
-    try {
-      // Checks if the user logged in is an admin
-      // const isAdmin = req.payload.role;
-      // if (isAdmin !== "admin") {
-      //   return res
-      //     .status(403)
-      //     .send({ msg: "You don't have permission for this funcionality" });
-      // }
+  async updateSubject(req, res) {
+    // Retrieves the id parameter from the request
+    const id = req.params.id;
 
-      // Finds only a user in the database
-      const id = req.params.id;
-      const subject = await subjectsModel.findById(id, "-__v");
-      if (!subject) return res.status(404).json({ Error: "Subject not found" }); // Returns a 404 status if the subject is not found
+    // Updates the subject with the provided id using the data from the request body
+    const updatedSubject = await subjectsModel.findByIdAndUpdate(id, req.body, {
+      new: true,
+    });
 
-      return res.status(200).json(subject); // Returns a 200 status with the found subject
-    } catch (error) {
-      console.log({ Error: `${error.message}` });
-      return res.status(500).json({ Error: `${error.message}` }); // Returns a 500 status with an erroror message if an erroror occurs
+    // Checks if the subject was found and updated
+    if (!updatedSubject) {
+      throw new ServerError(SUBJECT_ERROR.DOESNT_EXIST);
     }
+
+    // Returns a 200 status with the updated subject
+    return res.status(204).send();
   }
 
-  static async updateSubject(req, res) {
-    try {
-      // Checks if the user logged in is an admin
-      const isAdmin = req.payload.role;
-      if (isAdmin !== "admin") {
-        return res
-          .status(403)
-          .send({ msg: "You don't have permission for this funcionality" });
-      }
+  async deleteSubject(req, res) {
+    // Retrieves the id parameter from the request
+    const id = req.params.id;
 
-      const id = req.params.id; // Retrieves the id parameter from the request
+    // Deletes the related user_subject relationships
+    await usersSubjectsModel.deleteMany({ subject_id: id });
 
-      // Checks if the subject exists
-      const subjectExists = await subjectsModel.findById(id);
-      if (!subjectExists) {
-        return res.status(404).json({ msg: "Subject not found" }); // Returns a 404 status with a message if the subject doesn't exist
-      }
+    // Deletes the subject with the provided id
+    const deletedSubject = await subjectsModel.findByIdAndDelete(id);
 
-      // Updates the subject with the provided id using the data from the request body
-      await subjectsModel.findByIdAndUpdate(id, req.body, {
-        new: true,
-      });
-
-      return res.status(200).send({ msg: "Succesfully updated" }); // Returns a 200 status with the updated subject
-    } catch (error) {
-      console.log({ Error: `${error.message}` });
-      return res.status(500).json({ Error: `${error.message}` }); // Returns a 500 status with an erroror message if an erroror occurs
+    // Checks if the subject exists
+    if (!deletedSubject) {
+      throw new ServerError(SUBJECT_ERROR.DOESNT_EXIST);
     }
-  }
 
-  static async deletedSubject(req, res) {
-    try {
-      // Checks if the user logged in is an admin
-      const isAdmin = req.payload.role;
-      if (isAdmin !== "admin") {
-        return res
-          .status(403)
-          .send({ msg: "You don't have permission for this funcionality" });
-      }
-
-      const id = req.params.id; // Retrieves the id parameter from the request
-
-      // Checks if the subject exists
-      const subjectExists = await subjectsModel.findById(id);
-      if (!subjectExists) {
-        return res.status(404).json({ msg: "Subject not found" }); // Returns a 404 status with a message if the subject doesn't exist
-      }
-
-      // Deletes the subject with the provided id
-      await subjectsModel.findByIdAndDelete(id);
-
-      return res.status(200).send({ msg: "Successfully deleted" }); // Returns a 200 status with the deleted subject
-    } catch (error) {
-      console.log({ Error: `${error.message}` });
-      return res.status(500).json({ Error: `${error.message}` }); // Returns a 500 status with an erroror message if an erroror occurs
-    }
+    // Returns a 204 status with the deleted subject
+    return res.status(204).send();
   }
 }
+
+export default new SubjectController();

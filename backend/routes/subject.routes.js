@@ -1,22 +1,26 @@
 import { Router } from "express";
-import { SubjectController } from "../controllers/subject.controller.js";
+import SubjectController from "../controllers/subject.controller.js";
+import { tryCatch } from "../utils/tryCatch.js";
+import { adminCheck } from "../middlewares/adminCheck.js";
 
 const subjectRoute = Router();
 
-// PRIVATE ROUTES FOR ALL USERS
-subjectRoute.get("/", SubjectController.readSubjects);
+subjectRoute.post("/", adminCheck, tryCatch(SubjectController.createSubject));
 
-// PRIVATE ROUTES FOR ADMINS
-// POST routes
-subjectRoute.post("/", SubjectController.createSubject);
+/* 
+    works with query params
+    does not require adminCheck, for now
 
-// GET routes
-subjectRoute.get("/search/:id", SubjectController.readSubjectById);
+    1. /search finds all subjects
+    2. e.g. /search?id=123
+    3. e.g. /search?teacher_id=123
+    4. e.g. /search?name=math
+    5. e.g. /search?teacher_id=123&name=math
+*/
+subjectRoute.get("/search", tryCatch(SubjectController.readSubjects));
 
-// PATCH routes
-subjectRoute.patch("/:id", SubjectController.updateSubject);
+subjectRoute.patch("/:id", adminCheck, tryCatch(SubjectController.updateSubject));
 
-// DELETE routes
-subjectRoute.delete("/:id", SubjectController.deletedSubject);
+subjectRoute.delete("/:id", adminCheck, tryCatch(SubjectController.deleteSubject));
 
 export default subjectRoute;
