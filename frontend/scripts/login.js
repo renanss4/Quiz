@@ -1,12 +1,10 @@
-import { setToken } from "./configs/tokenManager.js";
-import { loginFetch, fetchUserRole } from "./configs/fetch.js";
+import { setToken, decodeToken } from "./configs/tokenManager.js";
+import { loginFetch } from "./configs/fetch.js";
 import { Button } from "../components/Button/Button.js";
 import { Input } from "../components/Input/Input.js";
 
 // Função para validar os campos
-function validateFields() {
-  const email = emailInput.querySelector("input");
-  const password = passwordInput.querySelector("input");
+function validateFields(email, password) {
   let isValid = true;
 
   if (!email.value) {
@@ -34,21 +32,35 @@ function handleInputChange() {
 async function handleLogin(event) {
   event.preventDefault();
 
+  const emailInputField = emailInput.querySelector("input");
+  const passwordInputField = passwordInput.querySelector("input");
+
   // Validando os campos
-  if (!validateFields()) {
+  if (!validateFields(emailInputField, passwordInputField)) {
     return;
   }
 
+  const emailOrEnrollment = emailInputField.value;
+  const password = passwordInputField.value;
+
+  let email = null;
+  let enrollment = null;
+
+  if (emailOrEnrollment.includes("@")) {
+    email = emailOrEnrollment;
+  } else {
+    enrollment = emailOrEnrollment;
+  }
+
   try {
-    const email = emailInput.querySelector("input").value;
-    const password = passwordInput.querySelector("input").value;
-    const data = await loginFetch(email, password);
+    const data = await loginFetch(email, enrollment, password);
     if (data) {
       setToken(data.token);
-      const role = await fetchUserRole();
-      if (role === "student") {
+      const decodedToken = decodeToken(data.token);
+      const userRole = decodedToken.role;
+      if (userRole === "student") {
         window.location.href = "student-dashboard.html";
-      } else if (role === "teacher") {
+      } else if (userRole === "teacher") {
         window.location.href = "teacher-dashboard.html";
       } else {
         window.location.href = "admin-dashboard.html";
@@ -56,15 +68,9 @@ async function handleLogin(event) {
     }
   } catch (error) {
     const incorrect = document.getElementById("error");
-    if (error.message === "User invalid!") {
-      incorrect.style.display = "block";
-      incorrect.innerText = "Usuário inválido!";
-    } else if (error.message === "User not found!") {
-      incorrect.style.display = "block";
-      incorrect.innerText = "Usuário não cadastrado!";
-    } else {
-      console.error(`Error: ${error}`);
-    }
+    incorrect.style.display = "block";
+    incorrect.textContent = "Login failed: " + error.message;
+    console.error("Login ou Fetch falhou:", error);
   }
 }
 
