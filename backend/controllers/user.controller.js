@@ -106,6 +106,22 @@ class UserController {
     return res.status(200).json(users);
   }
 
+  async readMe(req, res) {
+    // Retrieves the user id from the request
+    const id = req.userId;
+
+    // Finds the user by id without the _id, password, __v, and role fields
+    const user = await usersModel.findById(id, "-_id -password -__v -role");
+
+    // Checks if the user exists
+    if (!user) {
+      throw new ServerError(USER_ERROR.DOESNT_EXIST);
+    }
+
+    // Returns a 200 status with the found user
+    return res.status(200).json(user);
+  }
+
   async updateUser(req, res) {
     // Retrieves the id parameter from the request
     const id = req.params.id;
