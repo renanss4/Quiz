@@ -7,8 +7,7 @@ import { Header } from "../components/Header/Header.js";
 import { Input } from "../components/Input/Input.js";
 import { Optional } from "../components/Optional/Optional.js";
 import { Select } from "../components/Select/Select.js";
-import { Sidebar } from "../components/SideBar/Sidebar.js";
-import { SidebarItem } from "../components/SideBar/SidebarItem/SidebarItem.js";
+import { Sidebar } from "../components/SideBar/SideBar.js";
 import { Table } from "../components/Table/Table.js";
 import { Tag } from "../components/Tag/Tag.js";
 import { Toaster } from "../components/Toaster/Toaster.js";
@@ -21,20 +20,11 @@ document.addEventListener("DOMContentLoaded", () => {
   const body = document.querySelector("body");
 
   const sidebarTest = Sidebar({
-    children: [
-      SidebarItem({
-        text: "Item 1",
-        link: "#",
-      }),
-      SidebarItem({
-        text: "Item 2",
-        link: "#",
-      }),
-      SidebarItem({
-        text: "Item 3",
-        link: "#",
-      }),
-    ],
+    itens: [
+      { iconSrc: "../assets/books.svg", text: "Dashboard", link: "/#" },
+      { iconSrc: "../assets/books.svg", text: "Cursos", link: "/#" },
+      { iconSrc: "../assets/books.svg", text: "Alunos", link: "/#" },
+    ]
   });
   body.appendChild(sidebarTest);
   const boxTestMain = Box({

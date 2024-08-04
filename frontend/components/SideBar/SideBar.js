@@ -1,65 +1,62 @@
-import { SidebarItem } from "./SideBarItem/SideBarItem.js";
+function SidebarItem({ iconSrc, text, link, selected = false }) {
+  const li = document.createElement('li');
+  const a = document.createElement('a');
+  const img = document.createElement('img');
+  const p = document.createElement('p');
+
+  a.href = link;
+  a.classList.add('menu-item');
+  img.src = iconSrc;
+  p.textContent = text;
+
+  if (selected) {
+    a.classList.add('selected');
+  }
+
+  a.appendChild(img);
+  a.appendChild(p);
+  li.appendChild(a);
+
+  return li;
+}
 
 export function Sidebar({ itens = [] }) {
-  const nav = document.createElement("nav");
-  nav.classList.add("sidebar");
+  const nav = document.createElement('nav');
 
-  const menu = document.createElement("ul");
-  menu.classList.add("menu");
+  // header
+  const aHeader = document.createElement('a');
+  aHeader.classList.add('nav-header');
+  const divHeader = document.createElement('div');
+  const imgHeader = document.createElement('img');
 
-  // Adiciona o logo (header)
-  const logo = SidebarItem({
-    iconSrc: "../assets/logo1.svg",
-    link: "#",
-    local: "header",
-  });
-  logo.classList.add("logo");
-  // console.log(logo);
-  //   const header = document.createElement("div");
-  //   header.classList.add("header");
-  //   const headerItens = [
-  //     { iconSrc: "../assets/logo1.svg", link: "#" },
-  //     { iconSrc: "../assets/logo2.svg", link: "#" },
-  //   ];
+  aHeader.href = '/';
+  divHeader.className = 'logo';
+  imgHeader.src = '../assets/logo1.svg';
+  divHeader.appendChild(imgHeader);
+  aHeader.appendChild(divHeader);
 
-  //   headerItens.forEach((item) => {
-  //     const li = document.createElement("li");
-  //     const sidebarItem = SideBarItem({ ...item, local: "header" });
-  //     li.appendChild(sidebarItem);
-  //     header.appendChild(li);
-  //   });
+  // menu
+  const ul = document.createElement('ul');
+  ul.className = 'menu';
 
-  // Adiciona os itens principais (main)
-
-  // main
-  const main = document.createElement("div");
-  main.classList.add("main");
-  itens.forEach((item) => {
-    const li = document.createElement("li");
-    const sidebarItem = SidebarItem(item);
-    li.appendChild(sidebarItem);
-    main.appendChild(li);
+  itens.forEach(item => {
+    const isSelected = window.location.pathname === new URL(item.link, window.location.origin).pathname;
+    ul.appendChild(SidebarItem({ ...item, selected: isSelected }));
   });
 
   // footer
-  const footer = document.createElement("div");
-  footer.classList.add("footer");
-  const footerItens = [
-    { iconSrc: "../assets/psswd.svg", text: "Trocar senha", link: "#" },
-    { iconSrc: "../assets/logout.svg", text: "Encerrar sessão", link: "#" },
-  ];
+  const divFooter = document.createElement('div');
+  divFooter.classList.add('nav-footer');
 
-  footerItens.forEach((item) => {
-    const li = document.createElement("li");
-    const sidebarItem = SidebarItem({ ...item, local: "footer" });
-    li.appendChild(sidebarItem);
-    footer.appendChild(li);
-  });
+  const logout = SidebarItem({ iconSrc: '../assets/psswd.svg', text: 'Alterar senha', link: '/change-password' });
+  const changePassword = SidebarItem({ iconSrc: '../assets/logout.svg', text: 'Encerrar sessão', link: '/logout' });
 
-  // Adiciona os elementos ao nav
-  nav.appendChild(logo);
-  menu.appendChild(main);
-  menu.appendChild(footer);
-  nav.appendChild(menu);
+  divFooter.appendChild(logout);
+  divFooter.appendChild(changePassword);
+
+  nav.appendChild(aHeader);
+  nav.appendChild(ul);
+  nav.appendChild(divFooter);
+
   return nav;
 }
