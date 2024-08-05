@@ -3,7 +3,9 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- <link rel="stylesheet" href="../styles/reset.css"> -->
     <link rel="stylesheet" href="../styles/admin-dashboard.css" />
+    <link rel="stylesheet" href="../styles/components.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -13,74 +15,9 @@
     <title>Admin Dashboard</title>
   </head>
   <body>
-    <nav>
-      <a href="#">
-        <!-- Link para a página inicial -->
-        <div class="logo">
-          <img src="../assets/" alt="Logo" />
-        </div>
-      </a>
-      <ul class="menu">
-        <li>
-          <a href="#" class="menu-item">
-            <img src="../assets//house.svg" alt="Dashboard Icon" />
-            <p>Dashboard</p>
-          </a>
-        </li>
-        <div id="dropdown">
-          <li>
-            <a href="#" class="menu-item">
-              <img src="../assets//books.svg" alt="Disciplinas Icon" />
-              <p>Painel</p>
-            </a>
-          </li>
-
-          <a href="#" class="button-hide">
-            <img
-              src="../assets//go-down.svg"
-              alt="Seta baixo Icon"
-              class="arrow-icon-down"
-            />
-            <img
-              src="../assets//go-back-nav.svg"
-              alt="Seta volta Icon"
-              class="arrow-icon-back hidden"
-            />
-          </a>
-        </div>
-
-        <div class="atalhos">
-          <li>
-            <a href="#">Alunos</a>
-          </li>
-          <li>
-            <a href="#">Professores</a>
-          </li>
-          <li>
-            <a href="#">Disciplinas</a>
-          </li>
-        </div>
-        <div class="footer">
-          <li>
-            <a href="#" class="menu-item">
-              <img src="../assets//psswd.svg" alt="Trocar senha Icon" />
-              <p>Trocar senha</p>
-            </a>
-          </li>
-          <li>
-            <a href="#" class="menu-item" id="logout">
-              <img src="../assets//logout.svg" alt="Encerrar sessão Icon" />
-              <p>Encerrar sessão</p>
-            </a>
-          </li>
-        </div>
-      </ul>
-    </nav>
+    <div class="nav"></div>
     <main>
-      <div class="title">
-        <h1>Dashboard</h1>
-        <h2 class="name" id="welcome">Bem-vindo!</h2>
-      </div>
+      <div class="title"></div>
       <section>
         <h3 class="painel">Painel</h3>
         <button id="student">Alunos <a href="#">Cadastrar Novo</a></button>

@@ -21,9 +21,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const sidebarTest = Sidebar({
     itens: [
-      { iconSrc: "../assets/books.svg", text: "Dashboard", link: "/#" },
-      { iconSrc: "../assets/books.svg", text: "Cursos", link: "/#" },
-      { iconSrc: "../assets/books.svg", text: "Alunos", link: "/#" },
+      { iconSrc: "../assets/house.svg", text: "Dashboard", link: "#" },
+      { iconSrc: "../assets/books.svg", text: "Painel", link: "#" },
     ]
   });
   body.appendChild(sidebarTest);

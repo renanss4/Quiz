@@ -1,46 +1,53 @@
-import { fetchUser, fetchUserById } from "./configs/fetch.js";
+import { fetchDataUser } from "./configs/fetch.js";
+import { Sidebar } from "../components/Sidebar/Sidebar.js";
+import { Header } from "../components/Header/Header.js";
+
+// Sidebar
+const nav = document.querySelector(".nav");
+const sidebar = Sidebar({
+  itens: [
+    { iconSrc: "../assets/house.svg", text: "Dashboard", link: "#" },
+    { iconSrc: "../assets/books.svg", text: "Painel", link: "#" },
+  ],
+});
+
+nav.appendChild(sidebar);
+
 
 // Função para exibir a mensagem de boas-vindas
-function welcomeMessage() {
-  const welcome = document.querySelector("#welcome");
-  fetchUserById()
-    .then((id) => fetchUser(id))
-    .then((user) => {
-      welcome.textContent = `Bem-vindo, ${user.name}`;
-    })
-    .catch((error) => {
-      console.error("Erro ao buscar usuário:", error);
-    });
+async function welcomeMessage() {
+  const data = await fetchDataUser();
+  return `Bem-vindo, ${data.name}!`;
 }
 
-welcomeMessage();
+// Header
+function createHeader() {
+  const header = Header({
+    title: "Dashboard",
+    subtitle: '',
+  });
 
-// Toggle the visibility of the shortcuts
-const shortcutsButton = document.querySelector(".button-hide");
-const shortcuts = document.querySelector(".atalhos");
-const arrowIconDown = document.querySelector(".arrow-icon-down");
-const arrowIconBack = document.querySelector(".arrow-icon-back");
+  // Exibir a mensagem de boas-vindas
+  welcomeMessage().then((message) => {
+    header.querySelector("h2").textContent = message;
+  });
 
-shortcutsButton.addEventListener("click", (event) => {
-  event.preventDefault();
+  return header;
+}
 
-  // Toggle the visibility of the shortcuts
-  shortcuts.classList.toggle("hidden");
+const title = document.querySelector(".title");
+const header = createHeader();
+title.appendChild(header);
 
-  // Toggle the arrow icons
-  arrowIconDown.classList.toggle("hidden");
-  arrowIconBack.classList.toggle("hidden");
+// Função de redirecionamento dos botões
+document.querySelector("#student").addEventListener("click", () => {
+  window.location.href = "#";
 });
 
-// Redirect to the subject page
-const buttonSubject = document.querySelector("#subject");
-buttonSubject.addEventListener("click", () => {
-  window.location.href = "subject.html";
+document.querySelector("#teacher").addEventListener("click", () => {
+  window.location.href = "#";
 });
 
-// Encerrar sessão
-const logoutButton = document.querySelector("#logout");
-logoutButton.addEventListener("click", () => {
-  localStorage.removeItem("token");
-  window.location.href = "login.html";
+document.querySelector("#subject").addEventListener("click", () => {
+  window.location.href = "admin/subject.html";
 });
