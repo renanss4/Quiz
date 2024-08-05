@@ -1,4 +1,4 @@
-function SidebarItem({ iconSrc, text, link, selected = false }) {
+function SidebarItem({ iconSrc, text, link }) {
   const li = document.createElement('li');
   const a = document.createElement('a');
   const img = document.createElement('img');
@@ -9,10 +9,6 @@ function SidebarItem({ iconSrc, text, link, selected = false }) {
   img.src = iconSrc;
   p.textContent = text;
 
-  if (selected) {
-    a.classList.add('selected');
-  }
-
   a.appendChild(img);
   a.appendChild(p);
   li.appendChild(a);
@@ -22,6 +18,7 @@ function SidebarItem({ iconSrc, text, link, selected = false }) {
 
 export function Sidebar({ itens = [] }) {
   const nav = document.createElement('nav');
+  nav.classList.add('sidebar');
 
   // header
   const aHeader = document.createElement('a');
@@ -45,18 +42,18 @@ export function Sidebar({ itens = [] }) {
   });
 
   // footer
-  const divFooter = document.createElement('div');
-  divFooter.classList.add('nav-footer');
+  const ulFooter = document.createElement('ul');
+  ulFooter.classList.add('nav-footer');
 
-  const logout = SidebarItem({ iconSrc: '../assets/psswd.svg', text: 'Alterar senha', link: '/change-password' });
-  const changePassword = SidebarItem({ iconSrc: '../assets/logout.svg', text: 'Encerrar sessão', link: '/logout' });
+  const logout = SidebarItem({ iconSrc: '../assets/logout.svg', text: 'Encerrar sessão', link: '/logout' });
+  const changePassword = SidebarItem({ iconSrc: '../assets/psswd.svg', text: 'Alterar senha', link: '/change-password' });
 
-  divFooter.appendChild(logout);
-  divFooter.appendChild(changePassword);
+  ulFooter.appendChild(changePassword);
+  ulFooter.appendChild(logout);
 
   nav.appendChild(aHeader);
   nav.appendChild(ul);
-  nav.appendChild(divFooter);
+  nav.appendChild(ulFooter);
 
   return nav;
 }

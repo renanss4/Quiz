@@ -1,3 +1,9 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 a,
 li {
   list-style: none;
@@ -14,7 +20,8 @@ nav {
   flex-direction: column;
   align-items: center;
   background-color: #1e1b4b;
-  width: 16rem;
+  width: 18rem;
+  height: 100vh;
   gap: 1rem;
   padding: 3.5rem;
 }
@@ -37,8 +44,16 @@ nav {
   gap: 1rem;
 }
 
+.menu-item {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 1rem;
+}
+
 .nav-footer {
   margin-top: auto;
+  width: 100%;
 }
 
 .nav-footer a {
@@ -49,6 +64,7 @@ nav {
   padding: 0.5rem;
 }
 
-.selected {
-  background-color: #fef08a;
+.nav-footer p {
+  margin: 0; 
+  white-space: nowrap;
 }
