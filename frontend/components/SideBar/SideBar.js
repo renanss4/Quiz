@@ -1,10 +1,22 @@
-function SidebarItem({ iconSrc, text, link }) {
+import { Dialog } from '../Dialog/Dialog.js';
+
+function SidebarItem({ iconSrc, text, link = null, action = () => {} }) {
   const li = document.createElement('li');
   const a = document.createElement('a');
   const img = document.createElement('img');
   const p = document.createElement('p');
 
-  a.href = link;
+  if (action) {
+    a.addEventListener('click', (e) => {
+      e.preventDefault(); // Previne o redirecionamento padrão do link
+      action();
+    });
+  }
+
+  if (link) {
+    a.href = link;
+  }
+
   a.classList.add('menu-item');
   img.src = iconSrc;
   p.textContent = text;
@@ -14,6 +26,34 @@ function SidebarItem({ iconSrc, text, link }) {
   li.appendChild(a);
 
   return li;
+}
+
+function showDialog() {
+  const overlay = document.getElementById('overlay');
+  const dialogContainer = document.getElementById('dialog-container');
+
+  // Criar e adicionar o dialog
+  const dialog = Dialog({
+    title: 'Tem certeza?',
+    message: 'Você irá encerrar a sessão e será redirecionado para a página de login.',
+    buttons: [
+      { type: 'outline', size: 'mid', text: 'Cancelar', onClick: () => { hideDialog(); } },
+      { type: 'destructive', size: 'mid', text: 'Encerrar', onClick: () => { window.location.href = '/login'; } },
+    ],
+  });
+
+  dialogContainer.innerHTML = ''; // Limpa o conteúdo anterior
+  dialogContainer.appendChild(dialog);
+  overlay.style.display = 'block'; // Exibe o overlay
+  dialogContainer.style.display = 'block'; // Exibe o dialog
+}
+
+function hideDialog() {
+  const overlay = document.getElementById('overlay');
+  const dialogContainer = document.getElementById('dialog-container');
+
+  overlay.style.display = 'none'; // Esconde o overlay
+  dialogContainer.style.display = 'none'; // Esconde o dialog
 }
 
 export function Sidebar({ itens = [] }) {
@@ -45,7 +85,8 @@ export function Sidebar({ itens = [] }) {
   const ulFooter = document.createElement('ul');
   ulFooter.classList.add('nav-footer');
 
-  const logout = SidebarItem({ iconSrc: '../assets/logout.svg', text: 'Encerrar sessão', link: '/logout' });
+  const logout = SidebarItem({ iconSrc: '../assets/logout.svg', text: 'Encerrar sessão', action: () => showDialog() });
+
   const changePassword = SidebarItem({ iconSrc: '../assets/psswd.svg', text: 'Alterar senha', link: '/change-password' });
 
   ulFooter.appendChild(changePassword);

@@ -76,20 +76,53 @@ document.addEventListener("DOMContentLoaded", () => {
         onClose: teste,
       }),
       Dialog({
-        type: "confirm",
         title: "Teste 1",
-        message: "fusyiahdidsioçad",
+        message: "fusyiahdiaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaadsioçad",
+        buttons: [
+          {
+            type: "outline",
+            text: "Cancelar",
+            onClick: teste,
+          },
+          {
+            type: "destructive",
+            text: "Confirmar",
+            onClick: teste,
+          },
+        ],
       }),
       Dialog({
-        type: "alert",
         title: "Teste 2",
         message: "fusyiahdidsioçad",
+        buttons: [
+          {
+            type: "default",
+            text: "Cancelar",
+            onClick: teste,
+          },
+          {
+            type: "destructive",
+            text: "Confirmar",
+            onClick: teste,
+          },
+        ],
       }),
       Dialog({
-        type: "toaster",
         title: "Teste 3",
         message:
           "fusyiahdidsioçajjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjf jjjjjjjjjjjjjjjjjjjjjjjjj jjjhhhhhhhhhhhhhhhhhhhhd",
+        buttons: [
+          {
+            type: "default",
+            text: "Cancelar",
+            onClick: teste,
+          },
+          {
+            type: "destructive",
+            text: "Confirmar",
+            onClick: teste,
+          },
+        ]
       }),
       Header({
         title: "Título",

@@ -13,7 +13,6 @@ const sidebar = Sidebar({
 
 nav.appendChild(sidebar);
 
-
 // Função para exibir a mensagem de boas-vindas
 async function welcomeMessage() {
   const data = await fetchDataUser();
