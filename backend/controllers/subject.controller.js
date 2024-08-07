@@ -60,7 +60,7 @@ class SubjectController {
     });
 
     if (!subjects || subjects.length === 0) {
-      throw new ServerError(SUBJECT_ERROR.DOESNT_EXIST);
+      return res.status(200).json({ message: "No subjects found" });
     }
 
     // Returns a 200 status with the found subjects

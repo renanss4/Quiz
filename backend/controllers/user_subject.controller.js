@@ -87,7 +87,7 @@ class UserSubjectController {
         { path: "subject_id", select: "name" },
       ]);
     if (!usersSubjects) {
-      throw new ServerError(RELATION_ERROR.DOESNT_EXIST);
+      return res.status(200).json({ message: "No user_subject relationships found" });
     }
 
     // Returns a 200 status with the found user_subject relationships

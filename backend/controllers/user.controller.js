@@ -99,7 +99,7 @@ class UserController {
     // Finds users in the database based on the query
     const users = await usersModel.find(query, "-password -__v");
     if (!users) {
-      throw new ServerError(USER_ERROR.DOESNT_EXIST);
+      return res.status(200).json({ message: "No users found" });
     }
 
     // Returns a 200 status with the found users
