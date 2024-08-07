@@ -1,0 +1,9 @@
+.select-container {
+    position: relative;
+}
+
+.optional {
+    position: absolute;
+    bottom: 40px;
+    left: 80px;
+}

@@ -131,7 +131,113 @@ export async function fetchSubjects(params = undefined){
       throw new Error(data.message || "Error fetching subjects data");
     }
 
-    console.log(data);
+    // console.log(data);
+    return data;
+  } catch (error) {
+    throw new Error("Network error: " + error.message);
+  }
+}
+
+//Create a new subject
+export async function createSubject(name, teacher_id) {
+  
+  await checkAuthenticationByToken();
+
+  teacher_id = teacher_id === "null" ? null : teacher_id;
+
+  const token = getToken();
+  if (!token) {
+    throw new Error("No token found!");
+  }
+
+  try {
+    const response = await fetch(`${URL}/subject`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({ name, teacher_id }),
+    });
+
+    if (response.status === 204) {
+      return;
+    }
+
+    const data = await response.json();
+    if (!response.ok) {
+      throw new Error(data.message || "Error creating subject");
+    }
+
+    return data;
+  } catch (error) {
+    throw new Error("Network error: " + error.message);
+  }
+}
+
+// Function to edit a subject
+export async function editSubject(id, name, teacher_id) {
+  await checkAuthenticationByToken();
+
+  teacher_id = teacher_id === "null" ? null : teacher_id;
+
+  const token = getToken();
+  if (!token) {
+    throw new Error("No token found!");
+  }
+
+  try {
+    const response = await fetch(`${URL}/subject/${id}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({ name, teacher_id }),
+    });
+
+    if (response.status === 204) {
+      return;
+    }
+
+    const data = await response.json();
+    if (!response.ok) {
+      throw new Error(data.message || "Error editing subject");
+    }
+
+    return data;
+  } catch (error) {
+    throw new Error("Network error: " + error.message);
+  }
+}
+
+// Function to delete a subject
+export async function deleteSubject(id) {
+  await checkAuthenticationByToken();
+
+  const token = getToken();
+  if (!token) {
+    throw new Error("No token found!");
+  }
+
+  try {
+    const response = await fetch(`${URL}/subject/${id}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    if (response.status === 204) {
+      return;
+    }
+
+    const data = await response.json();
+    if (!response.ok) {
+      throw new Error(data.message || "Error deleting subject");
+    }
+
     return data;
   } catch (error) {
     throw new Error("Network error: " + error.message);

@@ -4,7 +4,7 @@ import { Box } from "../../components/Box/Box.js";
 import { Header } from "../../components/Header/Header.js";
 import { Button } from "../../components/Button/Button.js";
 import { Table } from "../../components/Table/Table.js";
-import { fetchSubjects } from "../fetch.js";
+import { fetchSubjects, deleteSubject } from "../fetch.js";
 
 // Inicialização da sidebar e adição ao DOM
 const nav = document.querySelector(".nav");
@@ -15,27 +15,60 @@ const sidebar = Sidebar({
 });
 nav.appendChild(sidebar);
 
+// botões de editar e excluir pegando o id da disciplina
+const editButton = (id) => Button({
+  type: "link",
+  text: "Editar",
+  link: `subject-edit.html?id=${id}`
+});
+
+const deleteButton = (id) => Button({
+  type: "link",
+  text: "Excluir",
+  onClick: async (event) => {
+    event.preventDefault(); // Impede o comportamento padrão do link
+
+    const confirmDelete = confirm("Tem certeza que deseja excluir esta disciplina?");
+    if (!confirmDelete) {
+      return;
+    }
+
+    try {
+      await deleteSubject(id); // Exclui o assunto
+      alert("Disciplina excluída com sucesso!");
+      window.location.reload(); // Recarrega a página para atualizar a tabela
+    } catch (error) {
+      alert("Erro ao excluir disciplina: " + error.message);
+    }
+  }
+});
+
+
 // Função para renderizar a tabela dinamicamente com os dados das disciplinas
 async function renderTable() {
   try {
-    const subjects = await fetchSubjects();
+    const response = await fetchSubjects();
 
-    const rows = subjects.map(subject => [
-      subject.name, 
-      subject.teacher_id ? subject.teacher_id.name : "Sem professor",
-      0, // Quiz, que ainda não foi implementado, retorna 0
-      "Editar", // Placeholder para ação de editar
-      "Excluir" // Placeholder para ação de excluir
-    ]);
-
-    const tableDiv = document.querySelector(".table-subject");
-    const table = Table({
-      headers: ["Nome", "Professor", "Quiz", "Ações"],
-      rows: rows
-    });
-
-    tableDiv.innerHTML = ''; // Limpa o conteúdo anterior
-    tableDiv.appendChild(table);
+    if (Array.isArray(response)) {
+      const subjects = response;
+      const rows = subjects.map(subject => [
+        subject.name, 
+        subject.teacher_id ? subject.teacher_id.name : "Sem professor",
+        0, // Quiz, que ainda não foi implementado, retorna 0
+        editButton(subject._id), // Botão de editar
+        deleteButton(subject._id) // Botão de excluir
+      ]);
+  
+      const tableDiv = document.querySelector(".table-subject");
+      const table = Table({
+        headers: ["Nome", "Professor", "Quiz", "Ações"],
+        rows: rows
+      });
+  
+      tableDiv.innerHTML = ''; // Limpa o conteúdo anterior
+      tableDiv.appendChild(table);
+    }
+    
   } catch (error) {
     console.error("Failed to render table:", error);
   }
@@ -57,10 +90,25 @@ buttonDiv.appendChild(buttonCreate);
 const tableDiv = document.createElement('div');
 tableDiv.classList.add('table-subject');
 
+// função que conta quantas disciplinas tem cadastradas
+async function countSubjects() {
+  try {
+    const subjects = await fetchSubjects();
+    if (subjects.length > 0) {
+      const subtitle = document.querySelector("h2");
+      subtitle.innerHTML = `${subjects.length} Disciplinas Cadastradas`;
+    } 
+
+  } catch (error) {
+    console.error("Failed to count subjects:", error);
+  }
+}
+countSubjects();
+
 // Criação do header
 const headerElement = Header({
   title: "Disciplinas",
-  subtitle: '0 Disciplinas Cadastradas',
+  subtitle: "Nenhuma disciplina cadastrada",
   btnBack: true,
   linkBack: "admin-dashboard.html"
 });

@@ -1,4 +1,4 @@
-export function Optional({ imgSrc = "../assets/optional.svg", info }) {
+export function Optional({ imgSrc = "../../assets/optional.svg", info }) {
   const element = document.createElement("div");
   element.classList.add("optional");
 

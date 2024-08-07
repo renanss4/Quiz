@@ -8,7 +8,12 @@ export function Select({
   value,
   placeholder = "Selecione uma opção",
   onChange = () => {},
+  label = ""
 }) {
+  // Cria o container para o select e o label
+  const container = document.createElement("div");
+  container.classList.add("select-container");
+
   // Cria o elemento select
   const select = document.createElement("select");
 
@@ -40,9 +45,6 @@ export function Select({
       selected: optionConfig.value === value,
       disabled: optionConfig.value === "",
     });
-
-    // console.log(optionConfig);
-    // console.log(option);
     select.appendChild(option);
   });
 
@@ -52,6 +54,18 @@ export function Select({
   // Adiciona a classe de estilo
   select.classList.add("select");
 
-  // Retorna o elemento select
-  return select;
+  // Define o label
+  if (label) {
+    const labelElement = document.createElement("label");
+    labelElement.setAttribute("for", select.id);
+    labelElement.textContent = label;
+    labelElement.classList.add("select-label");
+    container.appendChild(labelElement);
+  }
+
+  // Adiciona o select ao container
+  container.appendChild(select);
+
+  // Retorna o container
+  return container;
 }
