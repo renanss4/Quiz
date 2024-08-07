@@ -1,5 +1,5 @@
-import { setToken, decodeToken } from "./configs/tokenManager.js";
-import { loginFetch } from "./configs/fetch.js";
+import { setToken, decodeToken } from "./tokenManager.js";
+import { loginFetch } from "./fetch.js";
 import { Button } from "../components/Button/Button.js";
 import { Input } from "../components/Input/Input.js";
 
@@ -59,11 +59,11 @@ async function handleLogin(event) {
       const decodedToken = decodeToken(data.token);
       const userRole = decodedToken.role;
       if (userRole === "student") {
-        window.location.href = "student-dashboard.html";
+        window.location.href = "./student/student-dashboard.html";
       } else if (userRole === "teacher") {
-        window.location.href = "teacher-dashboard.html";
+        window.location.href = "./teacher/teacher-dashboard.html";
       } else {
-        window.location.href = "admin-dashboard.html";
+        window.location.href = "./admin/admin-dashboard.html";
       }
     }
   } catch (error) {

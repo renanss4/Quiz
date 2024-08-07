@@ -1,134 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="../../styles/subject.css" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
-      rel="stylesheet"
-    />
-    <title>Disciplinas</title>
-  </head>
-  <body>
-    <nav>
-      <a href="#">
-        <!-- Link para a página inicial -->
-        <div class="logo">
-          <img src="../../assets/logo1.svg" alt="Logo" />
-        </div>
-      </a>
-      <ul class="menu">
-        <li>
-          <a href="" class="menu-item">
-            <img src="../../assets/house.svg" alt="Dashboard Icon" />
-            <p>Dashboard</p>
-          </a>
-        </li>
-        <li>
-          <a href="" class="menu-item">
-            <img src="../../assets/books.svg" alt="Disciplinas Icon" />
-            <p>Painel</p>
-            <img src="../../assets/go-down.svg" alt="Seta baixo Icon" />
-          </a>
-        </li>
-        <div class="atalhos">
-          <li>
-            <a href="">Alunos</a>
-          </li>
-          <li>
-            <a href="">Professores</a>
-          </li>
-          <li>
-            <a href="">Disciplinas</a>
-          </li>
-        </div>
-        <div class="footer">
-          <li>
-            <a href="" class="menu-item">
-              <img src="../../assets/psswd.svg" alt="Trocar senha Icon" />
-              <p>Trocar senha</p>
-            </a>
-          </li>
-          <li>
-            <a href="" class="menu-item" id="logout">
-              <img src="../../assets/logout.svg" alt="Encerrar sessão Icon" />
-              <p>Encerrar sessão</p>
-            </a>
-          </li>
-        </div>
-      </ul>
-    </nav>
-    <main>
-      <div id="content">
-        <header>
-          <div class="title">
-            <a href="#" id="painel"
-              ><img src="../../assets/go-back.svg" alt="Voltar"
-            /></a>
-            <h1>Disciplinas</h1>
-            <h2 id="count-subject">0 Disciplinas Cadastradas</h2>
-          </div>
-          <button id="cadastrar">
-            <img src="../../assets/create.svg" alt="Cadastrar algo" />
-            Cadastrar
-          </button>
-        </header>
-        <table>
-          <thead>
-            <tr>
-              <th>Nome</th>
-              <th>Professor</th>
-              <th>Quiz</th>
-              <th>Ações</th>
-            </tr>
-          </thead>
-          <tbody></tbody>
-        </table>
-      </div>
-
-      <div id="dialog">
-        <div>
-          <h3>Tem certeza?</h3>
-          <p id="data-dialog">
-            Você irá elimiar a disciplina "". Esta ação não pode ser desfeita.
-          </p>
-        </div>
-        <div class="buttons">
-          <button id="cancel">Cancelar</button>
-          <button id="confirm">Eliminar</button>
-        </div>
-      </div>
-
-      <div id="form-container" style="display: none">
-        <form id="subject-form" action="" method="post">
-          <a href="#" id="back">
-            <img src="../../assets/go-back.svg" alt="Fechar" />
-          </a>
-          <h1 class="title-form">Cadastro da Disciplina</h1>
-          <label for="name">Nome</label>
-          <input
-            type="text"
-            id="name"
-            name="name"
-            required
-            placeholder="Disciplina"
-          />
-          <label for="teacher">Professor</label>
-          <select id="teacher" name="teacher" required>
-            <option value="">Selecione um professor</option>
-            <!-- Adicione mais opções conforme necessário -->
-          </select>
-          <div id="error">
-            <p>Erro ao cadastrar disciplina</p>
-          </div>
-          <button type="submit" id="submit">Cadastrar</button>
-        </form>
-      </div>
-    </main>
-
-    <script src="../../scripts/subject.js" type="module"></script>
-  </body>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="../../styles/admin/subject.css" />
+  <link rel="stylesheet" href="../../styles/components.css" />
+  <title>Disciplinas</title>
+</head>
+<body>
+  <div class="nav"></div>
+  <div class="main-content">
+    <!-- Este div será preenchido com o conteúdo gerado pelo Box -->
+  </div>
+  <script src="../../scripts/admin/subject.js" type="module"></script>
+</body>
 </html>

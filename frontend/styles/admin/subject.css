@@ -1,0 +1,16 @@
+.button-create {
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    position: relative;
+    top: -6rem;
+}
+
+.table-subject {
+    position: relative;
+    top: -4.5rem;
+}
+
+.main-content {
+    width: 100%;
+}

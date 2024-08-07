@@ -23,7 +23,7 @@ export function Header({ title, subtitle, btnBack = false, linkBack = null }) {
   if (btnBack) {
     const btn = Button({
       type: "link",
-      imgSrc: "../assets/go-back.svg",
+      imgSrc: "../../assets/go-back.svg",
       link: linkBack,
     });
     btn.classList.add("btn-back");

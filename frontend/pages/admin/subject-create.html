@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="form-container" >
+        <form id="subject-form" action="" method="post">
+          <a href="#" id="back">
+            <img src="../../assets/go-back.svg" alt="Fechar" />
+          </a>
+          <h1 class="title-form">Cadastro da Disciplina</h1>
+          <label for="name">Nome</label>
+          <input
+            type="text"
+            id="name"
+            name="name"
+            required
+            placeholder="Disciplina"
+          />
+          <label for="teacher">Professor</label>
+          <select id="teacher" name="teacher" required>
+            <option value="">Selecione um professor</option>
+            <!-- Adicione mais opções conforme necessário -->
+          </select>
+          <div id="error">
+            <p>Erro ao cadastrar disciplina</p>
+          </div>
+          <button type="submit" id="submit">Cadastrar</button>
+        </form>
+      </div>
+</body>
+</html>

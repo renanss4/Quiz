@@ -101,3 +101,39 @@ export async function fetchUsers(params = undefined) {
     throw new Error("Network error: " + error.message);
   }
 }
+
+// Function to fetch all subjects
+export async function fetchSubjects(params = undefined){
+  await checkAuthenticationByToken();
+
+  const token = getToken();
+  if (!token) {
+    throw new Error("No token found!");
+  }
+
+  let uri = `${URL}/subject/search`;
+  if (params) {
+    const queryString = new URLSearchParams(params).toString();
+    uri = `${uri}?${queryString}`;
+  }
+
+  try {
+    const response = await fetch(uri, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    const data = await response.json();
+    if (!response.ok) {
+      throw new Error(data.message || "Error fetching subjects data");
+    }
+
+    console.log(data);
+    return data;
+  } catch (error) {
+    throw new Error("Network error: " + error.message);
+  }
+}

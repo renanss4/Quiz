@@ -3,7 +3,7 @@ import {
   fetchDisciplina,
   fetchAluno,
   fetchUserById,
-} from "./configs/fetch.js";
+} from "../configs/fetch.js";
 
 const welcome = document.querySelector(".name");
 const ul = document.querySelector(".main-list");

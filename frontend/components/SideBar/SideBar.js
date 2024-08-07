@@ -68,7 +68,7 @@ export function Sidebar({ itens = [] }) {
 
   aHeader.href = '/';
   divHeader.className = 'logo';
-  imgHeader.src = '../assets/logo1.svg';
+  imgHeader.src = '../../assets/logo1.svg';
   divHeader.appendChild(imgHeader);
   aHeader.appendChild(divHeader);
 
@@ -85,9 +85,9 @@ export function Sidebar({ itens = [] }) {
   const ulFooter = document.createElement('ul');
   ulFooter.classList.add('nav-footer');
 
-  const logout = SidebarItem({ iconSrc: '../assets/logout.svg', text: 'Encerrar sessão', action: () => showDialog() });
+  const logout = SidebarItem({ iconSrc: '../../assets/logout.svg', text: 'Encerrar sessão', action: () => showDialog() });
 
-  const changePassword = SidebarItem({ iconSrc: '../assets/psswd.svg', text: 'Alterar senha', link: '/change-password' });
+  const changePassword = SidebarItem({ iconSrc: '../../assets/psswd.svg', text: 'Alterar senha', link: '/change-password' });
 
   ulFooter.appendChild(changePassword);
   ulFooter.appendChild(logout);
