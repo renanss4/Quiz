@@ -98,7 +98,7 @@ form {
 
 #toggle-password {
   position: absolute;
-  top: 50px; /* Ajuste conforme necessário */
+  top: 43px; /* Ajuste conforme necessário */
   right: 15px;
   cursor: pointer;
   z-index: 999;

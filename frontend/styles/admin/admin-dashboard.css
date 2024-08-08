@@ -34,7 +34,7 @@ main {
   gap: 1.6rem;
 }
 
-.title h1 {
+/* .title h1 {
   font-weight: 700;
   color: #1c1917;
 }
@@ -42,7 +42,7 @@ main {
 .title h2 {
   font-weight: 400;
   color: #44403c;
-}
+} */
 
 section .painel {
   margin-top: 1.2rem;
