@@ -102,8 +102,51 @@ export async function fetchUsers(params = undefined) {
   }
 }
 
+// Function to fetch all teachers
+export async function fetchTeachers() {
+  return fetchUsers({ role: "teacher" });
+}
+
+// Function to fetch all students
+export async function fetchStudents() {
+  return fetchUsers({ role: "student" });
+}
+
+// Function to delete a user
+export async function deleteUser(id) {
+  await checkAuthenticationByToken();
+
+  const token = getToken();
+  if (!token) {
+    throw new Error("No token found!");
+  }
+
+  try {
+    const response = await fetch(`${URL}/user/${id}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    if (response.status === 204) {
+      return;
+    }
+
+    const data = await response.json();
+    if (!response.ok) {
+      throw new Error(data.message || "Error deleting user");
+    }
+
+    return data;
+  } catch (error) {
+    throw new Error("Network error: " + error.message);
+  }
+}
+
 // Function to fetch all subjects
-export async function fetchSubjects(params = undefined){
+export async function fetchSubjects(params = undefined) {
   await checkAuthenticationByToken();
 
   const token = getToken();
@@ -140,7 +183,6 @@ export async function fetchSubjects(params = undefined){
 
 //Create a new subject
 export async function createSubject(name, teacher_id) {
-  
   await checkAuthenticationByToken();
 
   teacher_id = teacher_id === "null" ? null : teacher_id;

@@ -8,7 +8,7 @@ export function Select({
   value,
   placeholder = "Selecione uma opção",
   onChange = () => {},
-  label = ""
+  label = "",
 }) {
   // Cria o container para o select e o label
   const container = document.createElement("div");

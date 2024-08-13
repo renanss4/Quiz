@@ -23,7 +23,7 @@ document.addEventListener("DOMContentLoaded", () => {
     itens: [
       { iconSrc: "../assets/house.svg", text: "Dashboard", link: "#" },
       { iconSrc: "../assets/books.svg", text: "Painel", link: "#" },
-    ]
+    ],
   });
   body.appendChild(sidebarTest);
   const boxTestMain = Box({
@@ -77,7 +77,8 @@ document.addEventListener("DOMContentLoaded", () => {
       }),
       Dialog({
         title: "Teste 1",
-        message: "fusyiahdiaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaadsioçad",
+        message:
+          "fusyiahdiaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaadsioçad",
         buttons: [
           {
             type: "outline",
@@ -122,7 +123,7 @@ document.addEventListener("DOMContentLoaded", () => {
             text: "Confirmar",
             onClick: teste,
           },
-        ]
+        ],
       }),
       Header({
         title: "Título",

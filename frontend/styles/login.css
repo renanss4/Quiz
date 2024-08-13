@@ -68,6 +68,7 @@ body {
   align-items: center;
   gap: 18px;
   font-weight: 600;
+  font-size: 32px;
 }
 
 .login .line {

@@ -1,0 +1,9 @@
+.button-create {
+  position: absolute;
+  top: 4rem;
+  right: 4rem;
+  max-width: 10rem;
+}
+.main-content {
+  width: 100%;
+}
