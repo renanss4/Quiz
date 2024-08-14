@@ -5,6 +5,7 @@ import { Card } from "../components/Card/Card.js";
 import { Dialog } from "../components/Dialog/Dialog.js";
 import { Header } from "../components/Header/Header.js";
 import { Input } from "../components/Input/Input.js";
+import { Multiselect } from "../components/Multiselect/Multiselect.js";
 import { Optional } from "../components/Optional/Optional.js";
 import { Select } from "../components/Select/Select.js";
 import { Sidebar } from "../components/SideBar/SideBar.js";
@@ -15,7 +16,9 @@ import { Toaster } from "../components/Toaster/Toaster.js";
 function teste() {
   alert("Você clicou no botão!");
 }
-
+function handleSelectionChange(selectedItems) {
+  console.log("Selected items:", selectedItems);
+}
 document.addEventListener("DOMContentLoaded", () => {
   const body = document.querySelector("body");
 
@@ -28,6 +31,19 @@ document.addEventListener("DOMContentLoaded", () => {
   body.appendChild(sidebarTest);
   const boxTestMain = Box({
     children: [
+      Multiselect({
+        nome: "Multiselect",
+        options: [
+          { value: "1", label: "Opção 1" },
+          { value: "2", label: "Opção 2" },
+          { value: "3", label: "Opção 3" },
+          { value: "4", label: "Opção 4" },
+          { value: "5", label: "Opção 5" },
+          { value: "6", label: "Opção 6" },
+        ],
+        selectedOptions: [],
+        onChange: handleSelectionChange,
+      }),
       Optional({
         text: "Opcional 1",
         info: "Informação 1",
