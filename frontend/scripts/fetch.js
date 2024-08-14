@@ -146,6 +146,40 @@ export async function createUser(name, email, enrollment, password, role) {
   }
 }
 
+// Function to edit a user
+export async function editUser(id, name, email, enrollment, role) {
+  await checkAuthenticationByToken();
+
+  const token = getToken();
+  if (!token) {
+    throw new Error("No token found!");
+  }
+
+  try {
+    const response = await fetch(`${URL}/user/${id}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({ name, email, enrollment, role }),
+    });
+
+    if (response.status === 204) {
+      return;
+    }
+
+    const data = await response.json();
+    if (!response.ok) {
+      throw new Error(data.message || "Error editing user");
+    }
+
+    return data;
+  } catch (error) {
+    throw new Error("Network error: " + error.message);
+  }
+}
+
 // Function to delete a user
 export async function deleteUser(id) {
   await checkAuthenticationByToken();
