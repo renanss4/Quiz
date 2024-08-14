@@ -1,10 +1,11 @@
 import { Sidebar } from "../../components/Sidebar/Sidebar.js";
 import { Header } from "../../components/Header/Header.js";
 import { Input } from "../../components/Input/Input.js";
-import { Select } from "../../components/Select/Select.js";
 import { Button } from "../../components/Button/Button.js";
 import { Box } from "../../components/Box/Box.js";
 import { Optional } from "../../components/Optional/Optional.js";
+import { Multiselect } from "../../components/MultiSelect/Multiselect.js";
+import { fetchSubjects, createUser } from "../fetch.js";
 
 const nav = document.querySelector(".nav");
 const sidebar = Sidebar({
@@ -58,6 +59,24 @@ const inputPassword = Input({
   id: "student-password",
 });
 
+async function getOptions() {
+  const subjects = await fetchSubjects();
+  return subjects.map((subject) => ({
+    value: subject._id,
+    label: subject.name,
+  }));
+}
+const options = await getOptions();
+
+const checkBox = Multiselect({
+  nome: "Disciplinas",
+  options: options,
+  selectedOptions: [],
+  onChange: (values) => {
+    console.log("Selected values:", values);
+  },
+});
+
 const createBtn = Button({
   text: "Cadastrar Aluno",
   onClick: () => {
@@ -83,6 +102,7 @@ const container = Box({
     inputEmail,
     inputEnrollment,
     inputPassword,
+    checkBox,
     createBtn,
   ],
 });

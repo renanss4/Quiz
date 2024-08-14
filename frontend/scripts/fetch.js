@@ -112,6 +112,40 @@ export async function fetchStudents() {
   return fetchUsers({ role: "student" });
 }
 
+// Function to create a user
+export async function createUser(name, email, enrollment, password, role) {
+  await checkAuthenticationByToken();
+
+  const token = getToken();
+  if (!token) {
+    throw new Error("No token found!");
+  }
+
+  try {
+    const response = await fetch(`${URL}/user`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({ name, email, enrollment, password, role }),
+    });
+
+    if (response.status === 204) {
+      return;
+    }
+
+    const data = await response.json();
+    if (!response.ok) {
+      throw new Error(data.message || "Error creating user");
+    }
+
+    return data;
+  } catch (error) {
+    throw new Error("Network error: " + error.message);
+  }
+}
+
 // Function to delete a user
 export async function deleteUser(id) {
   await checkAuthenticationByToken();
