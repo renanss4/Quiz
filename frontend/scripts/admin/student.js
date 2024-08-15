@@ -4,7 +4,7 @@ import { Box } from "../../components/Box/Box.js";
 import { Header } from "../../components/Header/Header.js";
 import { Button } from "../../components/Button/Button.js";
 import { Table } from "../../components/Table/Table.js";
-import { fetchStudents, deleteUser } from "../fetch.js";
+import { fetchStudents, deleteUser, fetchStudentSubjects } from "../fetch.js";
 
 // Inicialização da sidebar e adição ao DOsM
 const nav = document.querySelector(".nav");
@@ -88,6 +88,32 @@ function deleteButton(id) {
   return button;
 }
 
+// Contar quantas disciplinas o aluno está matriculado
+async function countStudentSubjects(studentId) {
+  try {
+    const response = await fetchStudentSubjects({ student_id: studentId });
+    return response.length;
+  } catch (error) {
+    console.error("Failed to count student subjects:", error);
+    return 0;
+  }
+}
+
+// mostra as disciplinas que o aluno está matriculado
+async function showStudentSubjects(studentId) {
+  try {
+    const response = await fetchStudentSubjects({ student_id: studentId });
+    let subjects = [];
+    for (const subject of response) {
+      subjects.push(subject.subject_id.name);
+    }
+    return subjects;
+  } catch (error) {
+    console.error("Failed to show student subjects:", error);
+    return [];
+  }
+}
+
 // Criação da tabela
 const tableDiv = document.createElement("div");
 tableDiv.className = "table-student";
@@ -98,13 +124,22 @@ async function renderTable() {
     const response = await fetchStudents();
     if (Array.isArray(response)) {
       const students = response;
-      const rows = students.map((student) => [
-        student.enrollment,
-        student.name,
-        0, // quantas disciplinas o aluno está matriculado (ainda não implementado)
-        editButton(student._id),
-        deleteButton(student._id),
-      ]);
+
+      const rows = await Promise.all(
+        students.map(async (student) => {
+          const subjectCount = await countStudentSubjects(student._id);
+          const subjects = await showStudentSubjects(student._id);
+          console.log(subjects);
+
+          return [
+            student.enrollment,
+            student.name,
+            subjectCount,
+            editButton(student._id),
+            deleteButton(student._id),
+          ];
+        })
+      );
 
       const tableDiv = document.querySelector(".table-student");
       const table = Table({

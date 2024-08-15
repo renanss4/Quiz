@@ -112,6 +112,77 @@ export async function fetchStudents() {
   return fetchUsers({ role: "student" });
 }
 
+// Function to fetch all relationships between students and subjects
+export async function fetchStudentSubjects(params = undefined) {
+  await checkAuthenticationByToken();
+
+  const token = getToken();
+  if (!token) {
+    throw new Error("No token found!");
+  }
+
+  let uri = `${URL}/user_subject/search`;
+  if (params) {
+    const queryString = new URLSearchParams(params).toString();
+    uri = `${uri}?${queryString}`;
+  }
+
+  try {
+    const response = await fetch(uri, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    const data = await response.json();
+    if (!response.ok) {
+      throw new Error(data.message || "Error fetching student subjects data");
+    }
+
+    return data;
+  } catch (error) {
+    throw new Error("Network error: " + error.message);
+  }
+}
+
+// Function to make a relationship between a student and a subject
+export async function createStudentSubject(student_id, subject_id) {
+  await checkAuthenticationByToken();
+
+  const token = getToken();
+  if (!token) {
+    throw new Error("No token found!");
+  }
+
+  try {
+    const response = await fetch(`${URL}/user_subject`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({ student_id, subject_id }),
+    });
+
+    if (response.status === 204) {
+      return;
+    }
+
+    const data = await response.json();
+    if (!response.ok) {
+      throw new Error(data.message || "Error creating student subject");
+    }
+
+    return data;
+  } catch (error) {
+    throw new Error("Network error: " + error.message);
+  }
+}
+
+// Function to delete a relationship between a student and a subject
+
 // Function to create a user
 export async function createUser(name, email, enrollment, password, role) {
   await checkAuthenticationByToken();

@@ -5,7 +5,12 @@ import { Button } from "../../components/Button/Button.js";
 import { Box } from "../../components/Box/Box.js";
 import { Optional } from "../../components/Optional/Optional.js";
 import { Multiselect } from "../../components/MultiSelect/Multiselect.js";
-import { fetchSubjects, createUser } from "../fetch.js";
+import {
+  fetchSubjects,
+  createUser,
+  createStudentSubject,
+  fetchUsers,
+} from "../fetch.js";
 
 const nav = document.querySelector(".nav");
 const sidebar = Sidebar({
@@ -50,15 +55,6 @@ const inputEnrollment = Input({
   id: "student-enrollment",
 });
 
-const inputPassword = Input({
-  label: "Senha",
-  required: true,
-  type: "password",
-  placeholder: "********",
-  name: "Senha",
-  id: "student-password",
-});
-
 async function getOptions() {
   const subjects = await fetchSubjects();
   return subjects.map((subject) => ({
@@ -73,25 +69,43 @@ const checkBox = Multiselect({
   options: options,
   selectedOptions: [],
   onChange: (values) => {
-    console.log("Selected values:", values);
+    // console.log("Selected values:", values);
+    checkBox.selectedOptions = values;
   },
 });
 
 const createBtn = Button({
   text: "Cadastrar Aluno",
-  onClick: () => {
+  onClick: async () => {
     const name = document.getElementById("student-name").value;
     const email = document.getElementById("student-email").value;
     const enrollment = document.getElementById("student-enrollment").value;
-    const password = document.getElementById("student-password").value;
-    createUser(name, email, enrollment, password, "student")
-      .then(() => {
+
+    try {
+      // Cria o usuário
+      await createUser(name, email, enrollment, "teste123", "student");
+
+      // Busca o ID do aluno recém-criado
+      const users = await fetchUsers({ enrollment: enrollment });
+      const student = users[0];
+
+      if (student) {
+        const studentId = student._id;
+
+        // Cria a relação entre aluno e disciplinas
+        const selectedOptions = checkBox.selectedOptions;
+        for (const subjectId of selectedOptions) {
+          await createStudentSubject(studentId, subjectId);
+        }
+
         alert("Aluno cadastrado com sucesso!");
         window.location.href = "./student.html";
-      })
-      .catch((error) => {
-        alert("Erro ao cadastrar aluno: " + error.message);
-      });
+      } else {
+        throw new Error("Aluno não encontrado após criação.");
+      }
+    } catch (error) {
+      alert("Erro ao cadastrar aluno: " + error.message);
+    }
   },
 });
 
@@ -101,7 +115,6 @@ const container = Box({
     inputName,
     inputEmail,
     inputEnrollment,
-    inputPassword,
     checkBox,
     createBtn,
   ],
