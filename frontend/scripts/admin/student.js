@@ -129,7 +129,7 @@ async function renderTable() {
         students.map(async (student) => {
           const subjectCount = await countStudentSubjects(student._id);
           const subjects = await showStudentSubjects(student._id);
-          console.log(subjects);
+          // console.log(subjects);
 
           return [
             student.enrollment,
