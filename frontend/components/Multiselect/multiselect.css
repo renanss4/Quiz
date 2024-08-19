@@ -1,5 +1,9 @@
 .multiselect-container {
   margin-bottom: 20px;
+  padding: 10px;
+  max-height: 300px;
+  overflow-y: auto;
+  /* border: 1px solid #ccc; */
 }
 
 .multiselect-label {
@@ -25,5 +29,5 @@
 }
 
 .multiselect-option input[type="checkbox"] {
-  margin-right: 10px; /* Adiciona um espaçamento entre o checkbox e o label */
+  margin-right: 10px;
 }
