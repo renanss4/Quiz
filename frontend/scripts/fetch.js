@@ -141,6 +141,40 @@ export async function addTeacherToSubject(subject_id, teacher_id) {
   }
 }
 
+// Function to remove a teacher from a subject
+export async function removeTeacherFromSubject(subject_id) {
+  await checkAuthenticationByToken();
+
+  const token = getToken();
+  if (!token) {
+    throw new Error("No token found!");
+  }
+
+  try {
+    const response = await fetch(`${URL}/subject/${subject_id}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({ teacher_id: null }), // Set teacher_id to null to remove the teacher
+    });
+
+    if (response.status === 204) {
+      return;
+    }
+
+    const data = await response.json();
+    if (!response.ok) {
+      throw new Error(data.message || "Error removing teacher from subject");
+    }
+
+    return data;
+  } catch (error) {
+    throw new Error("Network error: " + error.message);
+  }
+}
+
 // Function to fetch all students
 export async function fetchStudents() {
   return fetchUsers({ role: "student" });
@@ -378,7 +412,10 @@ export async function fetchSubjects(params = undefined) {
       throw new Error(data.message || "Error fetching subjects data");
     }
 
-    // console.log(data);
+    if (data.message === "No subjects found") {
+      return [];
+    }
+
     return data;
   } catch (error) {
     throw new Error("Network error: " + error.message);
