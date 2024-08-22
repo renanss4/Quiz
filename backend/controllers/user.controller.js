@@ -5,6 +5,7 @@ import { validateId } from "../utils/validateId.js";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
 import { usersSubjectsModel } from "../models/user_subject.model.js";
+import { subjectsModel } from "../models/subject.model.js";
 
 class UserController {
   async loginUser(req, res) {
@@ -178,6 +179,12 @@ class UserController {
 
     // Deletes the related user_subject relationships
     await usersSubjectsModel.deleteMany({ student_id: id });
+
+    // If the user is a teacher, updates the teacher_id to null in subjects
+    await subjectsModel.updateMany(
+      { teacher_id: id },
+      { $set: { teacher_id: null } }
+    );
 
     // Deletes the user with the provided id
     await usersModel.findByIdAndDelete(id);
