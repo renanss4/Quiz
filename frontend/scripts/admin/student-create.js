@@ -93,7 +93,12 @@ const createBtn = Button({
         const studentId = student._id;
 
         // Cria a relação entre aluno e disciplinas
-        const selectedOptions = checkBox.selectedOptions;
+        let selectedOptions = checkBox.selectedOptions;
+
+        if (!selectedOptions) {
+          selectedOptions = [];
+        }
+
         for (const subjectId of selectedOptions) {
           await createStudentSubject(studentId, subjectId);
         }

@@ -41,7 +41,7 @@ const inputEmail = Input({
   label: "Email",
   required: true,
   type: "email",
-  placeholder: "Nome Sobrenome",
+  placeholder: "email@email.com",
   name: "Email",
   id: "teacher-email",
 });
@@ -79,9 +79,11 @@ const createBtn = Button({
     const name = document.getElementById("teacher-name").value;
     const email = document.getElementById("teacher-email").value;
     const enrollment = document.getElementById("teacher-enrollment").value;
-    const selectedSubjects = checkBox.selectedOptions;
+    let selectedSubjects = checkBox.selectedOptions;
 
-    console.log(selectedSubjects);
+    if (!selectedSubjects) {
+      selectedSubjects = [];
+    }
 
     try {
       await createUser(name, email, enrollment, "teste123", "teacher");

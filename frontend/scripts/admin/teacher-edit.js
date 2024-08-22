@@ -74,7 +74,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   const options = await getOptions();
 
   const multiselect = Multiselect({
-    label: "Disciplinas",
+    nome: "Disciplinas",
     options: options,
     selectedOptions: [],
     onChange: (values) => {
@@ -84,6 +84,10 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   async function updateTeacherSubjects(teacherId, selectedSubjects) {
     const allSubjects = await fetchSubjects();
+
+    if (!Array.isArray(allSubjects) || allSubjects.length === 0) {
+      return;
+    }
 
     // Filtra as disciplinas que têm o professor atualmente
     const previousSubjects = allSubjects
