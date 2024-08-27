@@ -2,6 +2,7 @@ import { Router } from "express";
 import userRoute from "./user.routes.js";
 import subjectRoute from "./subject.routes.js";
 import userSubjectRoute from "./user_subject.routes.js";
+import quizRoute from "./quiz.routes.js";
 import UserController from "../controllers/user.controller.js";
 import { checkToken } from "../middlewares/authenticate.js";
 import { tryCatch } from "../utils/tryCatch.js";
@@ -15,6 +16,7 @@ routes.post("/login", tryCatch(UserController.loginUser));
 routes.use("/user", checkToken, userRoute);
 routes.use("/subject", checkToken, subjectRoute);
 routes.use("/user_subject", checkToken, userSubjectRoute);
+routes.use("/quiz", checkToken, quizRoute);
 
 // 404 - Not Found
 routes.use((req, res) => {
