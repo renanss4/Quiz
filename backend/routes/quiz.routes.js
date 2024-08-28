@@ -3,7 +3,7 @@ import QuizController from "../controllers/quiz.controller.js";
 import { tryCatch } from "../utils/tryCatch.js";
 import { teacherCheck } from "../middlewares/teacherCheck.js";
 import { isNotStudent } from "../middlewares/isNotStudent.js";
-// import {adminCheck} from '../middlewares/adminCheck.js';
+import { adminCheck } from "../middlewares/adminCheck.js";
 
 const quizRoute = Router();
 
@@ -21,7 +21,7 @@ quizRoute.post("/", teacherCheck, tryCatch(QuizController.createQuiz));
 */
 quizRoute.get("/search", tryCatch(QuizController.readQuizzes));
 
-quizRoute.patch("/:id", isNotStudent, tryCatch(QuizController.updateQuiz));
+quizRoute.patch("/:id", adminCheck, tryCatch(QuizController.updateQuiz));
 
 quizRoute.delete("/:id", isNotStudent, tryCatch(QuizController.deleteQuiz));
 

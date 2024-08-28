@@ -19,8 +19,16 @@ subjectRoute.post("/", adminCheck, tryCatch(SubjectController.createSubject));
 */
 subjectRoute.get("/search", tryCatch(SubjectController.readSubjects));
 
-subjectRoute.patch("/:id", adminCheck, tryCatch(SubjectController.updateSubject));
+subjectRoute.patch(
+  "/:id",
+  adminCheck,
+  tryCatch(SubjectController.updateSubject)
+);
 
-subjectRoute.delete("/:id", adminCheck, tryCatch(SubjectController.deleteSubject));
+subjectRoute.delete(
+  "/:id",
+  adminCheck,
+  tryCatch(SubjectController.deleteSubject)
+);
 
 export default subjectRoute;
