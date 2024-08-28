@@ -19,6 +19,17 @@ function teste() {
 function handleSelectionChange(selectedItems) {
   console.log("Selected items:", selectedItems);
 }
+// Função para lidar com mudanças no input de data
+const handleDateChange = (event) => {
+  const dateValue = event.target.value;
+  console.log(`Data alterada para: ${dateValue}`);
+};
+
+// Função para lidar com mudanças no textarea
+const handleDescriptionChange = (event) => {
+  const descriptionValue = event.target.value;
+  console.log(`Descrição alterada para: ${descriptionValue}`);
+};
 document.addEventListener("DOMContentLoaded", () => {
   const body = document.querySelector("body");
 
@@ -31,6 +42,20 @@ document.addEventListener("DOMContentLoaded", () => {
   body.appendChild(sidebarTest);
   const boxTestMain = Box({
     children: [
+      Input({
+        type: "date",
+        label: "Data",
+        placeholder: "Digite a data",
+        name: "date",
+        onChange: handleDateChange,
+      }),
+      Input({
+        type: "textarea",
+        label: "Descrição",
+        placeholder: "Digite a descrição",
+        name: "description",
+        onChange: handleDescriptionChange,
+      }),
       Multiselect({
         nome: "Multiselect",
         options: [
