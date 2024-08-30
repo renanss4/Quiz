@@ -58,7 +58,7 @@ class UserSubjectController {
 
   async readUsersSubjects(req, res) {
     // Extracts query params for filtering
-    const { id, student_id, subject_id } = req.query;
+    const { id, enrollment, subject_id } = req.query;
     let query = {};
 
     // Add id to query if present and valid
@@ -67,10 +67,14 @@ class UserSubjectController {
       query._id = id;
     }
 
-    // Add student_id to query if present and valid
-    if (student_id) {
-      validateId(student_id);
-      query.student_id = student_id;
+    // Add enrollment to query if present
+    if (enrollment) {
+      // Find students with the given enrollment
+      const students = await usersModel.find({ enrollment: enrollment }).exec();
+      // Get the IDs of these students
+      const studentIds = students.map((student) => student._id);
+      // Add the student IDs to the query
+      query.student_id = { $in: studentIds };
     }
 
     // Add subject_id to query if present and valid
@@ -80,15 +84,10 @@ class UserSubjectController {
     }
 
     // Finds user_subject relationships in the database based on the query
-    const usersSubjects = await usersSubjectsModel
-      .find(query, "-__v")
-      .populate([
-        { path: "student_id", select: "name" },
-        { path: "subject_id", select: "name" },
-      ]);
-    if (!usersSubjects) {
-      return res.status(200).json({ message: "No user_subject relationships found" });
-    }
+    const usersSubjects = await usersSubjectsModel.find(query).populate([
+      { path: "student_id", select: "name enrollment" },
+      { path: "subject_id", select: "name" },
+    ]);
 
     // Returns a 200 status with the found user_subject relationships
     return res.status(200).json(usersSubjects);
