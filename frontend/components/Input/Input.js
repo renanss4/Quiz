@@ -12,6 +12,31 @@ export function Input({
   const container = document.createElement("div");
   container.classList.add("input-container");
 
+  if (type === "textareaGroup") {
+    // Cria uma div para o grupo de textareas
+    const textAreaGroup = document.createElement("div");
+    textAreaGroup.classList.add("textarea-group");
+
+    // Adiciona 4 textareas com estilos diferenciados
+    for (let i = 0; i < 4; i++) {
+      const textArea = document.createElement("textarea");
+      textArea.classList.add("textarea-item");
+      if (i === 0) {
+        textArea.classList.add("correct-answer");
+      } else {
+        textArea.classList.add("wrong-answer");
+      }
+      textArea.setAttribute("placeholder", placeholder);
+      textArea.name = `${name}_${i}`;
+      textArea.id = `${id}_${i}`;
+      textArea.addEventListener("input", onChange);
+      textAreaGroup.appendChild(textArea);
+    }
+
+    container.appendChild(textAreaGroup);
+    return container;
+  }
+
   // Cria o elemento de input ou textarea com base no tipo
   const input =
     type === "textarea"

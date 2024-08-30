@@ -526,3 +526,160 @@ export async function deleteSubject(id) {
     throw new Error("Network error: " + error.message);
   }
 }
+
+// Function to fetch all quizzes
+export async function fetchQuizzes(params = undefined) {
+  await checkAuthenticationByToken();
+
+  const token = getToken();
+  if (!token) {
+    throw new Error("No token found!");
+  }
+
+  let uri = `${URL}/quiz/search`;
+  if (params) {
+    const queryString = new URLSearchParams(params).toString();
+    uri = `${uri}?${queryString}`;
+  }
+
+  try {
+    const response = await fetch(uri, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    const data = await response.json();
+    if (!response.ok) {
+      throw new Error(data.message || "Error fetching quizzes data");
+    }
+
+    return data;
+  } catch (error) {
+    throw new Error("Network error: " + error.message);
+  }
+}
+
+// Function to create a quiz
+export async function createQuiz(
+  name,
+  type,
+  time,
+  attempts,
+  date_start,
+  date_end,
+  orientation,
+  subject_id,
+  is_draft,
+  questions
+) {
+  await checkAuthenticationByToken();
+
+  const token = getToken();
+  if (!token) {
+    throw new Error("No token found!");
+  }
+
+  try {
+    const response = await fetch(`${URL}/quiz`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({
+        name,
+        type,
+        time,
+        attempts,
+        date_start,
+        date_end,
+        orientation,
+        subject_id,
+        is_draft,
+        questions,
+      }),
+    });
+
+    if (response.status === 204) {
+      return;
+    }
+
+    const data = await response.json();
+    if (!response.ok) {
+      throw new Error(data.message || "Error creating quiz");
+    }
+
+    // console.log(data);
+    return data;
+  } catch (error) {
+    throw new Error("Network error: " + error.message);
+  }
+}
+
+export async function addQuestionToQuiz(quizId, questionsData) {
+  await checkAuthenticationByToken();
+
+  const token = getToken();
+  if (!token) {
+    throw new Error("No token found!");
+  }
+
+  try {
+    const response = await fetch(`${URL}/quiz/question/${quizId}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({ questions: questionsData }),
+    });
+
+    if (response.status === 204) {
+      return true;
+    }
+
+    const data = await response.json();
+    if (!response.ok) {
+      throw new Error(data.message || "Error updating quiz with questions");
+    }
+
+    return data;
+  } catch (error) {
+    throw new Error("Network error: " + error.message);
+  }
+}
+
+export async function transformDraftToQuiz(quizId) {
+  await checkAuthenticationByToken();
+
+  const token = getToken();
+  if (!token) {
+    throw new Error("No token found!");
+  }
+
+  try {
+    const response = await fetch(`${URL}/quiz/draft/${quizId}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    if (response.status === 204) {
+      return true;
+    }
+
+    const data = await response.json();
+    if (!response.ok) {
+      throw new Error(data.message || "Error transforming draft to quiz");
+    }
+
+    return data;
+  } catch (error) {
+    throw new Error("Network error: " + error.message);
+  }
+}

@@ -43,6 +43,12 @@ document.addEventListener("DOMContentLoaded", () => {
   const boxTestMain = Box({
     children: [
       Input({
+        type: "textareaGroup",
+        placeholder: "Digite uma resposta",
+        name: "responses",
+        onChange: handleDescriptionChange,
+      }),
+      Input({
         type: "date",
         label: "Data",
         placeholder: "Digite a data",
