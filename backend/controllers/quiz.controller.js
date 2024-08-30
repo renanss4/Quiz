@@ -21,7 +21,7 @@ class QuizController {
     if (!validateDate(date_start) || !validateDate(date_end)) {
       return res
         .status(400)
-        .json({ message: "Invalid date format. Use MM/DD/YYYY" });
+        .json({ message: "Invalid date format. Use YYYY-MM-DD" });
     }
 
     if (new Date(date_end) <= new Date(date_start)) {
@@ -53,7 +53,7 @@ class QuizController {
       orientation,
       type,
       is_draft,
-      questions,
+      questions: questions || [],
     };
 
     const createdQuiz = await quizzesModel.create(newQuiz);
@@ -99,6 +99,47 @@ class QuizController {
     }
 
     return res.status(200).send(quizzes);
+  }
+
+  async addQuestion(req, res) {
+    const id = req.params.id;
+    const { questions } = req.body;
+
+    const updatedQuiz = await quizzesModel.findByIdAndUpdate(
+      id,
+      {
+        $push: {
+          questions,
+        },
+      },
+      {
+        new: true,
+      }
+    );
+
+    if (!updatedQuiz) {
+      return res.status(404).json({ message: "Quiz not found" });
+    }
+
+    return res.status(204).send();
+  }
+
+  async transformDraft(req, res) {
+    const id = req.params.id;
+
+    const updatedQuiz = await quizzesModel.findByIdAndUpdate(
+      id,
+      { is_draft: false },
+      {
+        new: true,
+      }
+    );
+
+    if (!updatedQuiz) {
+      return res.status(404).json({ message: "Quiz not found" });
+    }
+
+    return res.status(204).send();
   }
 
   async updateQuiz(req, res) {
