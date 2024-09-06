@@ -77,7 +77,22 @@ const quizSchema = new Schema(
       type: Boolean,
       required: true,
     },
-    questions: [questionSchema],
+    questions: {
+      type: [questionSchema],
+      validate: {
+        validator: function (v) {
+          if (v.length < 10) {
+            this.is_draft = true; // Set to draft if fewer than 10 questions
+            return true; // Validation passes even though it’s a draft
+          }
+          if (v.length > 10) {
+            return false; // Validation fails if more than 10 questions
+          }
+        },
+        message:
+          "The quiz must contain exactly 10 questions and cannot exceed 10 questions!",
+      },
+    },
   },
   {
     timestamps: false,
