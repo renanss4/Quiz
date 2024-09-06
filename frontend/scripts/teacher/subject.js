@@ -19,10 +19,15 @@ const quizzes = await fetchQuizzes();
 
 // Combina os quizzes do subject com os quizzes completos retornados pelo fetchQuizzes
 const subjectQuizzes = subject.quizzes.map((subjectQuiz) => {
-  const fullQuiz = quizzes.find((quiz) => quiz._id === subjectQuiz.quiz_id);
+  // Verifica se quizzes é um array antes de usar o find
+  const fullQuiz = Array.isArray(quizzes)
+    ? quizzes.find((quiz) => quiz._id === subjectQuiz.quiz_id)
+    : null;
+
+  // Retorna o objeto subjectQuiz mesmo se o quiz não existir
   return {
     ...subjectQuiz,
-    is_draft: fullQuiz ? fullQuiz.is_draft : false,
+    is_draft: fullQuiz ? fullQuiz.is_draft : false, // Define o is_draft como false se o quiz não for encontrado
   };
 });
 

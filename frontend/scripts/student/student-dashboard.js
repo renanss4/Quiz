@@ -1,64 +1,53 @@
-import {
-  fetchAlunoDisciplina,
-  fetchDisciplina,
-  fetchAluno,
-  fetchUserById,
-} from "../configs/fetch.js";
+import { Sidebar } from "../../components/SideBar/SideBar.js";
+import { Header } from "../../components/Header/Header.js";
+import { Box } from "../../components/Box/Box.js";
+import { fetchDataUser, fetchStudentSubjects } from "../fetch.js";
 
-const welcome = document.querySelector(".name");
-const ul = document.querySelector(".main-list");
-const loader = document.querySelector(".loader-wrapper");
-const content = document.querySelector(".content");
-const noContent = document.querySelector(".no-content");
-const btnQuiz = document.querySelector("#btn-quiz");
-
-function addNameTitle(aluno) {
-  welcome.innerText = `Bem vindo, ${aluno.name}`;
-}
-
-function createSubjectsOnPage(disciplina) {
-  const liObj = document.createElement("li");
-  liObj.innerHTML = `<a href="#">${disciplina.name} - ${disciplina.year}</a>`;
-  ul.append(liObj);
-}
-
-async function initializePage() {
-  const userId = await fetchUserById();
-  if (userId) {
-    // Esconde o loader e mostra o conteúdo após o carregamento completo da página
-    loader.style.display = "none";
-    content.classList.add("loaded");
-
-    btnQuiz.remove(); // Remove o botão de quiz
-
-    const dadosAluno = await fetchAluno(userId);
-    if (dadosAluno) {
-      addNameTitle(dadosAluno);
-    }
-
-    const disciplinasAluno = await fetchAlunoDisciplina(userId);
-    if (disciplinasAluno === 404) {
-      // remove ul.main-list
-      ul.remove();
-      return null;
-    }
-
-    if (disciplinasAluno.length > 0) {
-      for (const element of disciplinasAluno) {
-        const disciplina = await fetchDisciplina(element.subject_id);
-        if (disciplina) {
-          createSubjectsOnPage(disciplina);
-        }
-      }
-      noContent.style.display = "none"; // Esconde a mensagem de "sem dados" se houver disciplinas
-    }
-  }
-}
-
-document.addEventListener("DOMContentLoaded", async () => {
-  try {
-    await initializePage();
-  } catch (error) {
-    console.error("Erro durante a inicialização da página:", error);
-  }
+const nav = document.querySelector(".nav");
+const sidebar = Sidebar({
+  itens: [],
 });
+nav.appendChild(sidebar);
+
+async function welcomeMessage() {
+  const data = await fetchDataUser();
+  return `Bem vindo, ${data.name}!`;
+}
+
+async function loadAndDisplayContent() {
+  const header = Header({
+    title: "Dashboard",
+    subtitle: await welcomeMessage(),
+    btnBack: false,
+    linkBack: "#",
+  });
+
+  const section = document.createElement("section");
+  const titleSubjects = document.createElement("h3");
+  titleSubjects.classList.add("painel");
+  titleSubjects.textContent = "Disciplinas";
+  section.appendChild(titleSubjects);
+
+  const student = await fetchDataUser();
+  const enrollment = student.enrollment;
+
+  // relação de alunos com disciplinas já tem os id
+  const data = await fetchStudentSubjects({ enrollment });
+  data.forEach((subject) => {
+    const btn = document.createElement("button");
+    btn.textContent = subject.subject_id.name;
+    btn.onclick = () => {
+      window.location.href = `subject.html?id=${subject.subject_id._id}`;
+    };
+    section.appendChild(btn);
+  });
+
+  const box = Box({
+    children: [header, section],
+  });
+
+  const main = document.querySelector(".main-content");
+  main.appendChild(box);
+}
+
+loadAndDisplayContent();

@@ -1,0 +1,43 @@
+section {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 55%;
+  gap: 32px;
+}
+
+section h2 {
+  color: #44403c;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 28px;
+  letter-spacing: 0px;
+}
+
+section p {
+  color: #44403c;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 24px;
+  letter-spacing: 0px;
+}
+
+section ul {
+  padding: 0;
+  margin: 0;
+}
+
+section li {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin: 1rem 0;
+  color: #44403c;
+  font-weight: bold;
+}
+
+/* .card a {
+  color: #4338ca;
+} */
