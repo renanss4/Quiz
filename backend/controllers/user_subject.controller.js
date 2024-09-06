@@ -58,7 +58,7 @@ class UserSubjectController {
 
   async readUsersSubjects(req, res) {
     // Extracts query params for filtering
-    const { id, enrollment, subject_id } = req.query;
+    const { id, enrollment, subject_id, student_id } = req.query;
     let query = {};
 
     // Add id to query if present and valid
@@ -81,6 +81,12 @@ class UserSubjectController {
     if (subject_id) {
       validateId(subject_id);
       query.subject_id = subject_id;
+    }
+
+    // Add student_id to query if present and valid
+    if (student_id) {
+      validateId(student_id);
+      query.student_id = student_id;
     }
 
     // Finds user_subject relationships in the database based on the query
