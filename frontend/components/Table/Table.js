@@ -1,6 +1,6 @@
 import { TableItem } from "./TableItem/TableItem.js";
 
-export function Table({ headers = [], rows = [] }) {
+export function Table({ headers = [], rows = [], rowClickHandler = null }) {
   const table = document.createElement("table");
   table.classList.add("table");
 
@@ -21,7 +21,13 @@ export function Table({ headers = [], rows = [] }) {
 
   // Cria as linhas da tabela
   rows.forEach((row) => {
-    const rowElement = TableItem(row);
+    // Aqui você deve garantir que cada item em rows é um array
+    const rowElement = Array.isArray(row.data)
+      ? TableItem(
+          row.data,
+          rowClickHandler ? () => rowClickHandler(row.id) : null
+        )
+      : TableItem(row);
     tbodyElement.appendChild(rowElement);
   });
 

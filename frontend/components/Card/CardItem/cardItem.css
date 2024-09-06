@@ -2,17 +2,24 @@ div.card-item {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
+  margin: 5px;
   width: 80%;
 }
-
-div.card-item p:first-child {
-  font-weight: bold;
+/* 
+div.card-item p.answer {
+  color: #78716c;
+} */
+.view-answer-button {
+  background: none;
+  border: none;
+  color: #4338ca;
+  /* text-decoration: underline; */
+  cursor: pointer;
+  font-size: inherit;
+  padding: 0;
+  margin: 0;
 }
 
-.card-item-default {
-  color: #44403c;
-}
-
-.card-item-error {
-  color: #ef4444;
+.view-answer-button:hover {
+  text-decoration: underline;
 }

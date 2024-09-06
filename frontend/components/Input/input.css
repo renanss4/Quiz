@@ -53,6 +53,21 @@
   background: #f8d7da;
 }
 
+.radio-container {
+  display: flex;
+  align-items: center;
+  margin: 10px 0;
+}
+
+.radio-container input[type="radio"] {
+  margin-right: 8px;
+  /* display: none; */
+}
+
+.input-container input[type="radio"]:checked + label {
+  background-color: #ffeb3b;
+}
+
 @media (max-width: 768px) {
   .input-container {
     width: 100%;

@@ -6,6 +6,7 @@ export function Input({
   placeholder = "",
   name = "",
   style = "default",
+  options = [],
   onChange,
 }) {
   // Cria o container para o input e o label
@@ -34,6 +35,32 @@ export function Input({
     }
 
     container.appendChild(textAreaGroup);
+    return container;
+  }
+
+  // Adicionando suporte para tipo 'radio'
+  if (type === "radio") {
+    // Cria um grupo de radio buttons
+    options.forEach((option, index) => {
+      const radioContainer = document.createElement("div");
+      radioContainer.classList.add("radio-container");
+
+      const radioInput = document.createElement("input");
+      radioInput.setAttribute("type", "radio");
+      radioInput.setAttribute("name", name);
+      radioInput.setAttribute("id", `${id}_${index}`);
+      radioInput.setAttribute("value", option.value);
+      radioInput.addEventListener("change", onChange);
+
+      const radioLabel = document.createElement("label");
+      radioLabel.setAttribute("for", `${id}_${index}`);
+      radioLabel.textContent = option.label;
+
+      radioContainer.appendChild(radioInput);
+      radioContainer.appendChild(radioLabel);
+
+      container.appendChild(radioContainer);
+    });
     return container;
   }
 

@@ -12,6 +12,7 @@ import { Sidebar } from "../components/SideBar/SideBar.js";
 import { Table } from "../components/Table/Table.js";
 import { Tag } from "../components/Tag/Tag.js";
 import { Toaster } from "../components/Toaster/Toaster.js";
+import { Timer } from "../components/Timer/Timer.js";
 
 function teste() {
   alert("Você clicou no botão!");
@@ -42,6 +43,36 @@ document.addEventListener("DOMContentLoaded", () => {
   body.appendChild(sidebarTest);
   const boxTestMain = Box({
     children: [
+      Input({
+        type: "radio",
+        name: "testRadio", // nome para agrupar os radio buttons
+        id: "testRadio_1", // id único para cada radio
+        options: [
+          { label: "Opção 1", value: "1" },
+          { label: "Opção 2", value: "2" },
+          { label: "Opção 3", value: "3" },
+          { label: "Opção 4", value: "4" },
+        ],
+        onChange: (e) => {
+          console.log(e.target.value);
+        }, // Loga o valor selecionado
+      }),
+      Timer({ time: 190, onTimeEnd: teste }),
+      Card({
+        type: "answers",
+        cardItems: [
+          { question: "Pergunta 1", answer: "Resposta 1" },
+          { question: "Pergunta 2", answer: "Resposta 2" },
+          { question: "Pergunta 3", answer: "Resposta 3" },
+          { question: "Pergunta 4", answer: "Resposta 4" },
+          { question: "Pergunta 5", answer: "Resposta 5" },
+          { question: "Pergunta 6", answer: "Resposta 6" },
+          { question: "Pergunta 7", answer: "Resposta 7" },
+          { question: "Pergunta 8", answer: "Resposta 8" },
+          { question: "Pergunta 9", answer: "Resposta 9" },
+          { question: "Pergunta 10", answer: "Resposta 10" },
+        ],
+      }),
       Input({
         type: "textareaGroup",
         placeholder: "Digite uma resposta",
@@ -239,51 +270,6 @@ document.addEventListener("DOMContentLoaded", () => {
         ],
         value: "",
         placeholder: "Selecione uma opção",
-      }),
-      Card({
-        type: "empty",
-      }),
-      Card({
-        type: "attempts",
-        title: "Suas Tentativas.",
-        cardItems: [
-          {
-            title: "Tentativa 1",
-            description: "Descrição da tentativa 1",
-          },
-          {
-            title: "Tentativa 2",
-            description: "Descrição da tentativa 2",
-          },
-        ],
-      }),
-      Card({
-        type: "answers",
-        title: "Suas Respostas.",
-        cardItems: [
-          {
-            title: "Resposta 1",
-            description: "Descrição da resposta 1",
-          },
-          {
-            title: "Resposta 2",
-            description: "Descrição da resposta 2",
-          },
-        ],
-      }),
-      Card({
-        type: "template",
-        title: "Seu Template.",
-        cardItems: [
-          {
-            title: "Template 1",
-            description: "Descrição do template 1",
-          },
-          {
-            title: "Template 2",
-            description: "Descrição do template 2",
-          },
-        ],
       }),
     ],
   });
