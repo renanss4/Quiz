@@ -20,6 +20,7 @@ userSubjectRoute.post(
   3. e.g. /search?enrollment=123
   4. e.g. /search?subject_id=123
   5. e.g. /search?enrollment=123&subject_id=123
+  6 e.g. /search?student_id=123
 */
 userSubjectRoute.get(
   "/search",
