@@ -3,7 +3,12 @@ import { Header } from "../../components/Header/Header.js";
 import { Box } from "../../components/Box/Box.js";
 import { Button } from "../../components/Button/Button.js";
 import { Card } from "../../components/Card/Card.js";
-import { fetchQuizzes, fetchStudentAnswers } from "../fetch.js";
+import {
+  fetchQuizzes,
+  fetchStudentAnswers,
+  fetchDataUser,
+  fetchUsers,
+} from "../fetch.js";
 
 const urlParams = new URLSearchParams(window.location.search);
 const quizId = urlParams.get("id");
@@ -16,6 +21,10 @@ if (!quizId) {
   alert("ID do quiz não fornecido");
   window.location.href = `subject.html?id=${subject._id}`;
 }
+
+const user = await fetchDataUser();
+const students = await fetchUsers({ enrollment: user.enrollment });
+const studentId = students[0]._id;
 
 const nav = document.querySelector(".nav");
 const sidebar = Sidebar({
@@ -95,7 +104,13 @@ const generateSection = () => {
 
 async function renderAttempts() {
   // Simulando a obtenção das respostas do aluno e o número de tentativas do quiz
-  const countAnswers = await fetchStudentAnswers(quizId);
+  const allAttempts = await fetchStudentAnswers(quizId);
+
+  // Filtrar as tentativas para o studentId atual
+  const studentAttempts = allAttempts.filter(
+    (attempt) => attempt.student_id._id === studentId
+  );
+
   const numberOfAttempts = quiz.attempts;
 
   // Array para armazenar os itens do card
@@ -110,10 +125,9 @@ async function renderAttempts() {
   }
 
   // Atualizar as tentativas realizadas com base nas respostas do aluno
-  countAnswers.forEach((attempt, index) => {
-    const attemptIndex = index; // Guardar o índice atual
-    cardItems[attemptIndex] = {
-      question: `${attemptIndex + 1}ª Tentativa`,
+  studentAttempts.forEach((attempt, index) => {
+    cardItems[index] = {
+      question: `${index + 1}ª Tentativa`,
       answer: `${attempt.score}/10`,
       link: attempt.score ? `student-answers.html?id=${attempt._id}` : null,
     };
