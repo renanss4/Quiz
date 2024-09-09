@@ -69,9 +69,10 @@ class AnswerController {
     }
 
     // Finds answers in the database based on the query
-    const answers = await answersModel
-      .find(query, "-__v")
-      .populate({ path: "student_id", select: "name" });
+    const answers = await answersModel.find(query, "-__v").populate([
+      { path: "student_id", select: "name" },
+      { path: "quiz_id", select: "name" },
+    ]);
 
     if (!answers || answers.length === 0) {
       return res.status(200).json({ message: "No answers found" });
