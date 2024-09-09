@@ -93,9 +93,12 @@ const generateSectionAboutAnswers = () => {
   h2.classList.add("title");
   h2.textContent = "Alunos que responderam";
 
+  section.appendChild(h2);
+
   if (!Array.isArray(answers) || answers.length === 0) {
-    h2.textContent = "Nenhum aluno respondeu ainda";
-    section.appendChild(h2);
+    const noAnswersMessage = document.createElement("p");
+    noAnswersMessage.textContent = "Nenhum aluno respondeu ainda";
+    section.appendChild(noAnswersMessage);
   } else {
     for (const answer of answers) {
       const item = document.createElement("div");
@@ -120,7 +123,6 @@ const generateSectionAboutAnswers = () => {
       item.appendChild(viewLink);
       item.appendChild(score);
 
-      section.appendChild(h2);
       section.appendChild(item);
     }
   }

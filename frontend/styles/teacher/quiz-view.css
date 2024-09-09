@@ -40,6 +40,8 @@ section li {
 
 .section-students {
   width: 100%;
+  max-height: 400px;
+  overflow-y: auto;
 }
 
 section .item {
@@ -60,3 +62,24 @@ section .item {
 button {
   max-width: 200px;
 }
+
+/* Estilo para a barra de rolagem no Webkit (Chrome, Safari) */
+.section-students::-webkit-scrollbar {
+  /* Largura da barra de rolagem */
+  width: 8px;
+}
+
+/* .section-students::-webkit-scrollbar-track {
+  Cor de fundo da pista
+  background: #f1f1f1;
+}
+
+.section-students::-webkit-scrollbar-thumb {
+  Cor da parte rolante
+  background: #888;
+}
+
+.section-students::-webkit-scrollbar-thumb:hover {
+  Cor da parte rolante ao passar o mouse
+  background: #555;
+} */
