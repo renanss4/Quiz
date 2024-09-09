@@ -108,11 +108,14 @@ const generateSectionAboutAnswers = () => {
       const studentName = document.createElement("p");
       studentName.textContent = answer.student_id.name;
 
-      // Link para ver respostas
-      const viewLink = document.createElement("a");
-      viewLink.href = `student-answers.html?quiz_id=${quizId}&student_id=${answer.student_id._id}`;
-      viewLink.textContent = "Ver Respostas";
-      viewLink.style.color = "#1d4ed8"; // cor do link
+      // Botão para ver respostas
+      const viewButton = Button({
+        type: "link",
+        text: "Ver Respostas",
+        onClick: () => {
+          window.location.href = `student-answers.html?answer_id=${answer._id}&student_id=${answer.student_id._id}`;
+        },
+      });
 
       // Pontuação
       const score = document.createElement("p");
@@ -120,7 +123,7 @@ const generateSectionAboutAnswers = () => {
 
       // Adiciona os elementos à div item
       item.appendChild(studentName);
-      item.appendChild(viewLink);
+      item.appendChild(viewButton);
       item.appendChild(score);
 
       section.appendChild(item);
