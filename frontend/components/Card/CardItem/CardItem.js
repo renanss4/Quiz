@@ -1,4 +1,10 @@
-export function CardItem({ question, answer, type = "default", link = null }) {
+export function CardItem({
+  question,
+  answer,
+  isCorrect = null,
+  type = "default",
+  link = null,
+}) {
   const cardItem = document.createElement("div");
   cardItem.classList.add("card-item");
 
@@ -7,8 +13,15 @@ export function CardItem({ question, answer, type = "default", link = null }) {
   questionElement.classList.add("question");
 
   const answerElement = document.createElement("p");
-  answerElement.textContent = answer;
+  answerElement.textContent = answer; // Exibir a opção de resposta no card
   answerElement.classList.add("answer");
+
+  // Aplicando a cor com base na resposta correta ou incorreta
+  if (isCorrect === true) {
+    answerElement.style.color = "green"; // Cor verde para respostas corretas
+  } else if (isCorrect === false) {
+    answerElement.style.color = "red"; // Cor vermelha para respostas incorretas
+  }
 
   const stylesByType = {
     default: "card-item-default",
