@@ -17,7 +17,7 @@ userRoute.post("/", adminCheck, tryCatch(UserController.createUser));
     4. e.g. /search?enrollment=123456
     5. e.g. /search?role=admin&id=123&enrollment=123456
 */
-userRoute.get("/search", adminCheck, tryCatch(UserController.readUsers));
+userRoute.get("/search", tryCatch(UserController.readUsers));
 
 userRoute.get("/me", tryCatch(UserController.readMe));
 
