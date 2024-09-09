@@ -127,11 +127,15 @@ function updateCardWithAnswers() {
 }
 
 // Criar perguntas e opções para o aluno clicar
-const questions = quiz.questions.map((question) => {
+const questions = quiz.questions.map((question, index) => {
   const questionElement = document.createElement("section");
   questionElement.style.marginBottom = "20px"; // Espaço entre perguntas
 
-  const questionTitle = document.createElement("h2");
+  const questionId = document.createElement("h2");
+  questionId.textContent = `Pergunta ${index + 1}`;
+  questionElement.appendChild(questionId);
+
+  const questionTitle = document.createElement("h3");
   questionTitle.textContent = question.name;
   questionElement.appendChild(questionTitle);
 
