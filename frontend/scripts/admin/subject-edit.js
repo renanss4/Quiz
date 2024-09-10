@@ -137,8 +137,8 @@ async function renderTable() {
       const rows = subject.quizzes.map((quiz) => [
         quiz.name,
         "",
-        editButton(quiz._id),
-        deleteButton(quiz._id),
+        editButton(quiz.quiz_id),
+        deleteButton(quiz.quiz_id),
       ]);
 
       const tableDiv = document.querySelector(".table-subject");
