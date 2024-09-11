@@ -140,6 +140,11 @@ class QuizController {
       return res.status(400).json({ message: "Missing questions" });
     }
 
+    // Checks if the questions array has more than 10 questions
+    if (questions.length > 10) {
+      return res.status(400).json({ message: "Too many questions" });
+    }
+
     // Updates the quiz with the provided id by adding the questions
     const updatedQuiz = await quizzesModel.findByIdAndUpdate(
       id,
@@ -199,7 +204,7 @@ class QuizController {
     }
 
     // Returns a 200 status with the updated quiz
-    return res.status(200).send();
+    return res.status(200).send(updatedQuiz);
   }
 
   async deleteQuiz(req, res) {
