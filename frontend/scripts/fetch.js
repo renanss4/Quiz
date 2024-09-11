@@ -652,7 +652,7 @@ export async function addQuestionToQuiz(quizId, questionsData) {
   }
 }
 
-export async function transformDraftToQuiz(quizId) {
+export async function transformDraftToQuiz(quizId, dataQuiz) {
   await checkAuthenticationByToken();
 
   const token = getToken();
@@ -661,12 +661,13 @@ export async function transformDraftToQuiz(quizId) {
   }
 
   try {
-    const response = await fetch(`${URL}/quiz/draft/${quizId}`, {
-      method: "PUT",
+    const response = await fetch(`${URL}/quiz/${quizId}`, {
+      method: "PATCH",
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
+      body: JSON.stringify({ data: dataQuiz }),
     });
 
     if (response.status === 204) {
@@ -676,6 +677,39 @@ export async function transformDraftToQuiz(quizId) {
     const data = await response.json();
     if (!response.ok) {
       throw new Error(data.message || "Error transforming draft to quiz");
+    }
+
+    return data;
+  } catch (error) {
+    throw new Error("Network error: " + error.message);
+  }
+}
+
+export async function editQuiz(quizId, dataQuiz) {
+  await checkAuthenticationByToken();
+
+  const token = getToken();
+  if (!token) {
+    throw new Error("No token found!");
+  }
+
+  try {
+    const response = await fetch(`${URL}/quiz/${quizId}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(dataQuiz),
+    });
+
+    if (response.status === 204) {
+      return true;
+    }
+
+    const data = await response.json();
+    if (!response.ok) {
+      throw new Error(data.message || "Error editing quiz");
     }
 
     return data;
