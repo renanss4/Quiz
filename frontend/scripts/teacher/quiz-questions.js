@@ -18,11 +18,13 @@ const sidebar = Sidebar({
 });
 nav.appendChild(sidebar);
 
+const quiz = await fetchQuizzes({ id: quizId });
+
 const header = Header({
   title: "Nome do Quiz",
   subtitle: "Nome da Disciplina",
   btnBack: true,
-  linkBack: "./quiz-create.html",
+  linkBack: `./subject.html?id=${quiz[0].subject_id._id}`,
 });
 
 // Função para gerar inputs de resposta
