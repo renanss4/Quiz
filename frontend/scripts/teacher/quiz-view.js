@@ -148,12 +148,28 @@ const btnDelete = Button({
   },
 });
 
+const btnEdit = Button({
+  type: "default",
+  text: "Editar Quiz",
+  onClick: () => {
+    window.location.href = `./quiz-edit.html?quiz_id=${quizId}`;
+  },
+});
+
+function showDivWithBtn() {
+  if (quiz.is_draft) {
+    return [btnDelete, btnEdit];
+  } else {
+    return [btnDelete];
+  }
+}
+
 const box = Box({
   children: [
     header,
     generateSectionAboutQuiz(),
     generateSectionAboutAnswers(),
-    btnDelete,
+    ...showDivWithBtn(),
   ],
 });
 document.body.appendChild(box);

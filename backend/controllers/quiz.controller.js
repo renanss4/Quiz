@@ -140,9 +140,18 @@ class QuizController {
       return res.status(400).json({ message: "Missing questions" });
     }
 
-    // Checks if the questions array has more than 10 questions
-    if (questions.length > 10) {
-      return res.status(400).json({ message: "Too many questions" });
+    // Retrieves the quiz with the provided id
+    const existingQuiz = await quizzesModel.findById(id);
+    if (!existingQuiz) {
+      return res.status(404).json({ message: "Quiz not found" });
+    }
+
+    // Verify if the total number of questions is less than 10
+    const totalQuestions = existingQuiz.questions.length + questions.length;
+    if (totalQuestions > 10) {
+      return res.status(400).json({
+        message: `Too many questions. Max allowed is 10. Current total: ${totalQuestions}`,
+      });
     }
 
     // Updates the quiz with the provided id by adding the questions
@@ -164,6 +173,44 @@ class QuizController {
     }
 
     // Returns a 204 status if the questions are added
+    return res.status(204).send();
+  }
+
+  async changeQuestion(req, res) {
+    // Retrieves the id parameter from the request
+    const id = req.params.id;
+
+    // Extracts the questions array from the request body
+    const { questions } = req.body;
+
+    // Checks if the questions array is empty
+    if (!questions || questions.length === 0) {
+      return res.status(400).json({ message: "Missing questions" });
+    }
+
+    // Retrieves the quiz with the provided id
+    const existingQuiz = await quizzesModel.findById(id);
+    if (!existingQuiz) {
+      return res.status(404).json({ message: "Quiz not found" });
+    }
+
+    // Updates the quiz with the provided id by changing the questions
+    const updatedQuiz = await quizzesModel.findByIdAndUpdate(
+      id,
+      {
+        questions,
+      },
+      {
+        new: true,
+      }
+    );
+
+    // Checks if the quiz was found and updated
+    if (!updatedQuiz) {
+      return res.status(404).json({ message: "Quiz not found" });
+    }
+
+    // Returns a 204 status if the questions are changed
     return res.status(204).send();
   }
 
@@ -197,6 +244,16 @@ class QuizController {
     const updatedQuiz = await quizzesModel.findByIdAndUpdate(id, req.body, {
       new: true,
     });
+
+    // Updates all subjects by updating the quiz with the provided id
+    await subjectsModel.updateOne(
+      { "quizzes.quiz_id": id },
+      {
+        $set: {
+          "quizzes.$.name": updatedQuiz.name,
+        },
+      }
+    );
 
     // Checks if the quiz was found and updated
     if (!updatedQuiz) {

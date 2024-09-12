@@ -629,7 +629,7 @@ export async function addQuestionToQuiz(quizId, questionsData) {
 
   try {
     const response = await fetch(`${URL}/quiz/question/${quizId}`, {
-      method: "PUT",
+      method: "POST",
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
@@ -652,7 +652,40 @@ export async function addQuestionToQuiz(quizId, questionsData) {
   }
 }
 
-export async function transformDraftToQuiz(quizId, dataQuiz) {
+export async function changeAllQuestions(quizId, questionsData) {
+  await checkAuthenticationByToken();
+
+  const token = getToken();
+  if (!token) {
+    throw new Error("No token found!");
+  }
+  try {
+    const response = await fetch(`${URL}/quiz/question/${quizId}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({ questions: questionsData }),
+    });
+
+    if (response.status === 204) {
+      return true;
+    }
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(data.message || "Error updating quiz with questions");
+    }
+
+    return data;
+  } catch (error) {
+    throw new Error("Network error: " + error.message);
+  }
+}
+
+export async function transformDraftToQuiz(quizId) {
   await checkAuthenticationByToken();
 
   const token = getToken();
@@ -661,13 +694,13 @@ export async function transformDraftToQuiz(quizId, dataQuiz) {
   }
 
   try {
-    const response = await fetch(`${URL}/quiz/${quizId}`, {
-      method: "PATCH",
+    const response = await fetch(`${URL}/quiz/draft/${quizId}`, {
+      method: "PUT",
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify({ data: dataQuiz }),
+      body: JSON.stringify({}),
     });
 
     if (response.status === 204) {
@@ -816,6 +849,10 @@ export async function fetchStudentAnswers(params = undefined) {
     const data = await response.json();
     if (!response.ok) {
       throw new Error(data.message || "Error fetching student answers data");
+    }
+
+    if (data.message === "No answers found") {
+      return [];
     }
 
     return data;

@@ -21,7 +21,9 @@ quizRoute.post("/", teacherCheck, tryCatch(QuizController.createQuiz));
 */
 quizRoute.get("/search", tryCatch(QuizController.readQuizzes));
 
-quizRoute.put("/question/:id", tryCatch(QuizController.addQuestion));
+quizRoute.post("/question/:id", tryCatch(QuizController.addQuestion));
+
+quizRoute.put("/question/:id", tryCatch(QuizController.changeQuestion));
 
 quizRoute.put(
   "/draft/:id",
