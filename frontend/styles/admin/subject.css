@@ -19,19 +19,19 @@
 }
 
 .button-create {
-  position: absolute;
+  /* position: absolute; */
   top: 4rem;
   right: 4rem;
   max-width: 10rem;
 }
 
 /* Ajustes para telas menores */
-@media (max-width: 768px) {
+/* @media (max-width: 768px) {
   .button-create {
     position: static;
     margin: 1rem auto;
   }
-}
+} */
 
 /* .table-subject {
     position: relative;

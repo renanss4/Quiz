@@ -90,7 +90,22 @@ export function Sidebar({ itens = [] }) {
   const divHeader = document.createElement("div");
   const imgHeader = document.createElement("img");
 
-  aHeader.href = "/";
+  // const userType = "student";
+  // switch (userType) {
+  //   case "student":
+  //     aHeader.href = "../student/student-dashboard.html";
+  //     break;
+  //   case "teacher":
+  //     aHeader.href = "../teacher/teacher-dashboard.html";
+  //     break;
+  //   case "admin":
+  //     aHeader.href = "../admin/admin-dashboard.html";
+  //     break;
+  //   default:
+  //     aHeader.href = "../login.html ";
+  //     break;
+  // }
+  aHeader.href = "../../index.html";
   divHeader.className = "logo";
   imgHeader.src = "../../assets/logo1.svg";
   divHeader.appendChild(imgHeader);
