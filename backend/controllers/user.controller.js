@@ -6,6 +6,7 @@ import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
 import { usersSubjectsModel } from "../models/user_subject.model.js";
 import { subjectsModel } from "../models/subject.model.js";
+import { answersModel } from "../models/answers.model.js";
 
 class UserController {
   async loginUser(req, res) {
@@ -179,6 +180,9 @@ class UserController {
 
     // Deletes the related user_subject relationships
     await usersSubjectsModel.deleteMany({ student_id: id });
+
+    // Deletes the related answers
+    await answersModel.deleteMany({ student_id: id });
 
     // If the user is a teacher, updates the teacher_id to null in subjects
     await subjectsModel.updateMany(
