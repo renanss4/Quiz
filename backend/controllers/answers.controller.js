@@ -1,6 +1,8 @@
 import { answersModel } from "../models/answers.model.js";
 import { quizzesModel } from "../models/quiz.model.js";
 import { usersModel } from "../models/user.model.js";
+import ServerError from "../ServerError.js";
+import { ANSWER_ERROR } from "../constants/errorCodes.js";
 import { validateId } from "../utils/validateId.js";
 
 class AnswerController {
@@ -10,24 +12,24 @@ class AnswerController {
 
     // Validates if the required fields are empty
     if (!quiz_id || !student_id || !score || !answers) {
-      return res.status(400).json({ message: "Missing fields" });
+      throw new ServerError(ANSWER_ERROR.MISSING_FIELDS);
     }
 
     // Checks if the quiz exists in the database by quiz_id
     const quizExists = await quizzesModel.findById(quiz_id);
     if (!quizExists) {
-      return res.status(400).json({ message: "Invalid quiz_id" });
+      throw new ServerError(ANSWER_ERROR.INVALID_QUIZ_ID);
     }
 
     // Checks if the student exists in the database by student_id
     const studentExists = await usersModel.findById(student_id);
     if (!studentExists) {
-      return res.status(400).json({ message: "Invalid student_id" });
+      throw new ServerError(ANSWER_ERROR.INVALID_STUDENT_ID);
     }
 
     // Checks if the answers are not empty
     if (answers.length === 0) {
-      return res.status(400).json({ message: "Answers cannot be empty" });
+      throw new ServerError(ANSWER_ERROR.EMPTY_ANSWERS);
     }
 
     // Creates a new answer object
@@ -75,7 +77,7 @@ class AnswerController {
     ]);
 
     if (!answers || answers.length === 0) {
-      return res.status(200).json({ message: "No answers found" });
+      throw new ServerError(ANSWER_ERROR.NOT_FOUND);
     }
 
     // Returns a 200 status with the found answers
@@ -93,7 +95,7 @@ class AnswerController {
 
     // Checks if the answer was found and updated
     if (!updatedAnswer) {
-      return res.status(404).json({ message: "Answer not found" });
+      throw new ServerError(ANSWER_ERROR.NOT_FOUND);
     }
 
     // Returns the updated answer
@@ -109,7 +111,7 @@ class AnswerController {
 
     // Checks if the answer was found and deleted
     if (!deletedAnswer) {
-      return res.status(404).json({ message: "Answer not found" });
+      throw new ServerError(ANSWER_ERROR.NOT_FOUND);
     }
 
     // Returns a 204 status if the answer is deleted

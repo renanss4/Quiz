@@ -9,11 +9,6 @@ export const USER_ERROR = {
     errorCode: 1404,
     message: "User does not exist!",
   },
-  //   FORBIDDEN_EDIT: {
-  //       statusCode: 403,
-  //       errorCode: 1403,
-  //       message: "Action not allowed!"
-  //   },
   INVALID_ID: {
     statusCode: 400,
     errorCode: 1400,
@@ -103,5 +98,77 @@ export const TOKEN_ERROR = {
     statusCode: 403,
     errorCode: 4403,
     message: "Access denied!",
+  },
+};
+
+export const ANSWER_ERROR = {
+  MISSING_FIELDS: {
+    statusCode: 400,
+    errorCode: 5401,
+    message: "Missing fields: quiz_id, student_id, score, or answers!",
+  },
+  INVALID_QUIZ_ID: {
+    statusCode: 400,
+    errorCode: 5402,
+    message: "Invalid quiz_id!",
+  },
+  INVALID_STUDENT_ID: {
+    statusCode: 400,
+    errorCode: 5403,
+    message: "Invalid student_id!",
+  },
+  EMPTY_ANSWERS: {
+    statusCode: 400,
+    errorCode: 5404,
+    message: "Answers cannot be empty!",
+  },
+  NOT_FOUND: {
+    statusCode: 404,
+    errorCode: 5405,
+    message: "Answer not found!",
+  },
+};
+
+export const QUIZ_ERROR = {
+  MISSING_FIELDS: {
+    statusCode: 400,
+    errorCode: 6401,
+    message:
+      "Missing fields: subject_id, name, time, attempts, date_start, or date_end!",
+  },
+  INVALID_DATE_FORMAT: {
+    statusCode: 400,
+    errorCode: 6402,
+    message: "Invalid date format. Use YYYY-MM-DD!",
+  },
+  INVALID_DATE_RANGE: {
+    statusCode: 400,
+    errorCode: 6403,
+    message: "End date must be after start date!",
+  },
+  ALREADY_EXISTS: {
+    statusCode: 409,
+    errorCode: 6404,
+    message: "Quiz already exists!",
+  },
+  INVALID_SUBJECT_ID: {
+    statusCode: 400,
+    errorCode: 6405,
+    message: "Invalid subject_id!",
+  },
+  NOT_FOUND: {
+    statusCode: 404,
+    errorCode: 6406,
+    message: "Quiz not found!",
+  },
+  TOO_MANY_QUESTIONS: {
+    statusCode: 400,
+    errorCode: 6407,
+    message: "Too many questions. Max allowed is 10!",
+  },
+  MISSING_QUESTIONS: {
+    statusCode: 400,
+    errorCode: 6408,
+    message: "Missing questions!",
   },
 };

@@ -1,6 +1,8 @@
 import { quizzesModel } from "../models/quiz.model.js";
 import { subjectsModel } from "../models/subject.model.js";
 import { answersModel } from "../models/answers.model.js";
+import ServerError from "../ServerError.js";
+import { QUIZ_ERROR } from "../constants/errorCodes.js";
 import { validateId } from "../utils/validateId.js";
 import { validateDate } from "../utils/validateDate.js";
 
@@ -29,21 +31,17 @@ class QuizController {
       !date_start ||
       !date_end
     ) {
-      return res.status(400).json({ message: "Missing fields" });
+      throw new ServerError(QUIZ_ERROR.MISSING_FIELDS);
     }
 
     // Validates if the date format is correct
     if (!validateDate(date_start) || !validateDate(date_end)) {
-      return res
-        .status(400)
-        .json({ message: "Invalid date format. Use YYYY-MM-DD" });
+      throw new ServerError(QUIZ_ERROR.INVALID_DATE_FORMAT);
     }
 
     // Validates if the end date is after the start date
-    if (new Date(date_end) <= new Date(date_start)) {
-      return res
-        .status(400)
-        .json({ message: "End date must be after start date" });
+    if (new Date(date_end) < new Date(date_start)) {
+      throw new ServerError(QUIZ_ERROR.INVALID_DATE_RANGE);
     }
 
     // Checks if the quiz already exists in the database by name and subject_id
@@ -52,13 +50,13 @@ class QuizController {
       subject_id,
     });
     if (quizExists) {
-      return res.status(400).json({ message: "Quiz already exists" });
+      throw new ServerError(QUIZ_ERROR.ALREADY_EXISTS);
     }
 
     // Checks if the subject exists in the database by subject_id
     const subjectExists = await subjectsModel.findById(subject_id);
     if (!subjectExists) {
-      return res.status(400).json({ message: "Invalid subject_id" });
+      throw new ServerError(QUIZ_ERROR.INVALID_SUBJECT_ID);
     }
 
     const newQuiz = {
@@ -121,7 +119,7 @@ class QuizController {
     });
 
     if (!quizzes || quizzes.length === 0) {
-      return res.status(200).json({ message: "No quizzes found" });
+      throw new ServerError(QUIZ_ERROR.NOT_FOUND);
     }
 
     // Returns a 200 status with the found quizzes
@@ -137,21 +135,19 @@ class QuizController {
 
     // Checks if the questions array is empty
     if (!questions || questions.length === 0) {
-      return res.status(400).json({ message: "Missing questions" });
+      throw new ServerError(QUIZ_ERROR.MISSING_FIELDS);
     }
 
     // Retrieves the quiz with the provided id
     const existingQuiz = await quizzesModel.findById(id);
     if (!existingQuiz) {
-      return res.status(404).json({ message: "Quiz not found" });
+      throw new ServerError(QUIZ_ERROR.NOT_FOUND);
     }
 
     // Verify if the total number of questions is less than 10
     const totalQuestions = existingQuiz.questions.length + questions.length;
     if (totalQuestions > 10) {
-      return res.status(400).json({
-        message: `Too many questions. Max allowed is 10. Current total: ${totalQuestions}`,
-      });
+      throw new ServerError(QUIZ_ERROR.TOO_MANY_QUESTIONS);
     }
 
     // Updates the quiz with the provided id by adding the questions
@@ -185,17 +181,17 @@ class QuizController {
 
     // Checks if the questions array is empty
     if (!questions || questions.length === 0) {
-      return res.status(400).json({ message: "Missing questions" });
+      throw new ServerError(QUIZ_ERROR.MISSING_QUESTIONS);
     }
 
     // Retrieves the quiz with the provided id
     const existingQuiz = await quizzesModel.findById(id);
     if (!existingQuiz) {
-      return res.status(404).json({ message: "Quiz not found" });
+      throw new ServerError(QUIZ_ERROR.NOT_FOUND);
     }
 
     // Updates the quiz with the provided id by changing the questions
-    const updatedQuiz = await quizzesModel.findByIdAndUpdate(
+    await quizzesModel.findByIdAndUpdate(
       id,
       {
         questions,
@@ -204,11 +200,6 @@ class QuizController {
         new: true,
       }
     );
-
-    // Checks if the quiz was found and updated
-    if (!updatedQuiz) {
-      return res.status(404).json({ message: "Quiz not found" });
-    }
 
     // Returns a 204 status if the questions are changed
     return res.status(204).send();
@@ -229,7 +220,7 @@ class QuizController {
 
     // Checks if the quiz was found and updated
     if (!updatedQuiz) {
-      return res.status(404).json({ message: "Quiz not found" });
+      throw new ServerError(QUIZ_ERROR.NOT_FOUND);
     }
 
     // Returns a 204 status if the quiz is transformed
@@ -244,6 +235,10 @@ class QuizController {
     const updatedQuiz = await quizzesModel.findByIdAndUpdate(id, req.body, {
       new: true,
     });
+
+    if (!updatedQuiz) {
+      throw new ServerError(QUIZ_ERROR.NOT_FOUND);
+    }
 
     // Updates all subjects by updating the quiz with the provided id
     await subjectsModel.updateOne(
@@ -286,7 +281,7 @@ class QuizController {
 
     // Checks if the quiz was found and deleted
     if (!deletedQuiz) {
-      return res.status(404).json({ message: "Quiz not found" });
+      throw new ServerError(QUIZ_ERROR.NOT_FOUND);
     }
 
     // Returns a 204 status without the deleted quiz
