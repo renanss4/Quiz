@@ -38,11 +38,11 @@ section li {
   font-weight: bold;
 }
 
-.section-students {
+/* .section-students {
   width: 100%;
   max-height: 400px;
   overflow-y: auto;
-}
+} */
 
 section .item {
   color: #1c1917;
@@ -65,24 +65,9 @@ button {
 
 /* Estilo para a barra de rolagem no Webkit (Chrome, Safari) */
 .section-students::-webkit-scrollbar {
-  /* Largura da barra de rolagem */
   width: 8px;
 }
 
-/* .section-students::-webkit-scrollbar-track {
-  Cor de fundo da pista
-  background: #f1f1f1;
-}
-
-.section-students::-webkit-scrollbar-thumb {
-  Cor da parte rolante
-  background: #888;
-}
-
-.section-students::-webkit-scrollbar-thumb:hover {
-  Cor da parte rolante ao passar o mouse
-  background: #555;
-} */
 #overlay {
   position: fixed;
   top: 0;
@@ -101,4 +86,30 @@ button {
   transform: translate(-50%, -50%);
   z-index: 1; /* Fica sobre o overlay */
   display: none; /* Inicialmente escondido */
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  section {
+    width: 100%; /* Ocupa toda a largura da tela */
+  }
+
+  section h2 {
+    font-size: 16px; /* Ajusta o tamanho da fonte */
+  }
+
+  section p,
+  section li {
+    font-size: 14px; /* Ajusta o tamanho da fonte */
+  }
+
+  /* .section-students {
+    width: 100%;
+  } */
+}
+
+@media (min-width: 768px) {
+  div.space {
+    display: none;
+  }
 }

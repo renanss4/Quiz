@@ -104,9 +104,13 @@ const btnSave = Button({
   },
 });
 
+const divSpace = document.createElement("div");
+divSpace.classList.add("space");
+divSpace.style.padding = "1.5rem";
+
 // Adiciona as perguntas e suas alternativas em uma única caixa
 const box = Box({
-  children: [header, ...questions, btnSave],
+  children: [header, ...questions, btnSave, divSpace],
 });
 
 document.body.appendChild(box);

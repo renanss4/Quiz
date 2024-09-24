@@ -26,3 +26,15 @@
 .main-content {
   width: 100%;
 }
+
+@media (min-width: 768px) {
+  div.space {
+    display: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .button-create {
+    position: static;
+  }
+}

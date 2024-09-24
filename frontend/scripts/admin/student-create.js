@@ -15,8 +15,8 @@ import {
 const nav = document.querySelector(".nav");
 const sidebar = Sidebar({
   items: [
-    { iconSrc: "../../assets/house.svg", text: "Dashboard", link: "#" },
-    { iconSrc: "../../assets/books.svg", text: "Painel", link: "#" },
+    // { iconSrc: "../../assets/house.svg", text: "Dashboard", link: "#" },
+    // { iconSrc: "../../assets/books.svg", text: "Painel", link: "#" },
   ],
 });
 nav.appendChild(sidebar);
@@ -114,6 +114,10 @@ const createBtn = Button({
   },
 });
 
+const divSpace = document.createElement("div");
+divSpace.classList.add("space");
+divSpace.style.padding = "1.5rem";
+
 const container = Box({
   children: [
     header,
@@ -122,6 +126,7 @@ const container = Box({
     inputEnrollment,
     checkBox,
     createBtn,
+    divSpace,
   ],
 });
 document.body.appendChild(container);

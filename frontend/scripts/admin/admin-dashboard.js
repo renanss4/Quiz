@@ -7,8 +7,8 @@ import { Box } from "../../components/Box/Box.js";
 const nav = document.querySelector(".nav");
 const sidebar = Sidebar({
   itens: [
-    { iconSrc: "../../assets/house.svg", text: "Dashboard", link: "#" },
-    { iconSrc: "../../assets/books.svg", text: "Painel", link: "#" },
+    // { iconSrc: "../../assets/house.svg", text: "Dashboard", link: "#" },
+    // { iconSrc: "../../assets/books.svg", text: "Painel", link: "#" },
   ],
 });
 

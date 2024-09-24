@@ -42,8 +42,12 @@ async function loadAndDisplayContent() {
     section.appendChild(btn);
   });
 
+  const divSpace = document.createElement("div");
+  divSpace.classList.add("space");
+  divSpace.style.padding = "1.5rem";
+
   const box = Box({
-    children: [header, section],
+    children: [header, section, divSpace],
   });
 
   const main = document.querySelector(".main-content");

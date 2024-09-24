@@ -11,8 +11,8 @@ import { createSubject, fetchUsers } from "../fetch.js";
 const nav = document.querySelector(".nav");
 const sidebar = Sidebar({
   items: [
-    { iconSrc: "../../assets/house.svg", text: "Dashboard", link: "#" },
-    { iconSrc: "../../assets/books.svg", text: "Painel", link: "#" },
+    // { iconSrc: "../../assets/house.svg", text: "Dashboard", link: "#" },
+    // { iconSrc: "../../assets/books.svg", text: "Painel", link: "#" },
   ],
 });
 nav.appendChild(sidebar);
@@ -104,11 +104,15 @@ async function loadSelectTeacher() {
   });
 }
 
+const divSpace = document.createElement("div");
+divSpace.classList.add("space");
+divSpace.style.padding = "1.5rem";
+
 // Carrega e adiciona as opções ao select
 loadSelectTeacher().then(() => {
   // Adiciona o Box ao corpo do documento após carregar os dados
   const container = Box({
-    children: [header, inputName, selectTeacherContainer, createBtn],
+    children: [header, inputName, selectTeacherContainer, createBtn, divSpace],
   });
 
   document.body.appendChild(container);

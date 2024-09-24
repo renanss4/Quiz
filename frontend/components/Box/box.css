@@ -9,3 +9,10 @@ main {
   border-radius: 3rem 0 0 3rem;
   overflow-y: auto;
 }
+
+@media (max-width: 768px) {
+  main {
+    padding: 2rem;
+    border-radius: 1rem 1rem 0 0;
+  }
+}

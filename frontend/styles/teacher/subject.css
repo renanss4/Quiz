@@ -57,6 +57,7 @@ section h3 {
 .quiz-category button:hover {
   background: #e7e5e4;
 }
+
 #overlay {
   position: fixed;
   top: 0;
@@ -75,4 +76,36 @@ section h3 {
   transform: translate(-50%, -50%);
   z-index: 1; /* Fica sobre o overlay */
   display: none; /* Inicialmente escondido */
+}
+
+/* Estilos para telas menores */
+@media (max-width: 768px) {
+  .quizzes-container {
+    flex-direction: column; /* Muda para coluna em telas menores */
+  }
+
+  .quiz-category {
+    width: 100%; /* Ocupa toda a largura */
+  }
+
+  .btn-create-quiz {
+    position: static;
+    align-self: center;
+  }
+
+  section {
+    overflow-y: auto; /* Adiciona scroll no eixo Y */
+    max-height: 60vh; /* Limita a altura da seção para o scroll aparecer */
+    padding: 1rem; /* Adiciona algum padding */
+  }
+
+  .quiz-category button {
+    font-size: 14px; /* Reduz o tamanho da fonte dos botões em telas menores */
+  }
+}
+
+@media (min-width: 768px) {
+  div.space {
+    display: none;
+  }
 }

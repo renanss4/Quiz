@@ -26,3 +26,15 @@
   z-index: 1; /* Fica sobre o overlay */
   display: none; /* Inicialmente escondido */
 }
+
+@media (min-width: 768px) {
+  div.space {
+    display: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .button-create {
+    position: static;
+  }
+}

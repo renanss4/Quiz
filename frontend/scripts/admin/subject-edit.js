@@ -70,8 +70,8 @@ async function loadSubjectData() {
 const nav = document.querySelector(".nav");
 const sidebar = Sidebar({
   items: [
-    { iconSrc: "../../assets/house.svg", text: "Dashboard", link: "#" },
-    { iconSrc: "../../assets/books.svg", text: "Painel", link: "#" },
+    // { iconSrc: "../../assets/house.svg", text: "Dashboard", link: "#" },
+    // { iconSrc: "../../assets/books.svg", text: "Painel", link: "#" },
   ],
 });
 nav.appendChild(sidebar);
@@ -197,9 +197,20 @@ const editButton = (id) =>
     },
   });
 
+const divSpace = document.createElement("div");
+divSpace.classList.add("space");
+divSpace.style.padding = "1.5rem";
+
 // Adiciona os componentes à página
 const container = Box({
-  children: [header, inputName, selectTeacherContainer, tableDiv, saveBtn],
+  children: [
+    header,
+    inputName,
+    selectTeacherContainer,
+    tableDiv,
+    saveBtn,
+    divSpace,
+  ],
 });
 document.body.appendChild(container);
 

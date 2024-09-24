@@ -14,7 +14,7 @@ body {
   width: 100vw;
 }
 
-.nav {
+/* .nav {
   height: 100%;
   width: 20rem;
   background-color: #1e1b4b;
@@ -22,7 +22,7 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-}
+} */
 
 main {
   flex: 1;
@@ -110,4 +110,13 @@ section button a:hover {
   transform: translate(-50%, -50%);
   z-index: 1; /* Fica sobre o overlay */
   display: none; /* Inicialmente escondido */
+}
+
+@media (min-width: 768px) {
+  div.space {
+    display: none;
+  }
+}
+
+@media (max-width: 768px) {
 }

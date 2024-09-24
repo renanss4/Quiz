@@ -95,8 +95,12 @@ quizzesContainer.appendChild(draftQuizzes);
 // Adiciona o quizzesContainer à seção principal
 section.appendChild(quizzesContainer);
 
+const divSpace = document.createElement("div");
+divSpace.classList.add("space");
+divSpace.style.padding = "1.5rem";
+
 const box = Box({
-  children: [header, btnCreateQuiz, section],
+  children: [header, btnCreateQuiz, section, divSpace],
 });
 
 const main = document.querySelector(".main-content");

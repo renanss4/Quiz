@@ -2,6 +2,7 @@ table {
   width: 100%;
   border-collapse: separate;
   border-spacing: 0 10px;
+  table-layout: auto; /* Permite que a largura das colunas se ajuste */
 }
 
 table tbody tr:hover {
@@ -37,4 +38,23 @@ table tbody tr td:last-child {
 
 table tbody a {
   color: #4338ca;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  thead tr {
+    display: none; /* Esconde o cabeçalho em telas menores */
+  }
+
+  thead th {
+    padding: 8px; /* Ajusta o padding em telas menores */
+    border: 1px solid #e7e5e4; /* Adiciona borda para separação visual */
+    width: 100%; /* Ocupa toda a largura */
+  }
+
+  tbody tr {
+    display: flex; /* Flexbox para os itens da linha */
+    flex-direction: column; /* Coloca cada célula em uma coluna */
+    margin-bottom: 1rem; /* Espaçamento entre as linhas */
+  }
 }

@@ -137,9 +137,13 @@ const btnCreateQuiz = Button({
 
 btnCreateQuiz.classList.add("btn-create-quiz");
 
+const divSpace = document.createElement("div");
+divSpace.classList.add("space");
+divSpace.style.padding = "1.5rem";
+
 // Adiciona as perguntas e suas alternativas em uma única caixa
 const box = Box({
-  children: [header, ...questions, btnDraft, btnCreateQuiz],
+  children: [header, ...questions, btnDraft, btnCreateQuiz, divSpace],
 });
 
 document.body.appendChild(box);

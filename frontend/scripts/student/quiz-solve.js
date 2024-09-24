@@ -216,9 +216,13 @@ const cardQuestions = Card({
 });
 cardQuestions.classList.add("card"); // Adicionando uma classe para facilitar a substituição
 
+const divSpace = document.createElement("div");
+divSpace.classList.add("space");
+divSpace.style.padding = "1.5rem";
+
 // Adicionando todos os elementos na Box e ao DOM
 const box = Box({
-  children: [header, timer, ...questions, cardQuestions],
+  children: [header, timer, ...questions, cardQuestions, divSpace],
 });
 box.classList.add("box"); // Adicionando uma classe para facilitar a substituição
 document.body.appendChild(box);

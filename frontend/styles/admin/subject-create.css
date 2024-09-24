@@ -27,3 +27,9 @@
   bottom: 40px;
   left: 80px;
 }
+
+@media (min-width: 768px) {
+  div.space {
+    display: none;
+  }
+}

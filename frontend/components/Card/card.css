@@ -36,3 +36,9 @@ div.card p.empty {
   line-height: var(--font-leading-6, 24px); /* 171.429% */
   letter-spacing: var(--font-tracking-normal, 0px);
 }
+
+@media (max-width: 768px) {
+  div.card {
+    position: static;
+  }
+}

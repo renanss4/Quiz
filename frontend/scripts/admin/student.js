@@ -10,11 +10,11 @@ import { fetchStudents, deleteUser, fetchStudentSubjects } from "../fetch.js";
 const nav = document.querySelector(".nav");
 const sidebar = Sidebar({
   itens: [
-    {
-      iconSrc: "../../assets/house.svg",
-      text: "Dashboard",
-      link: "admin-dashboard.html",
-    },
+    // {
+    //   iconSrc: "../../assets/house.svg",
+    //   text: "Dashboard",
+    //   link: "admin-dashboard.html",
+    // },
   ],
 });
 nav.appendChild(sidebar);
@@ -156,9 +156,13 @@ async function renderTable() {
 }
 renderTable();
 
+const divSpace = document.createElement("div");
+divSpace.classList.add("space");
+divSpace.style.padding = "1.5rem";
+
 // Criação do box
 const box = Box({
-  children: [headerElement, buttonDiv, tableDiv],
+  children: [headerElement, buttonDiv, tableDiv, divSpace],
 });
 
 const mainContent = document.querySelector(".main-content");

@@ -166,6 +166,10 @@ const btnQuestions = Button({
   },
 });
 
+const divSpace = document.createElement("div");
+divSpace.classList.add("space");
+divSpace.style.padding = "1.5rem";
+
 const continer = Box({
   children: [
     header,
@@ -178,6 +182,7 @@ const continer = Box({
     orientationTextarea,
     btnDraft,
     btnQuestions,
+    divSpace,
   ],
 });
 

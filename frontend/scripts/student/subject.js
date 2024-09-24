@@ -74,7 +74,11 @@ const table = Table({
   rowClickHandler: (quizId) => handleQuizClick(quizId),
 });
 
+const divSpace = document.createElement("div");
+divSpace.classList.add("space");
+divSpace.style.padding = "1.5rem";
+
 const box = Box({
-  children: [header, table],
+  children: [header, table, divSpace],
 });
 document.body.appendChild(box);

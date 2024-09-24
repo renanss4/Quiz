@@ -140,9 +140,13 @@ async function renderAttempts() {
     cardItems,
   });
 
+  const divSpace = document.createElement("div");
+  divSpace.classList.add("space");
+  divSpace.style.padding = "1.5rem";
+
   // Criar o container para o card
   const box = Box({
-    children: [header, generateSection(), card],
+    children: [header, generateSection(), card, divSpace],
   });
 
   // Adicionar o container ao DOM

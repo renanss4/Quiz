@@ -116,7 +116,11 @@ const questionsWithAnswers = quiz.questions.map((question, index) => {
   return questionElement;
 });
 
+const divSpace = document.createElement("div");
+divSpace.classList.add("space");
+divSpace.style.padding = "1.5rem";
+
 const box = Box({
-  children: [header, ...questionsWithAnswers, card],
+  children: [header, ...questionsWithAnswers, card, divSpace],
 });
 document.body.appendChild(box);

@@ -182,6 +182,10 @@ const btnQuestions = Button({
   },
 });
 
+const divSpace = document.createElement("div");
+divSpace.classList.add("space");
+divSpace.style.padding = "1.5rem";
+
 const box = Box({
   children: [
     header,
@@ -195,6 +199,7 @@ const box = Box({
     orientationTextarea,
     btnSave,
     btnQuestions,
+    divSpace,
   ],
 });
 document.body.appendChild(box);

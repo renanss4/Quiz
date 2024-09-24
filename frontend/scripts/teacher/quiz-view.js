@@ -156,11 +156,15 @@ const btnEdit = Button({
   },
 });
 
+const divSpace = document.createElement("div");
+divSpace.classList.add("space");
+divSpace.style.padding = "1.5rem";
+
 function showDivWithBtn() {
   if (quiz.is_draft) {
-    return [btnDelete, btnEdit];
+    return [btnDelete, btnEdit, divSpace];
   } else {
-    return [btnDelete];
+    return [btnDelete, divSpace];
   }
 }
 
