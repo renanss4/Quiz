@@ -76,9 +76,9 @@ class AnswerController {
       { path: "quiz_id", select: "name" },
     ]);
 
-    if (!answers || answers.length === 0) {
-      throw new ServerError(ANSWER_ERROR.NOT_FOUND);
-    }
+    // if (!answers || answers.length === 0) {
+    //   throw new ServerError(ANSWER_ERROR.NOT_FOUND);
+    // }
 
     // Returns a 200 status with the found answers
     return res.status(200).send(answers);
