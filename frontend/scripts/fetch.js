@@ -29,12 +29,12 @@ export async function loginFetch(email, enrollment, password) {
     }
 
     if (!response.ok) {
-      throw new Error(data.message || "Login failed");
+      throw new Error("Login failed");
     }
 
     return data;
   } catch (error) {
-    throw new Error("Network error: " + error.message);
+    throw new Error(error.message);
   }
 }
 
@@ -58,12 +58,12 @@ export async function fetchDataUser() {
 
     const data = await response.json();
     if (!response.ok) {
-      throw new Error(data.message || "Error fetching user data");
+      throw new Error("Error fetching user data");
     }
 
     return data;
   } catch (error) {
-    throw new Error("Network error: " + error.message);
+    throw new Error(error.message);
   }
 }
 
@@ -93,12 +93,12 @@ export async function fetchUsers(params = undefined) {
 
     const data = await response.json();
     if (!response.ok) {
-      throw new Error(data.message || "Error fetching users data");
+      throw new Error("Error fetching users data");
     }
 
     return data;
   } catch (error) {
-    throw new Error("Network error: " + error.message);
+    throw new Error(error.message);
   }
 }
 
@@ -132,12 +132,12 @@ export async function addTeacherToSubject(subject_id, teacher_id) {
 
     const data = await response.json();
     if (!response.ok) {
-      throw new Error(data.message || "Error adding teacher to subject");
+      throw new Error("Error adding teacher to subject");
     }
 
     return data;
   } catch (error) {
-    throw new Error("Network error: " + error.message);
+    throw new Error(error.message);
   }
 }
 
@@ -166,12 +166,12 @@ export async function removeTeacherFromSubject(subject_id) {
 
     const data = await response.json();
     if (!response.ok) {
-      throw new Error(data.message || "Error removing teacher from subject");
+      throw new Error("Error removing teacher from subject");
     }
 
     return data;
   } catch (error) {
-    throw new Error("Network error: " + error.message);
+    throw new Error(error.message);
   }
 }
 
@@ -206,12 +206,12 @@ export async function fetchStudentSubjects(params = undefined) {
 
     const data = await response.json();
     if (!response.ok) {
-      throw new Error(data.message || "Error fetching student subjects data");
+      throw new Error("Error fetching student subjects data");
     }
 
     return data;
   } catch (error) {
-    throw new Error("Network error: " + error.message);
+    throw new Error(error.message);
   }
 }
 
@@ -240,12 +240,12 @@ export async function createStudentSubject(student_id, subject_id) {
 
     const data = await response.json();
     if (!response.ok) {
-      throw new Error(data.message || "Error creating student subject");
+      throw new Error("Error creating student subject");
     }
 
     return data;
   } catch (error) {
-    throw new Error("Network error: " + error.message);
+    throw new Error(error.message);
   }
 }
 
@@ -273,12 +273,12 @@ export async function deleteStudentSubject(id) {
 
     const data = await response.json();
     if (!response.ok) {
-      throw new Error(data.message || "Error deleting student subject");
+      throw new Error("Error deleting student subject");
     }
 
     return data;
   } catch (error) {
-    throw new Error("Network error: " + error.message);
+    throw new Error(error.message);
   }
 }
 
@@ -307,12 +307,12 @@ export async function createUser(name, email, enrollment, password, role) {
 
     const data = await response.json();
     if (!response.ok) {
-      throw new Error(data.message || "Error creating user");
+      throw new Error("Error creating user");
     }
 
     return data;
   } catch (error) {
-    throw new Error("Network error: " + error.message);
+    throw new Error(error.message);
   }
 }
 
@@ -341,12 +341,12 @@ export async function editUser(id, name, email, enrollment, role) {
 
     const data = await response.json();
     if (!response.ok) {
-      throw new Error(data.message || "Error editing user");
+      throw new Error("Error editing user");
     }
 
     return data;
   } catch (error) {
-    throw new Error("Network error: " + error.message);
+    throw new Error(error.message);
   }
 }
 
@@ -374,12 +374,12 @@ export async function deleteUser(id) {
 
     const data = await response.json();
     if (!response.ok) {
-      throw new Error(data.message || "Error deleting user");
+      throw new Error("Error deleting user");
     }
 
     return data;
   } catch (error) {
-    throw new Error("Network error: " + error.message);
+    throw new Error(error.message);
   }
 }
 
@@ -409,7 +409,7 @@ export async function fetchSubjects(params = undefined) {
 
     const data = await response.json();
     if (!response.ok) {
-      throw new Error(data.message || "Error fetching subjects data");
+      throw new Error("Error fetching subjects data");
     }
 
     if (data.message === "No subjects found") {
@@ -418,7 +418,7 @@ export async function fetchSubjects(params = undefined) {
 
     return data;
   } catch (error) {
-    throw new Error("Network error: " + error.message);
+    throw new Error(error.message);
   }
 }
 
@@ -449,12 +449,12 @@ export async function createSubject(name, teacher_id) {
 
     const data = await response.json();
     if (!response.ok) {
-      throw new Error(data.message || "Error creating subject");
+      throw new Error("Error creating subject");
     }
 
     return data;
   } catch (error) {
-    throw new Error("Network error: " + error.message);
+    throw new Error(error.message);
   }
 }
 
@@ -485,12 +485,12 @@ export async function editSubject(id, name, teacher_id) {
 
     const data = await response.json();
     if (!response.ok) {
-      throw new Error(data.message || "Error editing subject");
+      throw new Error("Error editing subject");
     }
 
     return data;
   } catch (error) {
-    throw new Error("Network error: " + error.message);
+    throw new Error(error.message);
   }
 }
 
@@ -518,12 +518,12 @@ export async function deleteSubject(id) {
 
     const data = await response.json();
     if (!response.ok) {
-      throw new Error(data.message || "Error deleting subject");
+      throw new Error("Error deleting subject");
     }
 
     return data;
   } catch (error) {
-    throw new Error("Network error: " + error.message);
+    throw new Error(error.message);
   }
 }
 
@@ -553,12 +553,12 @@ export async function fetchQuizzes(params = undefined) {
 
     const data = await response.json();
     if (!response.ok) {
-      throw new Error(data.message || "Error fetching quizzes data");
+      throw new Error("Error fetching quizzes data");
     }
 
     return data;
   } catch (error) {
-    throw new Error("Network error: " + error.message);
+    throw new Error(error.message);
   }
 }
 
@@ -609,13 +609,13 @@ export async function createQuiz(
 
     const data = await response.json();
     if (!response.ok) {
-      throw new Error(data.message || "Error creating quiz");
+      throw new Error("Error creating quiz");
     }
 
     // console.log(data);
     return data;
   } catch (error) {
-    throw new Error("Network error: " + error.message);
+    throw new Error(error.message);
   }
 }
 
@@ -643,12 +643,12 @@ export async function addQuestionToQuiz(quizId, questionsData) {
 
     const data = await response.json();
     if (!response.ok) {
-      throw new Error(data.message || "Error updating quiz with questions");
+      throw new Error("Error updating quiz with questions");
     }
 
     return data;
   } catch (error) {
-    throw new Error("Network error: " + error.message);
+    throw new Error(error.message);
   }
 }
 
@@ -676,12 +676,12 @@ export async function changeAllQuestions(quizId, questionsData) {
     const data = await response.json();
 
     if (!response.ok) {
-      throw new Error(data.message || "Error updating quiz with questions");
+      throw new Error("Error updating quiz with questions");
     }
 
     return data;
   } catch (error) {
-    throw new Error("Network error: " + error.message);
+    throw new Error(error.message);
   }
 }
 
@@ -709,12 +709,12 @@ export async function transformDraftToQuiz(quizId) {
 
     const data = await response.json();
     if (!response.ok) {
-      throw new Error(data.message || "Error transforming draft to quiz");
+      throw new Error("Error transforming draft to quiz");
     }
 
     return data;
   } catch (error) {
-    throw new Error("Network error: " + error.message);
+    throw new Error(error.message);
   }
 }
 
@@ -742,12 +742,12 @@ export async function editQuiz(quizId, dataQuiz) {
 
     const data = await response.json();
     if (!response.ok) {
-      throw new Error(data.message || "Error editing quiz");
+      throw new Error("Error editing quiz");
     }
 
     return data;
   } catch (error) {
-    throw new Error("Network error: " + error.message);
+    throw new Error(error.message);
   }
 }
 
@@ -774,12 +774,12 @@ export async function deleteQuiz(quizId) {
 
     const data = await response.json();
     if (!response.ok) {
-      throw new Error(data.message || "Error deleting quiz");
+      throw new Error("Error deleting quiz");
     }
 
     return data;
   } catch (error) {
-    throw new Error("Network error: " + error.message);
+    throw new Error(error.message);
   }
 }
 
@@ -813,12 +813,12 @@ export async function sendStudentAnswer(quizId, studentId, score, answers) {
 
     const data = await response.json();
     if (!response.ok) {
-      throw new Error(data.message || "Error sending student answer");
+      throw new Error("Error sending student answer");
     }
 
     return data;
   } catch (error) {
-    throw new Error("Network error: " + error.message);
+    throw new Error(error.message);
   }
 }
 
@@ -848,7 +848,7 @@ export async function fetchStudentAnswers(params = undefined) {
 
     const data = await response.json();
     if (!response.ok) {
-      throw new Error(data.message || "Error fetching student answers data");
+      throw new Error("Error fetching student answers data");
     }
 
     if (data.message === "No answers found") {
@@ -857,6 +857,6 @@ export async function fetchStudentAnswers(params = undefined) {
 
     return data;
   } catch (error) {
-    throw new Error("Network error: " + error.message);
+    throw new Error(error.message);
   }
 }

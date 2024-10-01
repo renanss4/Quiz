@@ -18,15 +18,11 @@
   display: none; /* Inicialmente escondido */
 }
 
-.select-container {
-  position: relative;
-}
-
-.optional {
+/* .optional {
   position: absolute;
   bottom: 40px;
   left: 80px;
-}
+} */
 
 @media (min-width: 768px) {
   div.space {

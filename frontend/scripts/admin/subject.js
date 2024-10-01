@@ -59,7 +59,7 @@ const countQuizzes = (quiz) => {
 async function renderTable() {
   try {
     const response = await fetchSubjects();
-    console.log(response);
+    // console.log(response);
 
     if (Array.isArray(response)) {
       const subjects = response;

@@ -127,3 +127,5 @@ togglePassword.addEventListener("click", (event) => {
     hidePasswordImg.hidden = true;
   }
 });
+
+document.getElementById("forgot-password").removeAttribute("href");

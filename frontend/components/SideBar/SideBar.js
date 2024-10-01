@@ -105,7 +105,7 @@ export function Sidebar({ itens = [] }) {
   //     aHeader.href = "../login.html ";
   //     break;
   // }
-  aHeader.href = "../../index.html";
+  // aHeader.href = "../../index.html";
   divHeader.className = "logo";
   imgHeader.src = "../../assets/logo1.svg";
   divHeader.appendChild(imgHeader);
@@ -134,13 +134,13 @@ export function Sidebar({ itens = [] }) {
   });
   logout.style.cursor = "pointer";
 
-  const changePassword = SidebarItem({
-    iconSrc: "../../assets/psswd.svg",
-    text: "Alterar senha",
-    link: "/change-password",
-  });
+  // const changePassword = SidebarItem({
+  //   iconSrc: "../../assets/psswd.svg",
+  //   text: "Alterar senha",
+  //   link: "/change-password",
+  // });
 
-  ulFooter.appendChild(changePassword);
+  // ulFooter.appendChild(changePassword);
   ulFooter.appendChild(logout);
 
   nav.appendChild(aHeader);

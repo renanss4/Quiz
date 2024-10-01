@@ -57,7 +57,11 @@ const inputEnrollment = Input({
 
 async function getOptions() {
   const subjects = await fetchSubjects();
-  return subjects.map((subject) => ({
+  const filteredSubjects = subjects.filter(
+    (subject) => subject.teacher_id === null
+  );
+
+  return filteredSubjects.map((subject) => ({
     value: subject._id,
     label: subject.name,
   }));

@@ -39,6 +39,11 @@ class QuizController {
       throw new ServerError(QUIZ_ERROR.INVALID_DATE_FORMAT);
     }
 
+    // Is not possible to create a quiz with date_start before the current date
+    if (new Date(date_start) < new Date()) {
+      throw new ServerError(QUIZ_ERROR.INVALID_DATE_RANGE);
+    }
+
     // Validates if the end date is after the start date
     if (new Date(date_end) < new Date(date_start)) {
       throw new ServerError(QUIZ_ERROR.INVALID_DATE_RANGE);
